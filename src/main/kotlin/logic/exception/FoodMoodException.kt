@@ -1,4 +1,4 @@
-package org.example.data.exception
+package org.example.logic.exception
 
 sealed class FoodMoodException() : Exception() {
     sealed class Validation() : FoodMoodException() {
@@ -15,4 +15,6 @@ sealed class FoodMoodException() : Exception() {
         data object AttemptsExceeded : GameException()
         data object WrongGuessFormat : GameException()
     }
+
+    sealed class EmptyDataException : FoodMoodException()
 }
