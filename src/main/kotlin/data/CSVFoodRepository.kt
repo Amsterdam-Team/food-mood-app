@@ -1,4 +1,4 @@
-package org.example.data
+package data
 
 import logic.models.Meal
 import org.example.logic.MealsRepository

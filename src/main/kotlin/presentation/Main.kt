@@ -1,6 +1,6 @@
-package org.example.presentation
+package presentation
 
-import org.example.data.CSVMealsRepository
+import data.CSVMealsRepository
 import java.io.File
 
 fun main() {
