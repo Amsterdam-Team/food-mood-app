@@ -1,8 +1,8 @@
 package org.example.logic.search
 
-import org.example.data.exception.FoodMoodException
-import org.example.logic.MealsRepository
-import org.example.models.Meal
+import logic.MealsRepository
+import logic.exception.FoodMoodException
+import logic.models.Meal
 
 class GetMealByNameUseCase (
     private val searchUsingKMP: SearchUsingKMP,

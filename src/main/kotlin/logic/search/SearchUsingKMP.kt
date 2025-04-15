@@ -1,6 +1,5 @@
 package org.example.logic.search
 
-import org.example.data.exception.FoodMoodException
 
 class SearchUsingKMP {
 
