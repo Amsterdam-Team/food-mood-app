@@ -7,11 +7,8 @@ class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCalorie
     fun start(){
         println("Hi, Welcome to your Gym Helper!")
 
-        println("Please enter your desired calories:")
-        val calories = readlnOrNull()?.toIntOrNull() ?: return println("Invalid input for calories.")
-
-        println("Please enter your desired protein:")
-        val protein = readlnOrNull()?.toIntOrNull() ?: return println("Invalid input for protein.")
+        val calories = readValidInt("Please enter your desired calories:")
+        val protein = readValidInt("Please enter your desired protein:")
 
         val result = searchByCaloriesAndProteinUseCase.getMealByCaloriesAndProtein(calories, protein)
 
@@ -27,6 +24,15 @@ class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCalorie
                     println("No meals found that match your desired values.")
                 }
             }
+        }
+    }
+
+    fun readValidInt(prompt: String): Int {
+        while (true) {
+            println(prompt)
+            val input = readlnOrNull()?.toIntOrNull()
+            if (input != null) return input
+            println("Invalid input. Please enter a valid number.")
         }
     }
 }
