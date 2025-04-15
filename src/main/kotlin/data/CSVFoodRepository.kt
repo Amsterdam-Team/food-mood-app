@@ -1,15 +1,15 @@
 package org.example.data
 
 import org.example.logic.MealsRepository
-import org.example.models.ResultStatus
+import org.example.models.Meal
 import java.io.File
 
 class CSVMealsRepository(
     private val csvFile: File
 ): MealsRepository {
-    override fun getAllMeals(): ResultStatus{
+    override fun getAllMeals(): List<Meal>{
 
-        return ResultStatus.Success(emptyList())
+        return emptyList()
     }
     private fun parseOneLine(line: String){
 
