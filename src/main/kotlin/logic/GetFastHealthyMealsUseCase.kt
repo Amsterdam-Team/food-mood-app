@@ -6,7 +6,7 @@ class GetFastHealthyMealsUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun getFastHealthMeals(meals: List<Meal>): List<Meal> {
+    fun getFastHealthMeals(): List<Meal> {
         val allMeals = mealsRepository.getAllMeals()
         val validMeals = getValidMeals(allMeals)
         if (validMeals.isEmpty()) throw EmptyDataException()
