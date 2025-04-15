@@ -1,4 +1,4 @@
-package org.example.models
+package logic.models
 
 data class Nutrition(
     val calories: Double?,
