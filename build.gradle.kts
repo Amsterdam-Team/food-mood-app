@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("io.insert-koin:koin-core:4.0.2")
+    implementation("com.jsoizo:kotlin-csv-jvm:1.10.0")
 }
 
 tasks.test {
