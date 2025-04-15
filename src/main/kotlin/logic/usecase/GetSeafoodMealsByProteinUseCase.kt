@@ -16,7 +16,7 @@ class GetSeafoodMealsByProteinUseCase(
         val sortedSeafoodMealsByProtein = sortMealsByProtein(seafoodMeals).ifEmpty { throw EmptyDataException() }
 
         return sortedSeafoodMealsByProtein.mapIndexed { index, meal ->
-            "Rand: ${index + 1} Meal Name: ${meal.name} Protein Amount: ${meal.nutrition?.protein}"
+            "Rank: ${index + 1} Meal Name: ${meal.name} Protein Amount: ${meal.nutrition?.protein}"
         }
 
     }
