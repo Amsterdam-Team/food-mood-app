@@ -1,6 +1,6 @@
 package presentation
 
-import org.example.logic.usecase.SearchByCaloriesAndProteinUseCase
+import logic.usecase.SearchByCaloriesAndProteinUseCase
 
 class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCaloriesAndProteinUseCase) {
     fun start() {
