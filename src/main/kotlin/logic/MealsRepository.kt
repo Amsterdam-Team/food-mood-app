@@ -1,7 +1,7 @@
-package org.example.logic
+package logic
 
-import org.example.models.ResultStatus
+import logic.models.Meal
 
 interface MealsRepository {
-    fun getAllMeals(): ResultStatus
+    fun getAllMeals(): List<Meal>
 }

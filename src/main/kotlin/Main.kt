@@ -1,11 +1,10 @@
 package org.example
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import data.CSVMealsRepository
 import org.example.data.CSVFoodFileReader
 import org.example.data.CSVFoodParser
-import org.example.data.CSVMealsRepository
-import org.example.models.Meal
-import org.example.models.ResultStatus
+
 import java.io.File
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -21,13 +20,7 @@ fun main() {
 
     val csvMealRepo = CSVMealsRepository(csvParser)
     val result = csvMealRepo.getAllMeals()
-    when(result){
-        is ResultStatus.Success -> {
-            println(result.meals)
-        }
-        is ResultStatus.Error -> println(result.exception.message)
-        else -> Unit
-    }
+    println(result.slice(0..2))
 }
 
 fun parseString(line: String){

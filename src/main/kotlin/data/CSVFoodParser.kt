@@ -1,8 +1,9 @@
 package org.example.data
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
-import org.example.models.Meal
-import org.example.models.Nutrition
+import logic.models.Meal
+import logic.models.Nutrition
+
 import java.time.LocalDate
 
 class CSVFoodParser(val csvFoodFileReader: CSVFoodFileReader) {

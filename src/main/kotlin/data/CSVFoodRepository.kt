@@ -1,22 +1,18 @@
-package org.example.data
+package data
 
-import org.example.logic.MealsRepository
-import org.example.models.ResultStatus
-import java.io.File
+import logic.models.Meal
+import logic.MealsRepository
+import org.example.data.CSVFoodParser
 
 class CSVMealsRepository(
     private val csvFoodParser: CSVFoodParser
 ): MealsRepository {
-    override fun getAllMeals(): ResultStatus{
+    override fun getAllMeals(): List<Meal> {
         return try {
             val meals = csvFoodParser.parseCsvFile2()
-            ResultStatus.Success(meals)
-        }catch (e:Exception){
-            ResultStatus.Error(e)
+            return meals
+        } catch (e: Exception) {
+            throw e
         }
-
-    }
-    private fun parseOneLine(line: String){
-
     }
 }
