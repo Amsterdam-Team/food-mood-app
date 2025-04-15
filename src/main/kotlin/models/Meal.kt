@@ -2,7 +2,6 @@ package org.example.models
 
 import java.time.LocalDate
 
-
 data class Meal(
     val id: String?,
     val name: String?,
