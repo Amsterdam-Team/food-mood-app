@@ -1,22 +1,18 @@
 package org.example.logic
 
 import org.example.models.Meal
-import org.example.models.ResultStatus
 import kotlin.math.ceil
 
 
 class SearchByCaloriesAndProteinUseCase(private val mealsRepository: MealsRepository) {
-    fun getMealByCaloriesAndProtein(calories: Int,protein: Int, approximationRatio: Float = 0.1f): ResultStatus{
-        return when(val result = mealsRepository.getAllMeals()){
-            is ResultStatus.Error -> result
-            is ResultStatus.Loading -> result
-            is ResultStatus.Success -> ResultStatus.Success(
-                filterMealsByApproximateCaloriesAndProtein(meals = result.meals,
+    fun getMealByCaloriesAndProtein(calories: Int,protein: Int, approximationRatio: Float = 0.1f): List<Meal>{
+
+        return filterMealsByApproximateCaloriesAndProtein(meals = mealsRepository.getAllMeals(),
                     calories = calories,
                     protein=protein,
                     approximationRatio = approximationRatio)
-            )
-        }
+
+
     }
 
     private fun filterMealsByApproximateCaloriesAndProtein(
