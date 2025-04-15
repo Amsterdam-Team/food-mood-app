@@ -1,5 +1,7 @@
-package org.example.logic
+package org.example.logic.usecase
 
+import org.example.logic.EmptyDataException
+import org.example.logic.MealsRepository
 import org.example.models.Meal
 
 class GetFastHealthyMealsUseCase(
