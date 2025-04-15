@@ -6,13 +6,19 @@ import org.example.data.CSVFoodParser
 
 class CSVMealsRepository(
     private val csvFoodParser: CSVFoodParser
+
 ): MealsRepository {
-    override fun getAllMeals(): List<Meal> {
-        return try {
+    private var allMeals: List<Meal> = listOf()
+
+    init {
+        allMeals = try {
             val meals = csvFoodParser.parseCsvFile2()
-            return meals
+             meals
         } catch (e: Exception) {
             throw e
         }
+    }
+    override fun getAllMeals(): List<Meal> {
+        return allMeals
     }
 }

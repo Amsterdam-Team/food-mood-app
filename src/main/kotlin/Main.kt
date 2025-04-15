@@ -20,6 +20,12 @@ fun main() {
 
     val csvMealRepo = CSVMealsRepository(csvParser)
     val result = csvMealRepo.getAllMeals()
+    println("--> ${result.size}")
+    println("--> ${result.size}")
+    println("--> ${result.size}")
+//    println("--> count null steps: ${result.count {
+//        it == null
+//    }}")
     println(result.slice(0..2))
 }
 
