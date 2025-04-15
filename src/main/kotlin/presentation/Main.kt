@@ -1,20 +1,15 @@
 package org.example.presentation
 
-import org.example.dummyMeals
-import org.example.logic.GetFastHealthyMealsUseCase
+import org.example.data.CSVMealsRepository
 import presentation.utils.getErrorMessageByException
 import presentation.utils.loadingMessage
-import presentation.utils.withGreenColor
+import java.io.File
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    //val meals = CSVMealsRepository(File("food.csv")).getAllMeals()
+    val meals = CSVMealsRepository(File("food.csv")).getAllMeals()
 
-    tryToExecute(
-        action = { GetFastHealthyMealsUseCase().getFastHealthMeals(dummyMeals) },
-        onSuccess = { println(it.toString().withGreenColor()) }
-    )
 }
 
 fun <T> tryToExecute(action: () -> T, onSuccess: (result: T) -> Unit) {

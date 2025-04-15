@@ -2,10 +2,13 @@ package org.example.logic
 
 import org.example.models.Meal
 
-class GetFastHealthyMealsUseCase {
+class GetFastHealthyMealsUseCase(
+    private val mealsRepository: MealsRepository
+) {
 
     fun getFastHealthMeals(meals: List<Meal>): List<Meal> {
-        val validMeals = getValidMeals(meals)
+        val allMeals = mealsRepository.getAllMeals()
+        val validMeals = getValidMeals(allMeals)
         if (validMeals.isEmpty()) throw EmptyDataException()
         val healthyMeals = filterHealthyMeals(validMeals)
         if (healthyMeals.isEmpty()) throw EmptyDataException()
