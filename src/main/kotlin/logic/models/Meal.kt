@@ -1,7 +1,6 @@
-package org.example.models
+package logic.models
 
 import java.time.LocalDate
-
 
 data class Meal(
     val id: String?,
