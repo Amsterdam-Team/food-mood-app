@@ -1,9 +1,9 @@
-package org.example.presentation
+package presentation
 
-import org.example.logic.SearchByCaloriesAndProteinUseCase
+import logic.usecase.SearchByCaloriesAndProteinUseCase
 
 class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCaloriesAndProteinUseCase) {
-    fun start(){
+    fun start() {
         println("Hi, Welcome to your Gym Helper!")
 
         val calories = readValidInt("Please enter your desired calories:")

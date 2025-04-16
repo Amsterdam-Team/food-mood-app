@@ -1,12 +1,15 @@
-package org.example.logic.usecase
+package logic.usecase
 
-import org.example.logic.MealsRepository
-import org.example.models.Meal
+import logic.models.Meal
+import logic.MealsRepository
 import kotlin.math.ceil
 
-
 class SearchByCaloriesAndProteinUseCase(private val mealsRepository: MealsRepository) {
-    fun getMealByCaloriesAndProtein(calories: Int, protein: Int, approximationRatio: Float = 0.1f): List<Meal> {
+    fun getMealByCaloriesAndProtein(
+        calories: Int,
+        protein: Int,
+        approximationRatio: Float = 0.1f
+    ): List<Meal> {
 
         return filterMealsByApproximateCaloriesAndProtein(
             meals = mealsRepository.getAllMeals(),
@@ -14,8 +17,6 @@ class SearchByCaloriesAndProteinUseCase(private val mealsRepository: MealsReposi
             protein = protein,
             approximationRatio = approximationRatio
         )
-
-
     }
 
     private fun filterMealsByApproximateCaloriesAndProtein(
@@ -41,5 +42,4 @@ class SearchByCaloriesAndProteinUseCase(private val mealsRepository: MealsReposi
         val percentage = ceil(number * ratio).toInt()
         return (number - percentage)..(number + percentage)
     }
-
 }

@@ -1,6 +1,6 @@
-package org.example.logic
+package logic
 
-import org.example.models.Meal
+import logic.models.Meal
 
 interface MealsRepository {
     fun getAllMeals(): List<Meal>

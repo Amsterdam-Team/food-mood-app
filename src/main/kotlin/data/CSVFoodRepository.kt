@@ -1,14 +1,11 @@
-package org.example.data
+package data
 
-import org.example.logic.MealsRepository
-import org.example.models.Meal
+import logic.models.Meal
+import logic.MealsRepository
 import java.io.File
 
-class CSVMealsRepository(
-    private val csvFile: File
-) : MealsRepository {
+class CSVMealsRepository(private val csvFile: File) : MealsRepository {
     override fun getAllMeals(): List<Meal> {
-
         return emptyList()
     }
 
