@@ -1,5 +1,7 @@
 package presentation.uiController
 
+import presentation.utils.withRedColor
+
 class MainMenuHandler(
     private val featureControllers: Map<Int, BaseUIController>
 ) {
@@ -17,9 +19,9 @@ class MainMenuHandler(
                     break
                 }
 
-                null -> println("❌ Invalid input. Please enter a valid number.")
+                null -> println("❌ Invalid input. Please enter a valid number.".withRedColor())
 
-                else -> println("❌ Unknown feature number.")
+                else -> println("❌ Unknown feature number.".withRedColor())
             }
         }
     }
