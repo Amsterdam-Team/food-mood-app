@@ -1,6 +1,7 @@
-package org.example.logic
+package logic
 
-import org.example.models.Meal
+import logic.models.Meal
+import org.example.logic.EmptyDataException
 
 class GetFastHealthyMealsUseCase(
     private val mealsRepository: MealsRepository
