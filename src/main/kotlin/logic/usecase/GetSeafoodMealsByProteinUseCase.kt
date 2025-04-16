@@ -1,9 +1,8 @@
 package logic.usecase
 
 import logic.MealsRepository
+import logic.exception.FoodMoodException
 import logic.models.Meal
-import logic.models.isSeafood
-import org.example.logic.EmptyDataException
 
 
 class GetSeafoodMealsByProteinUseCase(
@@ -12,10 +11,11 @@ class GetSeafoodMealsByProteinUseCase(
 
     fun getSeafoodMealsByProteinUseCase(): List<Meal> {
         val allMeals = mealsRepository.getAllMeals()
-        val validMeals = getValidMeals(allMeals).ifEmpty { throw EmptyDataException() }
-        val seafoodMeals = filterSeafoodMeals(validMeals).ifEmpty { throw EmptyDataException() }
+        val validMeals = getValidMeals(allMeals).ifEmpty { throw FoodMoodException.Validation.EmptyDataException }
+        val seafoodMeals =
+            filterSeafoodMeals(validMeals).ifEmpty { throw FoodMoodException.Validation.EmptyDataException }
 
-        return sortMealsByProtein(seafoodMeals).ifEmpty { throw EmptyDataException() }
+        return sortMealsByProtein(seafoodMeals).ifEmpty { throw FoodMoodException.Validation.EmptyDataException }
     }
 
 
@@ -24,10 +24,14 @@ class GetSeafoodMealsByProteinUseCase(
     }
 
     private fun filterSeafoodMeals(meals: List<Meal>): List<Meal> {
-        return meals.filter { it.isSeafood() }
+        return meals.filter { it.tags?.joinToString(" ")?.lowercase().orEmpty().contains(FISH_TAG) }
     }
 
     private fun sortMealsByProtein(meals: List<Meal>): List<Meal> {
         return meals.sortedByDescending { it.nutrition?.protein }
+    }
+
+    private companion object {
+        const val FISH_TAG = "seafood"
     }
 }

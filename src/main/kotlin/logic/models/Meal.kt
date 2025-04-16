@@ -16,15 +16,3 @@ data class Meal(
     val ingredients: List<String>?,
     val numberOfIngredients: Int?
 )
-
-fun Meal.isSeafood(): Boolean {
-    val seafoodKeywords = listOf("fish", "shrimp", "salmon", "tuna", "crab", "lobster", "seafood", "anchovy", "sardine")
-
-    val lowerName = name?.lowercase().orEmpty()
-    val lowerIngredients = ingredients?.joinToString(" ")?.lowercase().orEmpty()
-    val lowerTags = tags?.joinToString(" ")?.lowercase().orEmpty()
-
-    return seafoodKeywords.any { keyword ->
-        keyword in lowerName || keyword in lowerIngredients || keyword in lowerTags
-    }
-}
