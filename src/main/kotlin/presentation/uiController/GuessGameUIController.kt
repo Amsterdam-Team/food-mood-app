@@ -7,21 +7,17 @@ import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 import presentation.utils.withRedColor
 import presentation.utils.withYellowColor
-import kotlin.math.abs
 
 class GuessGameUIController(
-    private val guessPreparationTimeUseCase: GuessPreparationTimeUseCase
+    private val guessUseCase: GuessPreparationTimeUseCase
 ) : BaseUIController {
 
     override fun execute() {
         tryToExecute(
             action = {
-                val meal = guessPreparationTimeUseCase.getRandomMeal()
-                val actualTime = meal.preparationTime
-                    ?: throw FoodMoodException.Validation.MissingPreparationTime
-
-                println("Guess the preparation time for: ${meal.name}")
-                runGuessGame(actualTime)
+                val meal = guessUseCase.getGuessMealName()
+                println("Guess the preparation time for: $meal")
+                runGuessGame()
             },
             onSuccess = {
                 println("Game finished!".withGreenColor())
@@ -29,31 +25,33 @@ class GuessGameUIController(
         )
     }
 
-    private tailrec fun runGuessGame(
-        actualTime: Int,
-        remainingAttempts: Int = 3
-    ) {
+    private tailrec fun runGuessGame(remainingAttempts: Int = 3) {
         if (remainingAttempts == 0) {
             throw FoodMoodException.GameException.AttemptsExceeded
         }
 
         val guess = readValidInt("Your guess (Attempts left: $remainingAttempts):")
-
-        val result = guessPreparationTimeUseCase.checkGuess(actualTime, guess)
-        val difference = abs(actualTime - guess)
-
-        if (difference in 1..2) println("You’re very close!".withYellowColor())
+        val result = guessUseCase.checkGuess(guess)
 
         when (result) {
             is GuessPreparationTimeUseCase.ComparisonResult.Correct -> {
-                println("Correct! It takes $actualTime minutes.".withGreenColor())
+                println("Correct! You guessed it.".withGreenColor())
                 return
             }
 
-            is GuessPreparationTimeUseCase.ComparisonResult.TooHigh -> println("Too high!".withRedColor())
-            is GuessPreparationTimeUseCase.ComparisonResult.TooLow -> println("Too low!".withRedColor())
+            is GuessPreparationTimeUseCase.ComparisonResult.Close -> {
+                println("Wrong but you're very close!".withYellowColor())
+            }
+
+            is GuessPreparationTimeUseCase.ComparisonResult.TooHigh -> {
+                println("Too high!".withRedColor())
+            }
+
+            is GuessPreparationTimeUseCase.ComparisonResult.TooLow -> {
+                println("Too low!".withRedColor())
+            }
         }
 
-        runGuessGame(actualTime, remainingAttempts - 1)
+        runGuessGame(remainingAttempts - 1)
     }
 }
