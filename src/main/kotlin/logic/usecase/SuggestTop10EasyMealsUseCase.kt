@@ -9,9 +9,9 @@ class SuggestTop10EasyMealsUseCase(
     fun suggestEasyMeals(): List<Meal> {
         return mealsRepository.getAllMeals().filter(::onSuggestEasyMeals).shuffled().take(10)
     }
-    private fun onSuggestEasyMeals(input:Meal):Boolean{
-        return (input.preparationTime ?: Int.MAX_VALUE) <= 30 &&
-                (input.numberOfIngredients ?: Int.MAX_VALUE) <= 5 &&
-                (input.numberOfSteps ?: Int.MAX_VALUE) <= 6
+    private fun onSuggestEasyMeals(meal: Meal): Boolean {
+        return (meal.preparationTime ?: Int.MAX_VALUE) <= 30 &&
+                (meal.numberOfIngredients ?: Int.MAX_VALUE) <= 5 &&
+                (meal.numberOfSteps ?: Int.MAX_VALUE) <= 6
     }
 }
