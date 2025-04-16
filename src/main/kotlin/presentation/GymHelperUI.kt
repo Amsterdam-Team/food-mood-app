@@ -1,6 +1,7 @@
 package presentation
 
 import logic.usecase.SearchByCaloriesAndProteinUseCase
+import org.example.logic.EmptyDataException
 
 class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCaloriesAndProteinUseCase) {
     fun start() {
@@ -15,7 +16,7 @@ class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCalorie
             println("Here are the meals that match your desired calories and protein:")
             meals.forEach { println("Meal: ${it.name}, Calories: ${it.nutrition?.calories}, Protein: ${it.nutrition?.protein}") }
         } else {
-            println("No meals found that match your desired values.")
+            throw EmptyDataException()
         }
 
 
