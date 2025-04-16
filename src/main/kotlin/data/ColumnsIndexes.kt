@@ -17,7 +17,7 @@ object ColumnsIndexes {
     // NUTRITION ARRAY
     final val CALORIES = 0
     final val TOTAL_FAT = 1
-    final val  SUGAR = 2
+    final val SUGAR = 2
     final val SODIUM = 3
     final val PROTEIN = 4
     final val SATURATED_FAT = 5

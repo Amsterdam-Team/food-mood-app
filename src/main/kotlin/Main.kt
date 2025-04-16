@@ -6,6 +6,7 @@ import org.example.data.CSVFoodFileReader
 import org.example.data.CSVFoodParser
 
 import java.io.File
+import kotlin.reflect.typeOf
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -20,6 +21,13 @@ fun main() {
 
     val csvMealRepo = CSVMealsRepository(csvParser)
     val result = csvMealRepo.getAllMeals()
+
+
+    println( result.filter {
+        it.ingredients != null && it.ingredients.contains("potatoes")
+    }.count()
+    )
+
     println("--> ${result.size}")
 //    println("--> count null description: ${result.count {
 //        it == null
