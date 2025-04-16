@@ -28,9 +28,10 @@ fun main() {
     }.count()
     )
 
-    println("--> ${result.size}")
-//    println("--> count null description: ${result.count {
-//        it == null
-//    }}")
-    println(result[4])
-}
+
+    println("--> ${result[0].tags}")
+
+    }
+
+
+
