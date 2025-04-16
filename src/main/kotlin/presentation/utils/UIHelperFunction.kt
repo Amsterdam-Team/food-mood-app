@@ -1,6 +1,6 @@
-package org.example.presentation.utils
+package presentation.utils
 
-import org.example.logic.exception.FoodMoodException
+import logic.exception.FoodMoodException
 
 
 fun String.withRedColor(): String = "\u001b[31m $this"

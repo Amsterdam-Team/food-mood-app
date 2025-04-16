@@ -1,4 +1,4 @@
-package org.example.presentation.utils
+package presentation.utils
 
 fun <T> tryToExecute(action: () -> T, onSuccess: (result: T) -> Unit) {
     println(loadingMessage())

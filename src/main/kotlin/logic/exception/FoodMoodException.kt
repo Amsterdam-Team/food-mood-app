@@ -1,4 +1,4 @@
-package org.example.logic.exception
+package logic.exception
 
 sealed class FoodMoodException() : Exception() {
     sealed class Validation() : FoodMoodException() {
