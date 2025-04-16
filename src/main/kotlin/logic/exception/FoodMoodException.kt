@@ -5,10 +5,13 @@ sealed class FoodMoodException() : Exception() {
         data object InvalidCalories : Validation()
         data object InvalidProtein : Validation()
         data object EmptyMealName : Validation()
+        data object NoMealsWereFoundForTheGivenDate : Validation()
     }
 
     sealed class ParsingException() : FoodMoodException() {
         data object MissingNutritionField : ParsingException()
+        data object InvalidDateFormatException : ParsingException()
+
     }
 
     sealed class GameException() : FoodMoodException() {
