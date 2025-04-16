@@ -1,24 +1,21 @@
-package org.example.logic.usecase
+package logic.usecase
 
+import logic.MealsRepository
+import logic.models.Meal
+import logic.models.isSeafood
 import org.example.logic.EmptyDataException
-import org.example.logic.MealsRepository
-import org.example.models.Meal
-import org.example.models.isSeafood
+
 
 class GetSeafoodMealsByProteinUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun getSeafoodMealsByProteinUseCase(): List<String> {
+    fun getSeafoodMealsByProteinUseCase(): List<Meal> {
         val allMeals = mealsRepository.getAllMeals()
         val validMeals = getValidMeals(allMeals).ifEmpty { throw EmptyDataException() }
         val seafoodMeals = filterSeafoodMeals(validMeals).ifEmpty { throw EmptyDataException() }
-        val sortedSeafoodMealsByProtein = sortMealsByProtein(seafoodMeals).ifEmpty { throw EmptyDataException() }
 
-        return sortedSeafoodMealsByProtein.mapIndexed { index, meal ->
-            "Rank: ${index + 1} Meal Name: ${meal.name} Protein Amount: ${meal.nutrition?.protein}"
-        }
-
+        return sortMealsByProtein(seafoodMeals).ifEmpty { throw EmptyDataException() }
     }
 
 
