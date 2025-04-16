@@ -1,21 +1,31 @@
 package logic.usecase
 
 import logic.MealsRepository
-import logic.exception.FoodMoodException.Validation.*
+import logic.exception.FoodMoodException.Validation.EmptyDataException
+import logic.exception.FoodMoodException.Validation.MissingPreparationTime
 import logic.models.Meal
-import org.example.presentation.utils.getRandomElementOrNull
+import presentation.utils.getRandomElementOrNull
+import kotlin.math.abs
 
 class GuessPreparationTimeUseCase(private val repository: MealsRepository) {
 
-    fun getRandomMeal(): Meal {
-        return repository.getAllMeals()
+    private val mealToGuess: Meal by lazy {
+        repository.getAllMeals()
             .filter { it.name != null && it.preparationTime != null }
             .getRandomElementOrNull() ?: throw EmptyDataException
     }
 
-    fun checkGuess(actual: Int, guess: Int): ComparisonResult {
+    fun getGuessMealName(): String {
+        return mealToGuess.name ?: throw EmptyDataException
+    }
+
+    fun checkGuess(guess: Int): ComparisonResult {
+        val actual = mealToGuess.preparationTime ?: throw MissingPreparationTime
+        val difference = abs(guess - actual)
+
         return when {
             guess == actual -> ComparisonResult.Correct
+            difference in 1..2 -> ComparisonResult.Close
             guess > actual -> ComparisonResult.TooHigh
             else -> ComparisonResult.TooLow
         }
@@ -25,5 +35,6 @@ class GuessPreparationTimeUseCase(private val repository: MealsRepository) {
         data object Correct : ComparisonResult()
         data object TooHigh : ComparisonResult()
         data object TooLow : ComparisonResult()
+        data object Close : ComparisonResult()
     }
 }
