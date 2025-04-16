@@ -4,6 +4,7 @@ import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import org.example.logic.search.SearchUsingKMP
+import org.example.presentation.utils.getRandomElements
 
 class ExploreOtherCountriesUseCase (
     private val searchUsingKMP: SearchUsingKMP,
@@ -14,13 +15,13 @@ class ExploreOtherCountriesUseCase (
         val allMeals = mealsRepository.getAllMeals()
 
         val mealsRelatedToCountry = allMeals.filter {
-            searchUsingKMP.validateTheInputInExistData(countryName, it.tags) != "Not Found"
+            searchUsingKMP.validateTheInputInExistData(countryName, it.tags) != null
         }
 
         if (mealsRelatedToCountry.isEmpty())
             throw FoodMoodException.Validation.InvalidCountryName
 
-        return mealsRelatedToCountry.shuffled().take(20)
+        return mealsRelatedToCountry.getRandomElements(20)
     }
 
 }
