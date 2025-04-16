@@ -2,15 +2,19 @@ package presentation.utils
 
 import logic.GetItalianMealsForLargeGroupsUseCase
 import logic.models.Meal
+import presentation.uiController.BaseUIController
 
 class ItalianMealUI(
     private val getItalianMealsForLargeGroupsUseCase: GetItalianMealsForLargeGroupsUseCase
-) {
-    fun start(){
-        tryToExecute(action = getItalianMealsForLargeGroupsUseCase::getItalianMealsForLargeGroups, onSuccess = ::outputItalianMeals)
+) : BaseUIController {
+    override fun execute() {
+        tryToExecute(
+            action = getItalianMealsForLargeGroupsUseCase::getItalianMealsForLargeGroups,
+            onSuccess = ::outputItalianMeals
+        )
     }
 
-    private fun outputItalianMeals(meals: List<Meal>){
+    private fun outputItalianMeals(meals: List<Meal>) {
         println("Your Italian Meals for large groups\n".withGreenColor())
         meals.forEach { meal ->
             println("Meal Name: ${meal.name},   Description: ${meal.description}".withGreenColor())
