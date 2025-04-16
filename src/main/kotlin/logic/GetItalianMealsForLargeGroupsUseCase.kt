@@ -1,6 +1,6 @@
-package org.example.logic
+package logic
 
-import org.example.models.Meal
+import logic.models.Meal
 
 class GetItalianMealsForLargeGroupsUseCase(
     private val mealsRepository: MealsRepository
@@ -9,7 +9,11 @@ class GetItalianMealsForLargeGroupsUseCase(
     fun getItalianMealsForLargeGroups(): List<Meal>{
         return mealsRepository.getAllMeals()
             .filter(::isHighQualityData)
-            .filter { (it.tags!!.contains("italian") || it.name!!.contains("italian", ignoreCase = true) || it.description!!.contains("italy")) && it.tags!!.contains("for-large-groups") }
+            .filter(::isItalianMealForLargeGroups)
+    }
+
+    private fun isItalianMealForLargeGroups(meal: Meal): Boolean{
+        return (meal.tags?.contains("italian")?:false || meal.name?.contains("italian", ignoreCase = true)?:false) &&  meal.tags?.contains("for-large-groups")?: false
     }
 
     private fun isHighQualityData(meal: Meal): Boolean{

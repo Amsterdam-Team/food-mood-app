@@ -16,6 +16,13 @@ class MainMenuHandler(
                     println("See You Later 🙂")
                     break
                 }
+                3 -> {
+
+                }
+
+                15 -> {
+
+                }
 
                 null -> println("❌ Invalid input. Please enter a valid number.")
 
