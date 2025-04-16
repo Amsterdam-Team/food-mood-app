@@ -14,6 +14,14 @@ sealed class FoodMoodException() : Exception() {
     sealed class GameException() : FoodMoodException() {
         data object AttemptsExceeded : GameException()
         data object WrongGuessFormat : GameException()
+
+        // // Ingredient Game Exceptions
+        data object InvalidUserInput : GameException()
+        data object MealDataCorrupted : GameException()
+        data object IngredientOptionsNotEnough : GameException()
+        data object NoMealsAvailable : GameException()
+        data object GameLoad : GameException()
+
     }
 
     sealed class EmptyDataException : FoodMoodException()
