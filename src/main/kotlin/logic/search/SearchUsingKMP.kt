@@ -3,33 +3,30 @@ package org.example.logic.search
 
 class SearchUsingKMP {
 
-    fun validateTheInputInExistData(input:String,searchList:List<String>?): String{
-        if (searchList != null) {
-            for(listItem in searchList){
-                if (kmpSearch(listItem,input)) return listItem
-            }
+    fun validateTheInputInExistData(input: String, searchList: List<String>?): String?{
+        return searchList?.firstOrNull { listItem ->
+            kmpSearch(listItem, input.lowercase())
         }
-         return "Not Found"
     }
 
-    fun kmpSearch(text: String, pattern: String): Boolean {
+    private fun kmpSearch(text: String, pattern: String): Boolean {
         val lps = computeLPS(pattern)
 
-        var i = 0 // text index
-        var j = 0 // pattern index
+        var textIndex = 0
+        var pattenIndex = 0
 
-        while (i < text.length) {
-            if (text[i] == pattern[j]) {
-                i++; j++
+        while (textIndex < text.length) {
+            if (text[textIndex] == pattern[pattenIndex]) {
+                textIndex++; pattenIndex++
             }
 
-            if (j == pattern.length) {
-               return true
-            } else if (i < text.length && text[i] != pattern[j]) {
-                if (j != 0) {
-                    j = lps[j - 1]
+            if (pattenIndex == pattern.length) {
+                return true
+            } else if (textIndex < text.length && text[textIndex] != pattern[pattenIndex]) {
+                if (pattenIndex != 0) {
+                    pattenIndex = lps[pattenIndex - 1]
                 } else {
-                    i++
+                    textIndex++
                 }
             }
         }
@@ -37,22 +34,22 @@ class SearchUsingKMP {
     }
 
 
-    fun computeLPS(pattern: String): IntArray {
+    private fun computeLPS(pattern: String): IntArray {
         val lps = IntArray(pattern.length)
-        var length = 0
-        var i = 1
+        var currentPrefixSuffixLength = 0
+        var patternIndex = 1
 
-        while (i < pattern.length) {
-            if (pattern[i] == pattern[length]) {
-                length++
-                lps[i] = length
-                i++
+        while (patternIndex < pattern.length) {
+            if (pattern[patternIndex] == pattern[currentPrefixSuffixLength]) {
+                currentPrefixSuffixLength++
+                lps[patternIndex] = currentPrefixSuffixLength
+                patternIndex++
             } else {
-                if (length != 0) {
-                    length = lps[length - 1]
+                if (currentPrefixSuffixLength != 0) {
+                    currentPrefixSuffixLength = lps[currentPrefixSuffixLength - 1]
                 } else {
-                    lps[i] = 0
-                    i++
+                    lps[patternIndex] = 0
+                    patternIndex++
                 }
             }
         }
