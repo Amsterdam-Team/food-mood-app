@@ -5,7 +5,8 @@ import org.example.logic.ketoMealHelper.GetRandomKetoMealsUseCase
 import presentation.uiController.BaseUIController
 import presentation.utils.tryToExecute
 
-class KetoMealHelperUI(private val getKetoFriendlyMealsUseCase: GetRandomKetoMealsUseCase) : BaseUIController {
+class KetoMealHelperUIController(private val getKetoFriendlyMealsUseCase: GetRandomKetoMealsUseCase) :
+    BaseUIController {
 
     private lateinit var suggestedMeal: Meal
     private var ketoMeals = getKetoFriendlyMealsUseCase.getKetoMeals()
