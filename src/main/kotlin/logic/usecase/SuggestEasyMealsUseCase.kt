@@ -11,6 +11,8 @@ class SuggestEasyMealsUseCase(
         return mealsRepository.getAllMeals().filter(::onSuggestEasyMeals).shuffled().take(10)
     }
     private fun onSuggestEasyMeals(input:Meal):Boolean{
-      return  input.preparationTime!! <= 30 && input.numberOfIngredients !!<= 5 && input.numberOfSteps!! <= 6
+        return (input.preparationTime ?: Int.MAX_VALUE) <= 30 &&
+                (input.numberOfIngredients ?: Int.MAX_VALUE) <= 5 &&
+                (input.numberOfSteps ?: Int.MAX_VALUE) <= 6
     }
 }
