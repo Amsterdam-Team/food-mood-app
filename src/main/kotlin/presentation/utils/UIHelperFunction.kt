@@ -3,8 +3,8 @@ package presentation.utils
 import logic.exception.FoodMoodException
 
 
-fun String.withRedColor(): String = "\u001b[31m $this"
-fun String.withGreenColor(): String = "\u001B[32m $this"
+fun String.withRedColor(): String = "\u001b[31m $this\u001B[0m"
+fun String.withGreenColor(): String = "\u001B[32m $this\u001B[0m"
 fun String.withYellowColor(): String = "\u001B[33m$this\u001B[0m"
 
 
