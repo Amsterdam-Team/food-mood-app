@@ -3,9 +3,8 @@ package logic.usecase
 import logic.MealsRepository
 import logic.models.Meal
 
-class SuggestEasyMealsUseCase(
+class SuggestTop10EasyMealsUseCase(
     private val mealsRepository: MealsRepository
-
 ) {
     fun suggestEasyMeals(): List<Meal> {
         return mealsRepository.getAllMeals().filter(::onSuggestEasyMeals).shuffled().take(10)
