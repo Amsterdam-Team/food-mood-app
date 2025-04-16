@@ -12,7 +12,7 @@ class CSVMealsRepository(
 
     init {
         allMeals = try {
-            val meals = csvFoodParser.parseCsvFile2()
+            val meals = csvFoodParser.parseCsvFile()
              meals
         } catch (e: Exception) {
             throw e
