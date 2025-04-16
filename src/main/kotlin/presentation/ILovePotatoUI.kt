@@ -1,6 +1,7 @@
-package org.example.presentation
-
-import org.example.logic.SearchByIngredientsUseCase
+package presentation
+import logic.exception.FoodMoodException
+import logic.usecase.SearchByIngredientsUseCase
+import org.example.logic.EmptyDataException
 
 class ILovePotatoUI(private val searchByIngredientsUseCase: SearchByIngredientsUseCase) {
     fun start() {
@@ -9,7 +10,7 @@ class ILovePotatoUI(private val searchByIngredientsUseCase: SearchByIngredientsU
         val potatoMeals = searchByIngredientsUseCase.getMealByIngredient("potatoes")
 
         if (potatoMeals.isEmpty()) {
-            println("No meals found that have potatoes in their ingredients.")
+            throw EmptyDataException()
             return
         }
 

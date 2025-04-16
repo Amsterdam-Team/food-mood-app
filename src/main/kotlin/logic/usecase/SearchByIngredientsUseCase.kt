@@ -1,6 +1,8 @@
-package org.example.logic
+package logic.usecase
 
-import org.example.models.Meal
+import logic.MealsRepository
+import logic.exception.FoodMoodException
+import logic.models.Meal
 
 class SearchByIngredientsUseCase (private val mealsRepository: MealsRepository) {
     fun getMealByIngredient(ingredient:String): List<Meal>{
