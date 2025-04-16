@@ -1,7 +1,7 @@
 package presentation
 
+import logic.ketoMealHelper.GetRandomKetoMealsUseCase
 import logic.models.Meal
-import org.example.logic.ketoMealHelper.GetRandomKetoMealsUseCase
 import presentation.uiController.BaseUIController
 import presentation.utils.tryToExecute
 
