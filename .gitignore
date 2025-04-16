@@ -5,7 +5,7 @@ build/
 !**/src/test/**/build/
 food.csv
 ### IntelliJ IDEA ###
-food.csv
+parsing-test.kt
 .idea/modules.xml
 .idea/misc.xml
 .idea/jarRepositories.xml
