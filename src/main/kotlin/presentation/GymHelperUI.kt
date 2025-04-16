@@ -1,6 +1,7 @@
 package presentation
 
 import logic.usecase.SearchByCaloriesAndProteinUseCase
+import presentation.utils.readValidInt
 
 class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCaloriesAndProteinUseCase) {
     fun start() {
@@ -16,17 +17,6 @@ class GymHelperUI(private val searchByCaloriesAndProteinUseCase: SearchByCalorie
             meals.forEach { println("Meal: ${it.name}, Calories: ${it.nutrition?.calories}, Protein: ${it.nutrition?.protein}") }
         } else {
             println("No meals found that match your desired values.")
-        }
-
-
-    }
-
-    fun readValidInt(prompt: String): Int {
-        while (true) {
-            println(prompt)
-            val input = readlnOrNull()?.toIntOrNull()
-            if (input != null) return input
-            println("Invalid input. Please enter a valid number.")
         }
     }
 }
