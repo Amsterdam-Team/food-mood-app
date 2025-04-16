@@ -1,8 +1,7 @@
-package org.example.logic.usecase
+package logic
 
+import logic.models.Meal
 import org.example.logic.EmptyDataException
-import org.example.logic.MealsRepository
-import org.example.models.Meal
 
 class GetFastHealthyMealsUseCase(
     private val mealsRepository: MealsRepository
@@ -10,9 +9,12 @@ class GetFastHealthyMealsUseCase(
 
     fun getFastHealthMeals(): List<Meal> {
         val allMeals = mealsRepository.getAllMeals()
-        val validMeals = getValidMeals(allMeals).ifEmpty { throw EmptyDataException() }
+        val validMeals = getValidMeals(allMeals)
+        if (validMeals.isEmpty()) throw EmptyDataException()
+        val healthyMeals = filterHealthyMeals(validMeals)
+        if (healthyMeals.isEmpty()) throw EmptyDataException()
 
-        return filterHealthyMeals(validMeals).ifEmpty { throw EmptyDataException() }
+        return healthyMeals
     }
 
     private fun getValidMeals(meals: List<Meal>): List<Meal> {
