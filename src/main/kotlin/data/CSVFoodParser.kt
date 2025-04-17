@@ -31,11 +31,11 @@ class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
                 contributorId = row["contributor_id"]?.takeIf { it.isNotBlank() },
                 submittedDate =submittedDateModel,
                 preparationTime = row["minutes"]?.takeIf { it.isNotBlank() }.toString().toIntOrNull(),
-                tags = if(row["tags"] == null ) null else parseQuotedStringIntoList(row["tags"]?.takeIf { it.isNotBlank() }) ,
+                tags = parseQuotedStringIntoList(row["tags"]?.takeIf { it.isNotBlank() }) ,
                 nutrition = parseNutrition(row["nutrition"]?.takeIf { it.isNotBlank() }),
-                steps = if(row["steps"] == null ) null else parseQuotedStringIntoList(row["steps"]?.takeIf { it.isNotBlank() }),
+                steps = parseQuotedStringIntoList(row["steps"]?.takeIf { it.isNotBlank() }),
                 numberOfSteps = row["n_steps"].toString().toIntOrNull(),
-                ingredients = if(row["ingredients"] == null ) null else parseQuotedStringIntoList(row["ingredients"]?.takeIf { it.isNotBlank() }),
+                ingredients = parseQuotedStringIntoList(row["ingredients"]?.takeIf { it.isNotBlank() }),
                 numberOfIngredients = row["n_ingredients"].toString().toIntOrNull(),
             )
         }
