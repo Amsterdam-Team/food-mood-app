@@ -3,7 +3,7 @@ package logic.usecase
 import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
-import org.example.logic.search.SearchUsingKMP
+import logic.search.SearchUsingKMP
 import org.example.presentation.utils.getRandomElements
 
 class ExploreOtherCountriesUseCase (
@@ -19,9 +19,8 @@ class ExploreOtherCountriesUseCase (
         }
 
         if (mealsRelatedToCountry.isEmpty())
-            throw FoodMoodException.Validation.InvalidCountryName
+            throw FoodMoodException.Validation.NotFoundCountryName
 
         return mealsRelatedToCountry.getRandomElements(20)
     }
-
 }
