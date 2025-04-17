@@ -1,11 +1,22 @@
 package presentation
 
 import data.CSVMealsRepository
+import org.example.data.CSVFoodFileReader
+import org.example.data.CSVFoodParser
 import java.io.File
 
 fun main() {
-//    val meals = CSVMealsRepository(File("food.csv")).getAllMeals()
 
+    val file = File("food.csv")
+
+
+
+    val csvFoodFileReader = CSVFoodFileReader(file)
+    val csvParser = CSVFoodParser(csvFoodFileReader)
+
+    val csvMealRepo = CSVMealsRepository(csvParser)
+    val meals = csvMealRepo.getAllMeals()
+    println(meals[0])
     /**
      ********* Executes a given use case safely and handles success and failure cases. *********
      * @sample

@@ -22,7 +22,6 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.GameException.WrongGuessFormat -> "Invalid input format. Please enter a valid number for preparation time."
 
         is FoodMoodException -> "Something went wrong with your request. Please try again."
-
         else -> "An unexpected error occurred. Please try again later."
     }
 

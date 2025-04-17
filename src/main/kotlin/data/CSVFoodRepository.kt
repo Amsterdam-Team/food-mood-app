@@ -11,12 +11,8 @@ class CSVMealsRepository(
     private var allMeals: List<Meal> = listOf()
 
     init {
-        allMeals = try {
-            val meals = csvFoodParser.parseCsvFile()
-             meals
-        } catch (e: Exception) {
-            throw e
-        }
+        val meals = csvFoodParser.parseCsvFile()
+        allMeals = meals
     }
     override fun getAllMeals(): List<Meal> {
         return allMeals
