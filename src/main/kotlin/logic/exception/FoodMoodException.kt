@@ -6,6 +6,11 @@ sealed class FoodMoodException() : Exception() {
         data object InvalidProtein : Validation()
         data object EmptyMealName : Validation()
         data object NoMealsWereFoundForTheGivenDate : Validation()
+        data object NotFoundMealName: Validation()
+        data object NotFoundCountryName: Validation()
+
+
+
     }
 
     sealed class ParsingException() : FoodMoodException() {
