@@ -21,5 +21,5 @@ sealed class FoodMoodException() : Exception() {
         data object WrongGuessFormat : GameException()
     }
 
-    sealed class EmptyDataException : FoodMoodException()
+    data object EmptyDataException : FoodMoodException()
 }

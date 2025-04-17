@@ -1,10 +1,11 @@
-package presentation.utils
+package presentation.uiController
 
 import logic.GetItalianMealsForLargeGroupsUseCase
 import logic.models.Meal
-import presentation.uiController.BaseUIController
+import presentation.utils.tryToExecute
+import presentation.utils.withGreenColor
 
-class ItalianMealUI(
+class ItalianMealUIController(
     private val getItalianMealsForLargeGroupsUseCase: GetItalianMealsForLargeGroupsUseCase
 ) : BaseUIController {
     override fun execute() {

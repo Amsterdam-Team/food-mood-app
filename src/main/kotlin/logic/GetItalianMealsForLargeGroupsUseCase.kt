@@ -1,5 +1,6 @@
 package logic
 
+import logic.exception.FoodMoodException
 import logic.models.Meal
 
 class GetItalianMealsForLargeGroupsUseCase(
@@ -7,9 +8,14 @@ class GetItalianMealsForLargeGroupsUseCase(
 ) {
 
     fun getItalianMealsForLargeGroups(): List<Meal>{
-        return mealsRepository.getAllMeals()
+        val italianMeals = mealsRepository.getAllMeals()
             .filter(::isHighQualityData)
             .filter(::isItalianMealForLargeGroups)
+        return if (italianMeals.isNotEmpty()){
+            italianMeals
+        } else{
+            throw FoodMoodException.EmptyDataException
+        }
     }
 
     private fun isItalianMealForLargeGroups(meal: Meal): Boolean{
