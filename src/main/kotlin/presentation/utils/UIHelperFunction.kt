@@ -23,6 +23,8 @@ fun getErrorMessageByException(exception: Exception): String {
 
         is FoodMoodException -> "Something went wrong with your request. Please try again."
 
+        is FoodMoodException.Validation.NotFoundMealName -> "This meal name not found , Please Try again and make sure of entering correct name "
+
         else -> "An unexpected error occurred. Please try again later."
     }
 

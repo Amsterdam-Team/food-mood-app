@@ -1,9 +1,9 @@
-package org.example.logic.search
+package logic.search
 
 
-class SearchUsingKMP {
+class SearchUsingKMP : SearchStrategy {
 
-    fun validateTheInputInExistData(input: String, searchList: List<String>?): String?{
+    override fun validateTheInputInExistData(input: String, searchList:List<String>?): String? {
         return searchList?.firstOrNull { listItem ->
             kmpSearch(listItem, input.lowercase())
         }
@@ -55,5 +55,4 @@ class SearchUsingKMP {
         }
         return lps
     }
-
 }
