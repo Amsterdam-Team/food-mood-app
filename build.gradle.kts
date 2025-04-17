@@ -12,6 +12,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("io.insert-koin:koin-core:4.0.2")
+    implementation(kotlin("stdlib"))
+
 }
 
 tasks.test {
