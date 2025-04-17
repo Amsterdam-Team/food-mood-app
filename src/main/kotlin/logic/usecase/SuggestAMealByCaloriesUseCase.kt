@@ -13,10 +13,18 @@ class SuggestAMealByCaloriesUseCase(private val mealsRepository: MealsRepository
             }
         }
 
-    fun chooseMealRandomly():Meal {
+    fun getMealRandomly():Meal {
         return filteredMealByCalories.ifEmpty {
             throw FoodMoodException.Validation.EmptyDataException }
             .getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+    }
+
+    fun getAnotherRandomMeal(currentMeal:Meal):Meal{
+        val remainingMeals = filteredMealByCalories.filter { nextMeal ->
+            nextMeal != currentMeal
+        }
+        return remainingMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+
     }
 
 }
