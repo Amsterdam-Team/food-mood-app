@@ -3,16 +3,22 @@ package presentation.uiController
 import logic.models.Meal
 import logic.sweetsWithNoEggs.GetRandomOneSweetMealWithoutEggsUseCase
 import presentation.utils.tryToExecute
-import presentation.utils.withGreenColor
 
 class SweetMealsUIController(
     private val getRandomOneSweetMealWithoutEggsUseCase: GetRandomOneSweetMealWithoutEggsUseCase
 ) : BaseUIController {
 
-    fun startSuggestShowSweetMealWithoutEggesUI() {
+    override fun execute() {
+        tryToExecute(
+            action = getRandomOneSweetMealWithoutEggsUseCase::getRandomOneSweetMealWithoutEggs,
+            onSuccess = ::onGetSuggestShowSweetMealWithoutEggsUISuccess
+        )
+    }
+
+    fun onGetSuggestShowSweetMealWithoutEggsUISuccess(currentSweetMeal: Meal) {
         println("Hi, Welcome to your Sweet Helper!")
 
-        var currentSweetMeal = getRandomOneSweetMealWithoutEggsUseCase.getRandomOneSweetMealWithoutEggs()
+        //  var currentSweetMeal = getRandomOneSweetMealWithoutEggsUseCase.getRandomOneSweetMealWithoutEggs()
         while (true) {
             println("Here is a random sweet meal without eggs: ${currentSweetMeal.name} , And description: ${currentSweetMeal.description}")
             println("You Are like it? y/n")
@@ -22,14 +28,8 @@ class SweetMealsUIController(
                     showMeal(currentSweetMeal)
                     break
                 }
-
                 "n" -> {
-                    val nextMeal = getRandomOneSweetMealWithoutEggsUseCase.getAnotherRandomMeal(currentSweetMeal)
-                    if (nextMeal == null) {
-                        println("No more sweet meals available without eggs")
-                        break
-                    }
-                    currentSweetMeal = nextMeal
+                    execute()
                 }
 
                 else -> {
@@ -44,14 +44,5 @@ class SweetMealsUIController(
         println(firstSweetMeal)
     }
 
-    override fun execute() {
-        tryToExecute(
-            action = {
-                startSuggestShowSweetMealWithoutEggesUI()
-            },
-            onSuccess = {
-                println("Success! Enjoy your sweet meal!".withGreenColor())
-            }
-        )
-    }
+
 }
