@@ -8,7 +8,7 @@ import presentation.utils.withGreenColor
 class FastHealthyMealsUIController(private val fastHealthyMealsUseCase: GetFastHealthyMealsUseCase) : BaseUIController {
     override fun execute() {
         tryToExecute(
-            action = { fastHealthyMealsUseCase.getFastHealthMeals() },
+            action = fastHealthyMealsUseCase::getFastHealthMeals,
             onSuccess = ::onGetFastHealthyMealsSuccess
         )
     }
