@@ -1,30 +1,36 @@
 package logic.usecase
 
+import data.MealSuggestionDataStore
 import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import org.example.presentation.utils.getRandomElementOrNull
 
-class SuggestAMealByCaloriesUseCase(private val mealsRepository: MealsRepository) {
-        private val inputCalories = 700.0
-        private val filteredMealByCalories:List<Meal> by lazy {
-            mealsRepository.getAllMeals().filter {
-                (it.nutrition?.calories ?: 0.0) > inputCalories
-            }
-        }
+class SuggestAMealByCaloriesUseCase(
+    private val mealsRepository: MealsRepository,
+    private val mealSuggestionDataStore: MealSuggestionDataStore
+) {
 
-    fun getMealRandomly():Meal {
-        return filteredMealByCalories.ifEmpty {
-            throw FoodMoodException.Validation.EmptyDataException }
-            .getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+    private val filteredMealByCalories: List<Meal> by lazy {
+        mealsRepository.getAllMeals().filter {
+            (it.nutrition?.calories ?: DEFAULT_CALORIES_VALUE) > INPUT_CALORIES
+        }
     }
 
-    fun getAnotherRandomMeal(currentMeal:Meal):Meal{
-        val remainingMeals = filteredMealByCalories.filter { nextMeal ->
-            nextMeal != currentMeal
+    fun getMealRandomly(): Meal {
+        val validMeals = filteredMealByCalories.ifEmpty { throw FoodMoodException.Validation.EmptyDataException }
+        val randomMeal = validMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+        if (mealSuggestionDataStore.checkSeenSuggestedMeal(randomMeal)) {
+            getMealRandomly()
+        } else {
+            mealSuggestionDataStore.addSeenSuggestedMeal(randomMeal)
         }
-        return remainingMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
-
+        return randomMeal
     }
 
+    private companion object {
+        const val INPUT_CALORIES = 700.0
+        const val DEFAULT_CALORIES_VALUE = 0.0
+    }
 }
+
