@@ -5,8 +5,8 @@ sealed class FoodMoodException() : Exception() {
         data object InvalidCalories : Validation()
         data object InvalidProtein : Validation()
         data object EmptyMealName : Validation()
-        data object InvalidMealName: Validation()
-        data object InvalidCountryName: Validation()
+        data object NotFoundMealName: Validation()
+        data object NotFoundCountryName: Validation()
 
 
 
