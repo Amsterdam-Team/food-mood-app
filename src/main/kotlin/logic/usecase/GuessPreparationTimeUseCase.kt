@@ -15,7 +15,7 @@ class GuessPreparationTimeUseCase(private val repository: MealsRepository) {
             .getRandomElementOrNull() ?: throw EmptyDataException
     }
 
-    fun getGuessMealName(): String {
+    fun getCurrentMeal(): String {
         return mealToGuess.name ?: throw EmptyDataException
     }
 
