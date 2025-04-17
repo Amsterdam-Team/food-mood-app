@@ -8,21 +8,24 @@ import presentation.utils.withGreenColor
 import presentation.utils.withRedColor
 import presentation.utils.withYellowColor
 
-class GuessGameUIController(
-    private val guessUseCase: GuessPreparationTimeUseCase
-) : BaseUIController {
+class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCase) :
+    BaseUIController {
 
     override fun execute() {
         tryToExecute(
-            action = {
-                val meal = guessUseCase.getGuessMealName()
-                println("Guess the preparation time for: $meal")
-                runGuessGame()
-            },
-            onSuccess = {
-                println("Game finished!".withGreenColor())
-            }
+            action = { ::onStartGuessing },
+            onSuccess = { ::onSuccessfulGuess }
         )
+    }
+
+    private fun onStartGuessing() {
+        val mealName = guessUseCase.getCurrentMeal()
+        println("🎯 Guess the preparation time for: $mealName")
+        runGuessGame()
+    }
+
+    private fun onSuccessfulGuess() {
+        println("Correct! You guessed it.".withGreenColor())
     }
 
     private tailrec fun runGuessGame(remainingAttempts: Int = 3) {
@@ -34,10 +37,7 @@ class GuessGameUIController(
         val result = guessUseCase.checkGuess(guess)
 
         when (result) {
-            is GuessPreparationTimeUseCase.ComparisonResult.Correct -> {
-                println("Correct! You guessed it.".withGreenColor())
-                return
-            }
+            is GuessPreparationTimeUseCase.ComparisonResult.Correct -> return
 
             is GuessPreparationTimeUseCase.ComparisonResult.Close -> {
                 println("Wrong but you're very close!".withYellowColor())
