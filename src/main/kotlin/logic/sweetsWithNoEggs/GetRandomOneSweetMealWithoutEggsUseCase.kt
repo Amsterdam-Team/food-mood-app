@@ -19,15 +19,13 @@ class GetRandomOneSweetMealWithoutEggsUseCase(
             }
     }
 
-    fun getRandomOneSweetMealWithoutEggs(): Meal {
-        return sweetMeals.ifEmpty {
-            throw MealNotFounded
-        }
-            .getRandomElementOrNull() ?: throw MealNotFounded
-    }
+    private val remainingMeals = sweetMeals.toMutableList()
 
-    fun getAnotherRandomMeal(meal: Meal?): Meal? {
-        val remainingMeals = sweetMeals.filter { it != meal }
-        return remainingMeals.getRandomElementOrNull()
+
+    fun getRandomOneSweetMealWithoutEggs(): Meal {
+        if (remainingMeals.isEmpty()) throw MealNotFounded
+        val meal = remainingMeals.getRandomElementOrNull()?:throw MealNotFounded
+        remainingMeals.remove(meal)
+        return meal
     }
 }
