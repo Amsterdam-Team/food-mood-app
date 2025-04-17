@@ -1,20 +1,26 @@
 package presentation
 
+import data.MealsRepositoryImpl
 import logic.usecase.GetSeafoodMealsByProteinUseCase
+import logic.usecase.GuessPreparationTimeUseCase
+import presentation.uiController.GuessGameUIController
 import presentation.uiController.MainMenuHandler
 import presentation.uiController.SeafoodMealsSuccessUIController
-import data.MealsRepositoryImpl
 import java.io.File
 
 fun main() {
-    val meals = CSVMealsRepository(File("food.csv")).getAllMeals()
+    val meals = MealsRepositoryImpl(File("food.csv")).getAllMeals()
     val csvFile = File("food.csv")
-    val csvMealsRepository = CSVMealsRepository(csvFile)
+    val mealsRepositoryImpl = MealsRepositoryImpl(csvFile)
 
-    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(csvMealsRepository)
-    val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
+    val getGuessPreparationTimeUseCase = GuessPreparationTimeUseCase(mealsRepositoryImpl)
+    val guessGameUIController = GuessGameUIController(getGuessPreparationTimeUseCase)
+    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(mealsRepositoryImpl)
+    val seafoodMealsSuccessUIController =
+        SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
     val handlers = mapOf(
+        5 to guessGameUIController,
         14 to seafoodMealsSuccessUIController
     )
 
