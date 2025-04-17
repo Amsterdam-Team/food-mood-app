@@ -14,18 +14,13 @@ class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCas
     override fun execute() {
         tryToExecute(
             action = { ::onStartGuessing },
-            onSuccess = { ::onSuccessfulGuess }
+            onSuccess = { ::runGuessGame }
         )
     }
 
     private fun onStartGuessing() {
         val mealName = guessUseCase.getCurrentMeal()
         println("🎯 Guess the preparation time for: $mealName")
-        runGuessGame()
-    }
-
-    private fun onSuccessfulGuess() {
-        println("Correct! You guessed it.".withGreenColor())
     }
 
     private tailrec fun runGuessGame(remainingAttempts: Int = 3) {
@@ -37,7 +32,10 @@ class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCas
         val result = guessUseCase.checkGuess(guess)
 
         when (result) {
-            is GuessPreparationTimeUseCase.ComparisonResult.Correct -> return
+            is GuessPreparationTimeUseCase.ComparisonResult.Correct -> {
+                println("Correct! You guessed it.".withGreenColor())
+                return
+            }
 
             is GuessPreparationTimeUseCase.ComparisonResult.Close -> {
                 println("Wrong but you're very close!".withYellowColor())
