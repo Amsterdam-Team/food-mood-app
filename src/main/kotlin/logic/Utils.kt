@@ -1,7 +1,7 @@
-package presentation.utils
+package logic
 
+import kotlinx.datetime.LocalDate
 import logic.exception.FoodMoodException
-import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
 object Utils {
