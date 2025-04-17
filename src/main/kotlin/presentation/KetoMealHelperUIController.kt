@@ -1,19 +1,19 @@
 package presentation
 
 import logic.exception.FoodMoodException
-import logic.ketoMealHelper.GetKetoMealsUseCase
 import logic.models.Meal
+import logic.usecase.GetKetoMealsUseCase
 import org.example.presentation.utils.getRandomElementOrNull
 import presentation.uiController.BaseUIController
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 import presentation.utils.withRedColor
 
-class KetoMealHelperUIController(private val getKetoFriendlyMealsUseCase: GetKetoMealsUseCase) :
+class KetoMealHelperUIController(getKetoFriendlyMealsUseCase: GetKetoMealsUseCase) :
     BaseUIController {
 
     private lateinit var suggestedMeal: Meal
-    private val seenMeals: MutableList<Meal> = mutableListOf()
+    private var seenMeals: MutableList<Meal> = mutableListOf()
     private val ketoMeals = getKetoFriendlyMealsUseCase.getKetoMeals()
     private var input: String = ""
 
@@ -32,6 +32,7 @@ class KetoMealHelperUIController(private val getKetoFriendlyMealsUseCase: GetKet
         }
         if (suggestedMeal in seenMeals) {
             execute()
+
         } else {
             println("Suggested Meal: ${meal.name}")
             seenMeals.add(suggestedMeal)
@@ -39,6 +40,11 @@ class KetoMealHelperUIController(private val getKetoFriendlyMealsUseCase: GetKet
 
         }
 
+    }
+
+    fun welcomeMessage() {
+        seenMeals.clear()
+        println("Welcome To Keto Meal Helper")
     }
 
     private fun handleUserInput() {

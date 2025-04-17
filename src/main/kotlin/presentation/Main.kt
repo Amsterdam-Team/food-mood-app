@@ -1,6 +1,7 @@
 package presentation
 
 import data.CSVMealsRepository
+import logic.usecase.GetKetoMealsUseCase
 import logic.usecase.GetSeafoodMealsByProteinUseCase
 import presentation.uiController.MainMenuHandler
 import presentation.uiController.SeafoodMealsSuccessUIController
@@ -35,8 +36,12 @@ fun main() {
     val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(csvMealsRepository)
     val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
+    val getKetoMealsUseCase = GetKetoMealsUseCase(csvMealsRepository)
+
+
     val handlers = mapOf(
-        14 to seafoodMealsSuccessUIController
+        14 to seafoodMealsSuccessUIController,
+        7 to KetoMealHelperUIController(getKetoMealsUseCase)
     )
 
     MainMenuHandler(handlers).start()

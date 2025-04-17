@@ -1,4 +1,4 @@
-package logic.ketoMealHelper
+package logic.usecase
 
 import logic.MealsRepository
 import logic.models.Meal
