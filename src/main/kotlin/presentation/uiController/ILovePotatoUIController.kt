@@ -1,10 +1,10 @@
 package presentation.uiController
 
 import logic.usecase.SearchByIngredientsUseCase
-import org.example.presentation.utils.getRandomElements
+import presentation.utils.getRandomElements
 import presentation.utils.tryToExecute
 
-class ILovePotatoUIController(private val searchByIngredientsUseCase: SearchByIngredientsUseCase): BaseUIController {
+class ILovePotatoUIController(private val searchByIngredientsUseCase: SearchByIngredientsUseCase) : BaseUIController {
 
     override fun execute() {
         tryToExecute(
