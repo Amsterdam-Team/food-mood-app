@@ -5,10 +5,8 @@ import logic.GetFastHealthyMealsUseCase
 import logic.usecase.GetKetoMealsUseCase
 import logic.usecase.GetSeafoodMealsByProteinUseCase
 import logic.usecase.GuessPreparationTimeUseCase
-import presentation.uiController.FastHealthyMealsUIController
-import presentation.uiController.GuessGameUIController
-import presentation.uiController.MainMenuHandler
-import presentation.uiController.SeafoodMealsSuccessUIController
+import logic.usecase.SuggestTop10EasyMealsUseCase
+import presentation.uiController.*
 import java.io.File
 
 fun main() {
@@ -26,10 +24,12 @@ fun main() {
     val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
     val getKetoMealsUseCase = GetKetoMealsUseCase(mealsRepositoryImpl)
+    val suggestTop10EasyMealsUIController = SuggestTop10EasyMealsUI(SuggestTop10EasyMealsUseCase(mealsRepositoryImpl))
 
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
+        4 to suggestTop10EasyMealsUIController,
         5 to guessGameUIController,
         7 to KetoMealHelperUIController(getKetoMealsUseCase),
         14 to seafoodMealsSuccessUIController
