@@ -20,6 +20,9 @@ class SuggestAMealByCaloriesUseCase(
     fun getMealRandomly(): Meal {
         val validMeals = filteredMealByCalories.ifEmpty { throw FoodMoodException.Validation.EmptyDataException }
         val randomMeal = validMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+        if (validMeals.size == mealSuggestionDataStore.checkTotalSeenSuggestedMeals()) {
+            throw FoodMoodException.Validation.NoMoreSuggestion
+        }
         if (mealSuggestionDataStore.checkSeenSuggestedMeal(randomMeal)) {
             getMealRandomly()
         } else {

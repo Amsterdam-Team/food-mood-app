@@ -4,7 +4,7 @@ import logic.models.Meal
 import logic.usecase.SuggestAMealByCaloriesUseCase
 import presentation.utils.tryToExecute
 
-class suggestMealByCaloriesUIController(private val suggestAMealByCaloriesUseCase: SuggestAMealByCaloriesUseCase) :
+class SuggestMealByCaloriesUIController(private val suggestAMealByCaloriesUseCase: SuggestAMealByCaloriesUseCase) :
     BaseUIController {
     override fun execute() {
         tryToExecute(
@@ -23,11 +23,14 @@ class suggestMealByCaloriesUIController(private val suggestAMealByCaloriesUseCas
             "Do you like it and want more details about it?" +
                     " \n enter Y to get details or N to get another meal"
         )
-        when (readlnOrNull()?.lowercase()) {
-            "y" -> println(meal)
-            "n " -> execute()
-            else -> println("please enter y or n")
-        }
+        do {
+           val userChoice = readlnOrNull()?.lowercase()
+            when (userChoice) {
+                "y" -> println(meal)
+                "n" -> execute()
+                else -> println("Please enter y or n")
+            }
+        } while (userChoice != "y" && userChoice != "n")
     }
 }
 

@@ -8,4 +8,6 @@ class MealSuggestionDataStore {
     fun addSeenSuggestedMeal(meal: Meal) = list.add(meal)
 
     fun checkSeenSuggestedMeal(meal: Meal) = list.contains(meal)
+
+    fun checkTotalSeenSuggestedMeals() = list.size
 }
