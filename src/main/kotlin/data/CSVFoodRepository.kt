@@ -2,14 +2,19 @@ package data
 
 import logic.models.Meal
 import logic.MealsRepository
-import java.io.File
+import org.example.data.CSVFoodParser
 
-class CSVMealsRepository(private val csvFile: File) : MealsRepository {
-    override fun getAllMeals(): List<Meal> {
-        return emptyList()
+class CSVMealsRepository(
+    private val csvFoodParser: CSVFoodParser
+
+): MealsRepository {
+    private var allMeals: List<Meal> = listOf()
+
+    init {
+        val meals = csvFoodParser.parseCsvFile()
+        allMeals = meals
     }
-
-    private fun parseOneLine(line: String) {
-
+    override fun getAllMeals(): List<Meal> {
+        return allMeals
     }
 }

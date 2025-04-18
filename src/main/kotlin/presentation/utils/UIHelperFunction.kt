@@ -27,6 +27,7 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.Validation.NotFoundCountryName -> "This country name not found , Please Try again and make sure of entering correct name "
 
 
+
         else -> "An unexpected error occurred. Please try again later."
     }
 
