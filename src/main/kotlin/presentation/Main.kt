@@ -24,7 +24,7 @@ fun main() {
     val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
     val getKetoMealsUseCase = GetKetoMealsUseCase(mealsRepositoryImpl)
-    val suggestTop10EasyMealsUIController = SuggestTop10EasyMealsUI(SuggestTop10EasyMealsUseCase(mealsRepositoryImpl))
+    val suggestTop10EasyMealsUIController = SuggestTop10EasyMealsUIController(SuggestTop10EasyMealsUseCase(mealsRepositoryImpl))
 
 
     val handlers = mapOf(

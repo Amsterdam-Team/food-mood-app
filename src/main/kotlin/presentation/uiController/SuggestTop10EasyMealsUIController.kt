@@ -5,7 +5,7 @@ import logic.usecase.SuggestTop10EasyMealsUseCase
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 
-class SuggestTop10EasyMealsUI(
+class SuggestTop10EasyMealsUIController(
     private val suggestTop10EasyMealsUseCase: SuggestTop10EasyMealsUseCase
 ) : BaseUIController {
     override fun execute() {
