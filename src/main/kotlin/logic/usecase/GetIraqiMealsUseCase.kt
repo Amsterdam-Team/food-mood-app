@@ -1,5 +1,6 @@
-package logic
+package logic.usecase
 
+import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
 
