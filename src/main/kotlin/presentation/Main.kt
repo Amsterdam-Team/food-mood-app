@@ -47,6 +47,12 @@ fun main() {
     val suggestTop10EasyMealsUIController =
         SuggestTop10EasyMealsUIController(SuggestTop10EasyMealsUseCase(mealsRepositoryImpl))
 
+    val searchByIngredientsUseCase = SearchByIngredientsUseCase(mealsRepositoryImpl)
+    val iLovePotatoUIController = ILovePotatoUIController(searchByIngredientsUseCase)
+
+    val searchByCaloriesAndProteinUseCase = SearchByCaloriesAndProteinUseCase(mealsRepositoryImpl)
+    val gymHelperUIController = GymHelperUIController(searchByCaloriesAndProteinUseCase)
+
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
         3 to iraqiMealUIController,
@@ -60,9 +66,10 @@ fun main() {
         13 to suggestMealByCalorieUI,
         14 to seafoodMealsSuccessUIController,
         15 to italianMealUIController,
+        12 to iLovePotatoUIController,
+        9 to gymHelperUIController
 
-
-        )
+    )
 
     MainMenuHandler(handlers).start()
 
