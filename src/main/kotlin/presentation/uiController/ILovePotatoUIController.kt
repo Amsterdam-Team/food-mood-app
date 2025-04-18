@@ -4,7 +4,7 @@ import logic.usecase.SearchByIngredientsUseCase
 import presentation.utils.getRandomElements
 import presentation.utils.tryToExecute
 
-class ILovePotatoUIController(private val searchByIngredientsUseCase: SearchByIngredientsUseCase): BaseUIController {
+class ILovePotatoUIController(private val searchByIngredientsUseCase: SearchByIngredientsUseCase) : BaseUIController {
 
     override fun execute() {
         tryToExecute(

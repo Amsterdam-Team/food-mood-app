@@ -6,7 +6,7 @@ import logic.models.Meal
 import logic.search.SearchUsingKMP
 import presentation.utils.getRandomElements
 
-class ExploreOtherCountriesUseCase (
+class ExploreOtherCountriesUseCase(
     private val searchUsingKMP: SearchUsingKMP,
     private val mealsRepository: MealsRepository
 ) {
