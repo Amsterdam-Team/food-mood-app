@@ -70,5 +70,6 @@ class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
             const val SATURATED_FAT = 5
             const val CARBOHYDRATE = 6
 
+
     }
 }
