@@ -1,9 +1,7 @@
 package data
-
+import CSVFoodParser
 import logic.MealsRepository
 import logic.models.Meal
-
-import org.example.data.CSVFoodParser
 
 
 class MealsRepositoryImpl(private val csvFoodParser: CSVFoodParser) : MealsRepository {

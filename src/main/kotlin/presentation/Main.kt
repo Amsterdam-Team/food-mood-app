@@ -1,10 +1,10 @@
 package presentation
 
+import CSVFoodParser
 import data.MealsRepositoryImpl
 import logic.usecase.GetSeafoodMealsByProteinUseCase
 import logic.usecase.GuessPreparationTimeUseCase
 import org.example.data.CSVFoodFileReader
-import org.example.data.CSVFoodParser
 import presentation.uiController.GuessGameUIController
 import presentation.uiController.MainMenuHandler
 import presentation.uiController.SeafoodMealsSuccessUIController
