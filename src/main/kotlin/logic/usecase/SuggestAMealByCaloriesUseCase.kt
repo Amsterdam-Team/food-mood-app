@@ -4,7 +4,7 @@ import data.MealSuggestionDataStore
 import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
-import org.example.presentation.utils.getRandomElementOrNull
+import presentation.utils.getRandomElementOrNull
 
 class SuggestAMealByCaloriesUseCase(
     private val mealsRepository: MealsRepository,
