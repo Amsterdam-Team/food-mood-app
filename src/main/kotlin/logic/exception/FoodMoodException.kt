@@ -9,6 +9,7 @@ sealed class FoodMoodException() : Exception() {
         data object NotFoundCountryName : Validation()
         data object EmptyDataException : Validation()
         data object MissingPreparationTime : Validation()
+        data object MealNotFounded : Validation()
     }
 
     sealed class ParsingException() : FoodMoodException() {
@@ -19,4 +20,6 @@ sealed class FoodMoodException() : Exception() {
         data object AttemptsExceeded : GameException()
         data object WrongGuessFormat : GameException()
     }
+
+    sealed class EmptyDataException : FoodMoodException()
 }

@@ -3,8 +3,8 @@ package presentation
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import logic.usecase.GetKetoMealsUseCase
-import org.example.presentation.utils.getRandomElementOrNull
 import presentation.uiController.BaseUIController
+import presentation.utils.getRandomElementOrNull
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 import presentation.utils.withRedColor
@@ -19,7 +19,7 @@ class KetoMealHelperUIController(getKetoFriendlyMealsUseCase: GetKetoMealsUseCas
 
     override fun execute() {
         tryToExecute(
-            action = { ketoMeals.getRandomElementOrNull() ?: throw FoodMoodException.EmptyDataException },
+            action = { ketoMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException },
             onSuccess = { onGetRandomMealSuccess(it) }
         )
     }
