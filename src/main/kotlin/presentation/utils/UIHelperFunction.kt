@@ -24,10 +24,10 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.GameException.AttemptsExceeded -> "You’ve used all your attempts. Better luck next time!"
         is FoodMoodException.GameException.WrongGuessFormat -> "Invalid input format. Please enter a valid number for preparation time."
 
-        is FoodMoodException -> "Something went wrong with your request. Please try again."
-
         is FoodMoodException.Validation.NotFoundMealName -> "This meal name not found , Please Try again and make sure of entering correct name "
         is FoodMoodException.Validation.NotFoundCountryName -> "This country name not found , Please Try again and make sure of entering correct name "
+
+        is FoodMoodException -> "Something went wrong with your request. Please try again."
 
 
         else -> "An unexpected error occurred. Please try again later."

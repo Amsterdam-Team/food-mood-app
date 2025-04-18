@@ -1,8 +1,8 @@
-package presentation
+package presentation.uiController
+
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import logic.usecase.GetKetoMealsUseCase
-import presentation.uiController.BaseUIController
 import presentation.utils.getRandomElementOrNull
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
@@ -41,10 +41,6 @@ class KetoMealHelperUIController(getKetoFriendlyMealsUseCase: GetKetoMealsUseCas
 
     }
 
-    fun welcomeMessage() {
-        seenMeals.clear()
-        println("Welcome To Keto Meal Helper")
-    }
 
     private fun handleUserInput() {
         println("press Y if you like it , or N if you do not like it")

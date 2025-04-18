@@ -3,11 +3,11 @@ package presentation.uiController
 import logic.models.Meal
 import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
 import presentation.utils.tryToExecute
+import presentation.utils.withGreenColor
 
 class SweetMealsUIController(
     private val getRandomOneSweetMealWithoutEggsUseCase: GetRandomOneSweetMealWithoutEggsUseCase
 ) : BaseUIController {
-
     override fun execute() {
         tryToExecute(
             action = getRandomOneSweetMealWithoutEggsUseCase::getRandomOneSweetMealWithoutEggs,
@@ -16,33 +16,24 @@ class SweetMealsUIController(
     }
 
     fun onGetSuggestShowSweetMealWithoutEggsUISuccess(currentSweetMeal: Meal) {
-        println("Hi, Welcome to your Sweet Helper!")
+        println("Here is a random sweet meal without eggs: ${currentSweetMeal.name} , And description: ${currentSweetMeal.description}")
+        readFromUser(currentSweetMeal)
+    }
+    private fun readFromUser(currentSweetMeal: Meal) {
+        println("You Are like it? y/n")
+        when (readlnOrNull()?.lowercase()) {
+            "y" -> {
+                println("Great! Enjoy your meal!")
+                println(currentSweetMeal.toString().withGreenColor())
+            }
+            "n" -> {
+                execute()
+            }
 
-        //  var currentSweetMeal = getRandomOneSweetMealWithoutEggsUseCase.getRandomOneSweetMealWithoutEggs()
-        while (true) {
-            println("Here is a random sweet meal without eggs: ${currentSweetMeal.name} , And description: ${currentSweetMeal.description}")
-            println("You Are like it? y/n")
-            when (readlnOrNull()?.lowercase()) {
-                "y" -> {
-                    println("Great! Enjoy your meal!")
-                    showMeal(currentSweetMeal)
-                    break
-                }
-                "n" -> {
-                    execute()
-                }
-
-                else -> {
-                    println("Please enter 'y' or 'n'")
-                }
+            else -> {
+                println("Please enter 'y' or 'n'")
+                readFromUser(currentSweetMeal)
             }
         }
-
     }
-
-    private fun showMeal(firstSweetMeal: Meal) {
-        println(firstSweetMeal)
-    }
-
-
 }
