@@ -1,10 +1,16 @@
 package presentation
 
 import data.CSVMealsRepository
+import logic.GetFastHealthyMealsUseCase
+import logic.usecase.GetSeafoodMealsByProteinUseCase
+import presentation.uiController.FastHealthyMealsUIController
+import presentation.uiController.MainMenuHandler
+import presentation.uiController.SeafoodMealsSuccessUIController
 import java.io.File
 
 fun main() {
     val meals = CSVMealsRepository(File("food.csv")).getAllMeals()
+    val csvMealsRepository = CSVMealsRepository(File("food.csv"))
 
     /**
      ********* Executes a given use case safely and handles success and failure cases. *********
@@ -38,5 +44,6 @@ fun main() {
         14 to seafoodMealsSuccessUIController
     )
 
+    MainMenuHandler(handlers).start()
 
 }
