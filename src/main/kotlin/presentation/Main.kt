@@ -1,43 +1,29 @@
 package presentation
 
-import CSVFoodParser
-import data.MealsRepositoryImpl
-import logic.GetFastHealthyMealsUseCase
-import logic.usecase.*
+import dependencyinjection.appModule
+import dependencyinjection.useCaseModule
 import logic.usecase.GetKetoMealsUseCase
 import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
-import logic.usecase.GetSeafoodMealsByProteinUseCase
-import logic.usecase.GuessPreparationTimeUseCase
-import org.example.data.CSVFoodFileReader
 import presentation.uiController.*
-import java.io.File
-import logic.usecase.SuggestTop10EasyMealsUseCase
+import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.getKoin
 
 fun main() {
-    val csvFile = File("food.csv")
-    val mealsRepositoryImpl = MealsRepositoryImpl(CSVFoodParser(CSVFoodFileReader(csvFile)))
+    startKoin {
+        modules(
+            appModule, useCaseModule
+        )
+    }
+    val getKetoMealsUseCase: GetKetoMealsUseCase = getKoin().get()
+    val getRandomOneSweetMealWithoutEggsUseCase: GetRandomOneSweetMealWithoutEggsUseCase = getKoin().get()
 
-
-
-
-    val getGuessPreparationTimeUseCase = GuessPreparationTimeUseCase(mealsRepositoryImpl)
-    val guessGameUIController = GuessGameUIController(getGuessPreparationTimeUseCase)
-
-    val fastHealthyMealsUseCase = GetFastHealthyMealsUseCase(mealsRepositoryImpl)
-    val fastHealthyMealsUiController = FastHealthyMealsUIController(fastHealthyMealsUseCase)
-
-    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(mealsRepositoryImpl)
-    val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
-
-    val getKetoMealsUseCase = GetKetoMealsUseCase(mealsRepositoryImpl)
-    val getRandomOneSweetMealWithoutEggsUseCase = GetRandomOneSweetMealWithoutEggsUseCase(mealsRepositoryImpl)
-
-    val getIraqiMealsUseCase = GetIraqiMealsUseCase(mealsRepositoryImpl)
-    val iraqiMealUIController = IraqiMealUIController(getIraqiMealsUseCase)
-
-    val getItalianMealsForLargeGroupsUseCase = GetItalianMealsForLargeGroupsUseCase(mealsRepositoryImpl)
-    val italianMealUIController = ItalianMealUIController(getItalianMealsForLargeGroupsUseCase)
-    val suggestTop10EasyMealsUIController = SuggestTop10EasyMealsUIController(SuggestTop10EasyMealsUseCase(mealsRepositoryImpl))
+    val guessGameUIController: GuessGameUIController = getKoin().get()
+    val fastHealthyMealsUiController: FastHealthyMealsUIController = getKoin().get()
+    val seafoodMealsSuccessUIController: SeafoodMealsSuccessUIController = getKoin().get()
+    val iraqiMealUIController: IraqiMealUIController = getKoin().get()
+    val italianMealUIController: ItalianMealUIController = getKoin().get()
+    val suggestTop10EasyMealsUIController: SuggestTop10EasyMealsUIController =
+        getKoin().get()
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
@@ -49,7 +35,7 @@ fun main() {
         14 to seafoodMealsSuccessUIController,
         15 to italianMealUIController,
 
-    )
+        )
 
     MainMenuHandler(handlers).start()
 
