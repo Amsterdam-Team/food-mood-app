@@ -2,13 +2,8 @@ package presentation
 
 import data.MealsRepositoryImpl
 import logic.GetFastHealthyMealsUseCase
-import logic.usecase.GetKetoMealsUseCase
-import logic.usecase.GetSeafoodMealsByProteinUseCase
-import logic.usecase.GuessPreparationTimeUseCase
-import presentation.uiController.FastHealthyMealsUIController
-import presentation.uiController.GuessGameUIController
-import presentation.uiController.MainMenuHandler
-import presentation.uiController.SeafoodMealsSuccessUIController
+import logic.usecase.*
+import presentation.uiController.*
 import java.io.File
 
 fun main() {
@@ -27,12 +22,19 @@ fun main() {
 
     val getKetoMealsUseCase = GetKetoMealsUseCase(mealsRepositoryImpl)
 
+    val getIraqiMealsUseCase = GetIraqiMealsUseCase(mealsRepositoryImpl)
+    val iraqiMealUIController = IraqiMealUIController(getIraqiMealsUseCase)
+
+    val getItalianMealsForLargeGroupsUseCase = GetItalianMealsForLargeGroupsUseCase(mealsRepositoryImpl)
+    val italianMealUIController = ItalianMealUIController(getItalianMealsForLargeGroupsUseCase)
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
         5 to guessGameUIController,
+        3 to iraqiMealUIController,
         7 to KetoMealHelperUIController(getKetoMealsUseCase),
-        14 to seafoodMealsSuccessUIController
+        14 to seafoodMealsSuccessUIController,
+        15 to italianMealUIController
     )
 
     MainMenuHandler(handlers).start()
