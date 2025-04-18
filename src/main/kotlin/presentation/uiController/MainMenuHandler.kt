@@ -1,5 +1,7 @@
 package presentation.uiController
 
+import presentation.KetoMealHelperUIController
+
 class MainMenuHandler(
     private val featureControllers: Map<Int, BaseUIController>
 ) {
@@ -10,7 +12,14 @@ class MainMenuHandler(
             val input = readlnOrNull()
 
             when (val choice = input?.toIntOrNull()) {
+                7 -> {
+                    val controller = featureControllers[choice] as KetoMealHelperUIController
+                    controller.welcomeMessage()
+                    controller.execute()
+                }
+
                 in featureControllers.keys -> featureControllers[choice]?.execute()
+
 
                 0 -> {
                     println("See You Later 🙂")
