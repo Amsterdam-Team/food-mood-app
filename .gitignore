@@ -3,9 +3,9 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
-### IntelliJ IDEA ###
 food.csv
+### IntelliJ IDEA ###
+parsing-test.kt
 .idea/modules.xml
 .idea/misc.xml
 .idea/jarRepositories.xml

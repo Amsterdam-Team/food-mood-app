@@ -1,6 +1,6 @@
 package presentation.uiController
 
-import presentation.KetoMealHelperUIController
+import presentation.utils.withRedColor
 
 class MainMenuHandler(
     private val featureControllers: Map<Int, BaseUIController>
@@ -12,23 +12,18 @@ class MainMenuHandler(
             val input = readlnOrNull()
 
             when (val choice = input?.toIntOrNull()) {
-                7 -> {
-                    val controller = featureControllers[choice] as KetoMealHelperUIController
-                    controller.welcomeMessage()
-                    controller.execute()
-                }
-
                 in featureControllers.keys -> featureControllers[choice]?.execute()
-
 
                 0 -> {
                     println("See You Later 🙂")
                     break
                 }
 
-                null -> println("❌ Invalid input. Please enter a valid number.")
 
-                else -> println("❌ Unknown feature number.")
+                null -> println("❌ Invalid input. Please enter a valid number.".withRedColor())
+
+
+                else -> println("❌ Unknown feature number.".withRedColor())
             }
         }
     }
