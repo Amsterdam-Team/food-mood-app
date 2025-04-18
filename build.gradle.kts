@@ -14,6 +14,7 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation("io.insert-koin:koin-core:4.0.2")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+    implementation("com.jsoizo:kotlin-csv-jvm:1.10.0")
 
 }
 

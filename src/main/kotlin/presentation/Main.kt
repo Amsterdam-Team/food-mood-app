@@ -1,10 +1,12 @@
 package presentation
 
+import CSVFoodParser
 import data.MealsRepositoryImpl
 import logic.GetFastHealthyMealsUseCase
 import logic.usecase.GetKetoMealsUseCase
 import logic.usecase.GetSeafoodMealsByProteinUseCase
 import logic.usecase.GuessPreparationTimeUseCase
+import org.example.data.CSVFoodFileReader
 import presentation.uiController.FastHealthyMealsUIController
 import presentation.uiController.GuessGameUIController
 import presentation.uiController.MainMenuHandler
@@ -12,9 +14,11 @@ import presentation.uiController.SeafoodMealsSuccessUIController
 import java.io.File
 
 fun main() {
-    val meals = MealsRepositoryImpl(File("food.csv")).getAllMeals()
     val csvFile = File("food.csv")
-    val mealsRepositoryImpl = MealsRepositoryImpl(csvFile)
+    val mealsRepositoryImpl = MealsRepositoryImpl(CSVFoodParser(CSVFoodFileReader(csvFile)))
+
+
+
 
     val getGuessPreparationTimeUseCase = GuessPreparationTimeUseCase(mealsRepositoryImpl)
     val guessGameUIController = GuessGameUIController(getGuessPreparationTimeUseCase)
