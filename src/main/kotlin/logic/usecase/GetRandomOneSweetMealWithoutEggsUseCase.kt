@@ -1,4 +1,4 @@
-package logic.sweetsWithNoEggs
+package logic.usecase
 
 import logic.MealsRepository
 import logic.exception.FoodMoodException.Validation.*
