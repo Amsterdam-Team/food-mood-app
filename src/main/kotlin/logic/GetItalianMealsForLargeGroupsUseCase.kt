@@ -14,7 +14,7 @@ class GetItalianMealsForLargeGroupsUseCase(
         return if (italianMeals.isNotEmpty()){
             italianMeals
         } else{
-            throw FoodMoodException.EmptyDataException
+            throw FoodMoodException.Validation.EmptyDataException
         }
     }
 

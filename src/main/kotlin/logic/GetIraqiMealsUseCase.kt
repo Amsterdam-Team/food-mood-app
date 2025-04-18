@@ -13,7 +13,7 @@ class GetIraqiMealsUseCase(
         if (meals.isNotEmpty()){
             return meals
         } else{
-            throw FoodMoodException.EmptyDataException
+            throw FoodMoodException.Validation.EmptyDataException
         }
     }
 
