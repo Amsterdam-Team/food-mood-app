@@ -4,8 +4,6 @@ import dependencyinjection.appModule
 import dependencyinjection.useCaseModule
 import logic.usecase.GetKetoMealsUseCase
 import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
-import logic.usecase.SearchByCaloriesAndProteinUseCase
-import logic.usecase.SearchByIngredientsUseCase
 import presentation.uiController.*
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
