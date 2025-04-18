@@ -1,6 +1,6 @@
 package presentation.uiController
 
-import logic.GetItalianMealsForLargeGroupsUseCase
+import logic.usecase.GetItalianMealsForLargeGroupsUseCase
 import logic.models.Meal
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
