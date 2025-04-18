@@ -3,7 +3,7 @@ package logic.sweetsWithNoEggs
 import logic.MealsRepository
 import logic.exception.FoodMoodException.Validation.*
 import logic.models.Meal
-import org.example.presentation.utils.getRandomElementOrNull
+import presentation.utils.getRandomElementOrNull
 
 class GetRandomOneSweetMealWithoutEggsUseCase(
     private val mealsRepository: MealsRepository
