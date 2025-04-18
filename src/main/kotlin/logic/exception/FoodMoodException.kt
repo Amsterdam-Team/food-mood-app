@@ -7,7 +7,7 @@ sealed class FoodMoodException() : Exception() {
         data object EmptyMealName : Validation()
         data object NotFoundMealName: Validation()
         data object NotFoundCountryName: Validation()
-
+        data object EmptyDataException : Validation()
 
 
     }
@@ -29,5 +29,4 @@ sealed class FoodMoodException() : Exception() {
 
     }
 
-    sealed class EmptyDataException : FoodMoodException()
 }

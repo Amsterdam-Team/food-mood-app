@@ -3,8 +3,9 @@ package logic.usecase
 import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
-import org.example.presentation.utils.getRandomElementOrNull
-import org.example.presentation.utils.getRandomElements
+import presentation.utils.getRandomElementOrNull
+import presentation.utils.getRandomElements
+
 
 data class IngredientGameResult(
     val mealName: String,

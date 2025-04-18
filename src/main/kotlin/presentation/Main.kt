@@ -3,8 +3,11 @@ package presentation
 import data.CSVMealsRepository
 
 import logic.usecase.GetSeafoodMealsByProteinUseCase
+import logic.usecase.ingredient_game_usecases.StartIngredientGameUseCase
+import logic.usecase.ingredient_game_usecases.SubmitAnswerUseCase
 import org.example.data.CSVFoodFileReader
 import org.example.data.CSVFoodParser
+import presentation.uiController.IngredientGameUIController
 import presentation.uiController.MainMenuHandler
 import presentation.uiController.SeafoodMealsSuccessUIController
 import java.io.File
@@ -46,9 +49,12 @@ fun main() {
 
     val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(csvMealRepo)
     val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
-
+    val startGameUC = StartIngredientGameUseCase(csvMealRepo)
+    val submitAnswerUC = SubmitAnswerUseCase()
+    val ingredientGameUiController = IngredientGameUIController(startGameUC,submitAnswerUC)
     val handlers = mapOf(
-        14 to seafoodMealsSuccessUIController
+        14 to seafoodMealsSuccessUIController,
+        11 to ingredientGameUiController
     )
 
     MainMenuHandler(handlers).start()

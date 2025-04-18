@@ -4,7 +4,7 @@ import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import logic.search.SearchUsingKMP
-import org.example.presentation.utils.getRandomElements
+import presentation.utils.getRandomElements
 
 class ExploreOtherCountriesUseCase (
     private val searchUsingKMP: SearchUsingKMP,
