@@ -1,5 +1,5 @@
 package logic.models
-//
+
 data class IngredientGameState(
     val usedMealIds: MutableSet<String> = mutableSetOf(),
     var score: Int = 0,

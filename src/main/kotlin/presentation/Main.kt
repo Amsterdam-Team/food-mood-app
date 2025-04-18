@@ -1,42 +1,74 @@
 package presentation
 
-import data.CSVMealsRepository
-import logic.usecase.GetSeafoodMealsByProteinUseCase
-import presentation.uiController.MainMenuHandler
-import presentation.uiController.SeafoodMealsSuccessUIController
+import CSVFoodParser
+import data.CSVFoodFileReader
+import data.MealSuggestionDataStore
+import data.MealsRepositoryImpl
+import logic.GetFastHealthyMealsUseCase
+import logic.search.SearchUsingKMP
+import logic.usecase.*
+import presentation.uiController.*
 import java.io.File
 
 fun main() {
-    val meals = CSVMealsRepository(File("food.csv")).getAllMeals()
+    val searchUsingKMP = SearchUsingKMP()
+    val mealSuggestionDataStore = MealSuggestionDataStore()
     val csvFile = File("food.csv")
-    val csvMealsRepository = CSVMealsRepository(csvFile)
+    val mealsRepositoryImpl = MealsRepositoryImpl(CSVFoodParser(CSVFoodFileReader(csvFile)))
 
-    /**
-     ********* Executes a given use case safely and handles success and failure cases. *********
-     * @sample
-     *  tryToExecute(
-     *      action = { GetFastHealthyMealsUseCase(CSVMealsRepository(File("food.csv"))).getFastHealthMeals() },
-     *      onSuccess = ::onGetFastHealthyMealsSuccess
-     *  )
-     *
-     * fun onGetFastHealthyMealsSuccess(meals: List<Meal>) {
-     *     meals.forEach { println(it.toString().withGreenColor()) }
-     * }
-     *
-     * @param action The block of use case function to execute.
-     *               This should be where your core logic goes, like fetching or processing data.
-     * @param onSuccess A callback invoked if the action completes successfully.
-     *                  Use this to handle the result (e.g., print output).
-     *
-     * @see getErrorMessageByException Used internally to convert known exceptions into readable error messages.
-     *      Make sure to add your specific custom exceptions inside `getErrorMessageByException` to handle them properly.
-     */
 
-    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(csvMealsRepository)
+    val getGuessPreparationTimeUseCase = GuessPreparationTimeUseCase(mealsRepositoryImpl)
+    val guessGameUIController = GuessGameUIController(getGuessPreparationTimeUseCase)
+
+    val fastHealthyMealsUseCase = GetFastHealthyMealsUseCase(mealsRepositoryImpl)
+    val fastHealthyMealsUiController = FastHealthyMealsUIController(fastHealthyMealsUseCase)
+
+    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(mealsRepositoryImpl)
     val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
+    val getKetoMealsUseCase = GetKetoMealsUseCase(mealsRepositoryImpl)
+    val getRandomOneSweetMealWithoutEggsUseCase = GetRandomOneSweetMealWithoutEggsUseCase(mealsRepositoryImpl)
+
+    val suggestAMealByCaloriesUseCase = SuggestAMealByCaloriesUseCase(mealsRepositoryImpl, mealSuggestionDataStore)
+    val suggestMealByCalorieUI = SuggestMealByCaloriesUIController(suggestAMealByCaloriesUseCase)
+
+    val getMealsByAddedDateUseCase = GetMealsByAddedDateUseCase(mealsRepositoryImpl)
+    val mealsByDateUIController = MealsByDateUIController(getMealsByAddedDateUseCase)
+    val getMealByNamesUseCase = GetMealByNameUseCase(searchUsingKMP, mealsRepositoryImpl)
+    val getMealByNameUIController = GetMealByNameUIController(getMealByNamesUseCase)
+
+    val exploreOtherCountriesUseCase = ExploreOtherCountriesUseCase(searchUsingKMP, mealsRepositoryImpl)
+    val exploreOtherCountriesUIController = ExploreOtherCountriesUIController(exploreOtherCountriesUseCase)
+    val getIraqiMealsUseCase = GetIraqiMealsUseCase(mealsRepositoryImpl)
+    val iraqiMealUIController = IraqiMealUIController(getIraqiMealsUseCase)
+
+    val getItalianMealsForLargeGroupsUseCase = GetItalianMealsForLargeGroupsUseCase(mealsRepositoryImpl)
+    val italianMealUIController = ItalianMealUIController(getItalianMealsForLargeGroupsUseCase)
+    val suggestTop10EasyMealsUIController =
+        SuggestTop10EasyMealsUIController(SuggestTop10EasyMealsUseCase(mealsRepositoryImpl))
+
+    val searchByIngredientsUseCase = SearchByIngredientsUseCase(mealsRepositoryImpl)
+    val iLovePotatoUIController = ILovePotatoUIController(searchByIngredientsUseCase)
+
+    val searchByCaloriesAndProteinUseCase = SearchByCaloriesAndProteinUseCase(mealsRepositoryImpl)
+    val gymHelperUIController = GymHelperUIController(searchByCaloriesAndProteinUseCase)
+
     val handlers = mapOf(
-        14 to seafoodMealsSuccessUIController
+        1 to fastHealthyMealsUiController,
+        3 to iraqiMealUIController,
+        4 to suggestTop10EasyMealsUIController,
+        2 to getMealByNameUIController,
+        5 to guessGameUIController,
+        6 to SweetMealsUIController(getRandomOneSweetMealWithoutEggsUseCase),
+        7 to KetoMealHelperUIController(getKetoMealsUseCase),
+        8 to mealsByDateUIController,
+        10 to exploreOtherCountriesUIController,
+        13 to suggestMealByCalorieUI,
+        14 to seafoodMealsSuccessUIController,
+        15 to italianMealUIController,
+        12 to iLovePotatoUIController,
+        9 to gymHelperUIController
+
     )
 
     MainMenuHandler(handlers).start()

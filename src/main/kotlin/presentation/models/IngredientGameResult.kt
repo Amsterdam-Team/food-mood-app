@@ -1,5 +1,5 @@
 package presentation.models
-//
+
 sealed class IngredientGameResult {
     data class GameInProgress(
         val mealName: String,

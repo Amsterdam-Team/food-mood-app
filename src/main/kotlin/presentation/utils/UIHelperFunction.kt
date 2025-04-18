@@ -10,24 +10,25 @@ fun String.withYellowColor(): String = "\u001B[33m$this\u001B[0m"
 
 fun getErrorMessageByException(exception: Exception): String {
     val message = when (exception) {
-        is FoodMoodException.EmptyDataException -> "No meals found that match your criteria."
+        is FoodMoodException.Validation.EmptyDataException -> "No meals found that match your criteria."
+        is FoodMoodException.Validation.NoMoreSuggestion -> "No more meals contain over than 700 calorie"
 
         is FoodMoodException.Validation.InvalidCalories -> "Calories value is invalid. Please enter a number within the acceptable range."
         is FoodMoodException.Validation.InvalidProtein -> "Protein value is invalid. Please check the input."
         is FoodMoodException.Validation.EmptyMealName -> "Meal name cannot be empty. Please provide a valid name."
+        is FoodMoodException.Validation.MissingPreparationTime -> "This meal has no preparation time. Unable to start the game."
+        is FoodMoodException.Validation.MealNotFounded -> "No meals found that match your criteria."
 
         is FoodMoodException.ParsingException.MissingNutritionField -> "Nutrition information is incomplete or missing. Please check the data source."
 
         is FoodMoodException.GameException.AttemptsExceeded -> "You’ve used all your attempts. Better luck next time!"
         is FoodMoodException.GameException.WrongGuessFormat -> "Invalid input format. Please enter a valid number for preparation time."
-        is FoodMoodException.GameException.InvalidUserInput -> " Invalid input. Please select a number from the options."
-        is FoodMoodException.GameException.MealDataCorrupted -> " The meal data is incomplete or corrupted"
-        is FoodMoodException.GameException.IngredientOptionsNotEnough -> "Not enough ingredients to play."
-        is FoodMoodException.GameException.NoMealsAvailable -> "No meals available at the moment"
-        is FoodMoodException.GameException.GameLoad -> "An error occurred while loading the game."
-        is FoodMoodException -> "Something went wrong with your request. Please try again."
 
         is FoodMoodException.Validation.NotFoundMealName -> "This meal name not found , Please Try again and make sure of entering correct name "
+        is FoodMoodException.Validation.NotFoundCountryName -> "This country name not found , Please Try again and make sure of entering correct name "
+
+        is FoodMoodException -> "Something went wrong with your request. Please try again."
+
 
         else -> "An unexpected error occurred. Please try again later."
     }

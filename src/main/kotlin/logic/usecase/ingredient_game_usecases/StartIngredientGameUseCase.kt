@@ -7,7 +7,7 @@ import logic.models.IngredientGameState
 import logic.models.Meal
 import presentation.utils.getRandomElementOrNull
 import presentation.utils.getRandomElements
-//
+
 class StartIngredientGameUseCase(private val mealsRepository: MealsRepository) {
 
     fun startGame(gameState: IngredientGameState): IngredientGameResult {
