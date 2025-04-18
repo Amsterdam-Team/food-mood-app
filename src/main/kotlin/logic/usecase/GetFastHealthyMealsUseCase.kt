@@ -1,7 +1,7 @@
 package logic
 
+import logic.exception.FoodMoodException
 import logic.models.Meal
-import org.example.logic.EmptyDataException
 
 class GetFastHealthyMealsUseCase(
     private val mealsRepository: MealsRepository
@@ -10,9 +10,9 @@ class GetFastHealthyMealsUseCase(
     fun getFastHealthMeals(): List<Meal> {
         val allMeals = mealsRepository.getAllMeals()
         val validMeals = getValidMeals(allMeals)
-        if (validMeals.isEmpty()) throw EmptyDataException()
+        if (validMeals.isEmpty()) throw FoodMoodException.Validation.EmptyDataException
         val healthyMeals = filterHealthyMeals(validMeals)
-        if (healthyMeals.isEmpty()) throw EmptyDataException()
+        if (healthyMeals.isEmpty()) throw FoodMoodException.Validation.EmptyDataException
 
         return healthyMeals
     }
