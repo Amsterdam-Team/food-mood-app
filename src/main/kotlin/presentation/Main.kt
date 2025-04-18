@@ -44,10 +44,10 @@ fun main() {
         8 to mealsByDateUIController,
         9 to gymHelperUIController,
         10 to exploreOtherCountriesUIController,
+        12 to iLovePotatoUIController,
         13 to suggestMealByCalorieUI,
         14 to seafoodMealsSuccessUIController,
         15 to italianMealUIController,
-        12 to iLovePotatoUIController,
         )
 
 
