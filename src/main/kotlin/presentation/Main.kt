@@ -3,6 +3,7 @@ package presentation
 import CSVFoodParser
 import data.MealsRepositoryImpl
 import logic.GetFastHealthyMealsUseCase
+import logic.usecase.*
 import logic.usecase.GetKetoMealsUseCase
 import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
 import logic.usecase.GetSeafoodMealsByProteinUseCase
@@ -30,13 +31,21 @@ fun main() {
     val getKetoMealsUseCase = GetKetoMealsUseCase(mealsRepositoryImpl)
     val getRandomOneSweetMealWithoutEggsUseCase = GetRandomOneSweetMealWithoutEggsUseCase(mealsRepositoryImpl)
 
+    val getIraqiMealsUseCase = GetIraqiMealsUseCase(mealsRepositoryImpl)
+    val iraqiMealUIController = IraqiMealUIController(getIraqiMealsUseCase)
+
+    val getItalianMealsForLargeGroupsUseCase = GetItalianMealsForLargeGroupsUseCase(mealsRepositoryImpl)
+    val italianMealUIController = ItalianMealUIController(getItalianMealsForLargeGroupsUseCase)
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
+        3 to iraqiMealUIController,
         5 to guessGameUIController,
-        7 to KetoMealHelperUIController(getKetoMealsUseCase),
         6 to SweetMealsUIController(getRandomOneSweetMealWithoutEggsUseCase),
-        14 to seafoodMealsSuccessUIController
+        7 to KetoMealHelperUIController(getKetoMealsUseCase),
+        14 to seafoodMealsSuccessUIController,
+        15 to italianMealUIController,
+
     )
 
     MainMenuHandler(handlers).start()
