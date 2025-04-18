@@ -1,8 +1,10 @@
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import kotlinx.datetime.LocalDate
 import logic.models.Meal
 import logic.models.Nutrition
 import org.example.data.CSVFoodFileReader
-import java.time.LocalDate
+
+
 import java.time.format.DateTimeParseException
 
 class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {

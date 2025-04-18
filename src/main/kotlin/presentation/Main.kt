@@ -15,9 +15,10 @@ import java.io.File
 
 fun main() {
     val csvFile = File("food.csv")
-    val meals = MealsRepositoryImpl(CSVFoodParser(CSVFoodFileReader(csvFile))).getAllMeals()
-
     val mealsRepositoryImpl = MealsRepositoryImpl(CSVFoodParser(CSVFoodFileReader(csvFile)))
+
+
+
 
     val getGuessPreparationTimeUseCase = GuessPreparationTimeUseCase(mealsRepositoryImpl)
     val guessGameUIController = GuessGameUIController(getGuessPreparationTimeUseCase)
