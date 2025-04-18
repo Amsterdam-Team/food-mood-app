@@ -11,6 +11,7 @@ import logic.usecase.GuessPreparationTimeUseCase
 import org.example.data.CSVFoodFileReader
 import presentation.uiController.*
 import java.io.File
+import logic.usecase.SuggestTop10EasyMealsUseCase
 
 fun main() {
     val csvFile = File("food.csv")
@@ -36,10 +37,12 @@ fun main() {
 
     val getItalianMealsForLargeGroupsUseCase = GetItalianMealsForLargeGroupsUseCase(mealsRepositoryImpl)
     val italianMealUIController = ItalianMealUIController(getItalianMealsForLargeGroupsUseCase)
+    val suggestTop10EasyMealsUIController = SuggestTop10EasyMealsUIController(SuggestTop10EasyMealsUseCase(mealsRepositoryImpl))
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
         3 to iraqiMealUIController,
+        4 to suggestTop10EasyMealsUIController,
         5 to guessGameUIController,
         6 to SweetMealsUIController(getRandomOneSweetMealWithoutEggsUseCase),
         7 to KetoMealHelperUIController(getKetoMealsUseCase),
