@@ -4,13 +4,11 @@ import CSVFoodParser
 import data.MealsRepositoryImpl
 import logic.GetFastHealthyMealsUseCase
 import logic.usecase.GetKetoMealsUseCase
+import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
 import logic.usecase.GetSeafoodMealsByProteinUseCase
 import logic.usecase.GuessPreparationTimeUseCase
 import org.example.data.CSVFoodFileReader
-import presentation.uiController.FastHealthyMealsUIController
-import presentation.uiController.GuessGameUIController
-import presentation.uiController.MainMenuHandler
-import presentation.uiController.SeafoodMealsSuccessUIController
+import presentation.uiController.*
 import java.io.File
 
 fun main() {
@@ -30,12 +28,14 @@ fun main() {
     val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
     val getKetoMealsUseCase = GetKetoMealsUseCase(mealsRepositoryImpl)
+    val getRandomOneSweetMealWithoutEggsUseCase = GetRandomOneSweetMealWithoutEggsUseCase(mealsRepositoryImpl)
 
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
         5 to guessGameUIController,
         7 to KetoMealHelperUIController(getKetoMealsUseCase),
+        6 to SweetMealsUIController(getRandomOneSweetMealWithoutEggsUseCase),
         14 to seafoodMealsSuccessUIController
     )
 
