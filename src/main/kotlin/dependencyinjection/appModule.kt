@@ -1,11 +1,12 @@
 package dependencyinjection
 
 import CSVFoodParser
+import data.CSVFoodFileReader
 import data.MealSuggestionDataStore
 import data.MealsRepositoryImpl
 import logic.MealsRepository
 import logic.search.SearchUsingKMP
-import org.example.data.CSVFoodFileReader
+
 import org.koin.dsl.module
 import presentation.uiController.*
 import java.io.File
