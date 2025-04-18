@@ -20,4 +20,6 @@ sealed class FoodMoodException() : Exception() {
         data object AttemptsExceeded : GameException()
         data object WrongGuessFormat : GameException()
     }
+
+    sealed class EmptyDataException : FoodMoodException()
 }
