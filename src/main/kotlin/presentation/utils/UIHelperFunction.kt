@@ -10,11 +10,11 @@ fun String.withYellowColor(): String = "\u001B[33m$this\u001B[0m"
 
 fun getErrorMessageByException(exception: Exception): String {
     val message = when (exception) {
-        is FoodMoodException.EmptyDataException -> "No meals found that match your criteria."
-
+        is FoodMoodException.Validation.EmptyDataException -> "No meals found that match your criteria."
         is FoodMoodException.Validation.InvalidCalories -> "Calories value is invalid. Please enter a number within the acceptable range."
         is FoodMoodException.Validation.InvalidProtein -> "Protein value is invalid. Please check the input."
         is FoodMoodException.Validation.EmptyMealName -> "Meal name cannot be empty. Please provide a valid name."
+        is FoodMoodException.Validation.MissingPreparationTime -> "This meal has no preparation time. Unable to start the game."
         is FoodMoodException.Validation.MealNotFounded -> "No meals found that match your criteria."
 
         is FoodMoodException.ParsingException.MissingNutritionField -> "Nutrition information is incomplete or missing. Please check the data source."
@@ -25,6 +25,8 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException -> "Something went wrong with your request. Please try again."
 
         is FoodMoodException.Validation.NotFoundMealName -> "This meal name not found , Please Try again and make sure of entering correct name "
+        is FoodMoodException.Validation.NotFoundCountryName -> "This country name not found , Please Try again and make sure of entering correct name "
+
 
         else -> "An unexpected error occurred. Please try again later."
     }
