@@ -1,6 +1,6 @@
 package presentation.uiController
 
-import logic.GetIraqiMealsUseCase
+import logic.usecase.GetIraqiMealsUseCase
 import logic.models.Meal
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
