@@ -9,3 +9,12 @@ fun <T> tryToExecute(action: () -> T, onSuccess: (result: T) -> Unit) {
         println(getErrorMessageByException(exception))
     }
 }
+
+fun readValidInt(prompt: String): Int {
+    while (true) {
+        println(prompt)
+        val input = readlnOrNull()?.toIntOrNull()
+        if (input != null) return input
+        println("Invalid input. Please enter a valid number.")
+    }
+}
