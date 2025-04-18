@@ -20,7 +20,11 @@ fun getErrorMessageByException(exception: Exception): String {
 
         is FoodMoodException.GameException.AttemptsExceeded -> "You’ve used all your attempts. Better luck next time!"
         is FoodMoodException.GameException.WrongGuessFormat -> "Invalid input format. Please enter a valid number for preparation time."
-
+        is FoodMoodException.GameException.InvalidUserInput -> " Invalid input. Please select a number from the options."
+        is FoodMoodException.GameException.MealDataCorrupted -> " The meal data is incomplete or corrupted"
+        is FoodMoodException.GameException.IngredientOptionsNotEnough -> "Not enough ingredients to play."
+        is FoodMoodException.GameException.NoMealsAvailable -> "No meals available at the moment"
+        is FoodMoodException.GameException.GameLoad -> "An error occurred while loading the game."
         is FoodMoodException -> "Something went wrong with your request. Please try again."
 
         is FoodMoodException.Validation.NotFoundMealName -> "This meal name not found , Please Try again and make sure of entering correct name "
