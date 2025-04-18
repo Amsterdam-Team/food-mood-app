@@ -4,6 +4,8 @@ import dependencyinjection.appModule
 import dependencyinjection.useCaseModule
 import logic.usecase.GetKetoMealsUseCase
 import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
+import logic.usecase.SearchByCaloriesAndProteinUseCase
+import logic.usecase.SearchByIngredientsUseCase
 import presentation.uiController.*
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
@@ -30,26 +32,24 @@ fun main() {
     val exploreOtherCountriesUIController: ExploreOtherCountriesUIController = getKoin().get()
     val suggestMealByCalorieUI: SuggestMealByCaloriesUIController = getKoin().get()
 
-    val searchByIngredientsUseCase = SearchByIngredientsUseCase(mealsRepositoryImpl)
-    val iLovePotatoUIController = ILovePotatoUIController(searchByIngredientsUseCase)
-
-    val searchByCaloriesAndProteinUseCase = SearchByCaloriesAndProteinUseCase(mealsRepositoryImpl)
-    val gymHelperUIController = GymHelperUIController(searchByCaloriesAndProteinUseCase)
+    val iLovePotatoUIController :ILovePotatoUIController= getKoin().get()
+    val gymHelperUIController :GymHelperUIController= getKoin().get()
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
+        2 to getMealByNameUIController,
         3 to iraqiMealUIController,
         4 to suggestTop10EasyMealsUIController,
         5 to guessGameUIController,
         6 to SweetMealsUIController(getRandomOneSweetMealWithoutEggsUseCase),
         7 to KetoMealHelperUIController(getKetoMealsUseCase),
         8 to mealsByDateUIController,
+        9 to gymHelperUIController,
         10 to exploreOtherCountriesUIController,
         13 to suggestMealByCalorieUI,
         14 to seafoodMealsSuccessUIController,
         15 to italianMealUIController,
         12 to iLovePotatoUIController,
-        9 to gymHelperUIController
         )
 
 
