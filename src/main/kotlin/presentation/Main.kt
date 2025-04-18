@@ -17,6 +17,7 @@ fun main() {
     val csvMealRepo = CSVMealsRepository(csvParser)
     val meals = csvMealRepo.getAllMeals()
     println(meals[0])
+
     /**
      ********* Executes a given use case safely and handles success and failure cases. *********
      * @sample

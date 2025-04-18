@@ -53,19 +53,17 @@ class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
         val cleanedText = text?.trim()?.trim('[',']','"') ?: return null
         val values:List<Double?> = cleanedText.split(",").map { it.trim().toDoubleOrNull() }
         return Nutrition(
-                values.getOrNull(ColumnsIndexes.CALORIES),
-                values.getOrNull(ColumnsIndexes.TOTAL_FAT),
-                values.getOrNull(ColumnsIndexes.SUGAR),
-                values.getOrNull(ColumnsIndexes.SODIUM),
-                values.getOrNull(ColumnsIndexes.PROTEIN),
-                values.getOrNull(ColumnsIndexes.SATURATED_FAT),
-                values.getOrNull(ColumnsIndexes.CARBOHYDRATE)
+                values.getOrNull(CALORIES),
+                values.getOrNull(TOTAL_FAT),
+                values.getOrNull(SUGAR),
+                values.getOrNull(SODIUM),
+                values.getOrNull(PROTEIN),
+                values.getOrNull(SATURATED_FAT),
+                values.getOrNull(CARBOHYDRATE)
         )
     }
 
-    companion object {
-
-        object ColumnsIndexes {
+    private companion object {
 
             // NUTRITION ARRAY
             final val CALORIES = 0
@@ -75,6 +73,6 @@ class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
             final val PROTEIN = 4
             final val SATURATED_FAT = 5
             final val CARBOHYDRATE = 6
-        }
+
     }
 }
