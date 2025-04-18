@@ -13,7 +13,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
     implementation("io.insert-koin:koin-core:4.0.2")
-    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
 }
 
