@@ -1,24 +1,29 @@
 package presentation
 
-import data.CSVMealsRepository
-import logic.GetFastHealthyMealsUseCase
+import data.MealsRepositoryImpl
 import logic.usecase.GetSeafoodMealsByProteinUseCase
-import presentation.uiController.FastHealthyMealsUIController
+import logic.usecase.GuessPreparationTimeUseCase
+import presentation.uiController.GuessGameUIController
 import presentation.uiController.MainMenuHandler
 import presentation.uiController.SeafoodMealsSuccessUIController
 import java.io.File
 
 fun main() {
-    val meals = CSVMealsRepository(File("food.csv")).getAllMeals()
-    val csvMealsRepository = CSVMealsRepository(File("food.csv"))
+    val meals = MealsRepositoryImpl(File("food.csv")).getAllMeals()
+    val csvFile = File("food.csv")
+    val mealsRepositoryImpl = MealsRepositoryImpl(csvFile)
 
-    val getFastHealthyMealsUseCase = GetFastHealthyMealsUseCase(csvMealsRepository)
-    val fastHealthyMealsUiController = FastHealthyMealsUIController(getFastHealthyMealsUseCase)
+    val getGuessPreparationTimeUseCase = GuessPreparationTimeUseCase(mealsRepositoryImpl)
+    val guessGameUIController = GuessGameUIController(getGuessPreparationTimeUseCase)
+    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(mealsRepositoryImpl)
+    val seafoodMealsSuccessUIController =
+        SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
     val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(csvMealsRepository)
     val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
     val handlers = mapOf(
+        5 to guessGameUIController,
         1 to fastHealthyMealsUiController,
         14 to seafoodMealsSuccessUIController
     )

@@ -2,6 +2,8 @@ package logic.usecase
 
 import logic.models.Meal
 import logic.MealsRepository
+import logic.exception.FoodMoodException.Validation.EmptyDataException
+
 import kotlin.math.ceil
 
 class SearchByCaloriesAndProteinUseCase(private val mealsRepository: MealsRepository) {
@@ -16,7 +18,9 @@ class SearchByCaloriesAndProteinUseCase(private val mealsRepository: MealsReposi
             calories = calories,
             protein = protein,
             approximationRatio = approximationRatio
-        )
+        ).also {
+            if(it.isEmpty()) throw EmptyDataException
+        }
     }
 
     private fun filterMealsByApproximateCaloriesAndProtein(
