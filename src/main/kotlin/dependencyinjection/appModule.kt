@@ -1,12 +1,12 @@
 package dependencyinjection
 
 import CSVFoodParser
+import data.MealSuggestionDataStore
 import data.MealsRepositoryImpl
 import logic.MealsRepository
 import logic.search.SearchUsingKMP
 import org.example.data.CSVFoodFileReader
 import org.koin.dsl.module
-import presentation.KetoMealHelperUIController
 import presentation.uiController.*
 import java.io.File
 
@@ -15,6 +15,7 @@ val appModule = module {
     single { CSVFoodFileReader(get()) }
     single { CSVFoodParser(get()) }
     single<MealsRepository> { MealsRepositoryImpl(get()) }
+    single { MealSuggestionDataStore() }
 
     single { SearchUsingKMP() }
 
