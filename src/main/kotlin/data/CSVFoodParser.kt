@@ -62,13 +62,13 @@ class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
     private companion object {
 
             // NUTRITION ARRAY
-            final val CALORIES = 0
-            final val TOTAL_FAT = 1
-            final val SUGAR = 2
-            final val SODIUM = 3
-            final val PROTEIN = 4
-            final val SATURATED_FAT = 5
-            final val CARBOHYDRATE = 6
+            const val CALORIES = 0
+            const val TOTAL_FAT = 1
+            const val SUGAR = 2
+            const val SODIUM = 3
+            const val PROTEIN = 4
+            const val SATURATED_FAT = 5
+            const val CARBOHYDRATE = 6
 
     }
 }
