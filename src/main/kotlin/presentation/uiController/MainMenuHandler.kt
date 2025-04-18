@@ -19,7 +19,9 @@ class MainMenuHandler(
                     break
                 }
 
+
                 null -> println("❌ Invalid input. Please enter a valid number.".withRedColor())
+
 
                 else -> println("❌ Unknown feature number.".withRedColor())
             }
