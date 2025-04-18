@@ -5,6 +5,7 @@ import logic.models.IngredientGameState
 import logic.usecase.ingredient_game_usecases.StartIngredientGameUseCase
 import logic.usecase.ingredient_game_usecases.SubmitAnswerUseCase
 
+//
 class IngredientGameUIController(
     private val startIngredientGameUseCase: StartIngredientGameUseCase ,
     private val submitAnswerUseCase: SubmitAnswerUseCase
