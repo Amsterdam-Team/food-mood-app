@@ -1,60 +1,30 @@
 package presentation
 
-import data.CSVMealsRepository
-
+import data.MealsRepositoryImpl
 import logic.usecase.GetSeafoodMealsByProteinUseCase
-import logic.usecase.ingredient_game_usecases.StartIngredientGameUseCase
-import logic.usecase.ingredient_game_usecases.SubmitAnswerUseCase
+import logic.usecase.GuessPreparationTimeUseCase
 import org.example.data.CSVFoodFileReader
 import org.example.data.CSVFoodParser
-import presentation.uiController.IngredientGameUIController
+import presentation.uiController.GuessGameUIController
 import presentation.uiController.MainMenuHandler
 import presentation.uiController.SeafoodMealsSuccessUIController
 import java.io.File
 
-
 fun main() {
+    val csvFile = File("food.csv")
+    val mealsRepositoryImpl = MealsRepositoryImpl(CSVFoodParser(CSVFoodFileReader(csvFile)))
+    val meals = MealsRepositoryImpl(CSVFoodParser(CSVFoodFileReader(csvFile))).getAllMeals()
 
-    val file = File("food.csv")
 
+    val getGuessPreparationTimeUseCase = GuessPreparationTimeUseCase(mealsRepositoryImpl)
+    val guessGameUIController = GuessGameUIController(getGuessPreparationTimeUseCase)
+    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(mealsRepositoryImpl)
+    val seafoodMealsSuccessUIController =
+        SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
 
-
-    val csvFoodFileReader = CSVFoodFileReader(file)
-    val csvParser = CSVFoodParser(csvFoodFileReader)
-
-    val csvMealRepo = CSVMealsRepository(csvParser)
-    val meals = csvMealRepo.getAllMeals()
-    println(meals[0])
-
-    /**
-     ********* Executes a given use case safely and handles success and failure cases. *********
-     * @sample
-     *  tryToExecute(
-     *      action = { GetFastHealthyMealsUseCase(CSVMealsRepository(File("food.csv"))).getFastHealthMeals() },
-     *      onSuccess = ::onGetFastHealthyMealsSuccess
-     *  )
-     *
-     * fun onGetFastHealthyMealsSuccess(meals: List<Meal>) {
-     *     meals.forEach { println(it.toString().withGreenColor()) }
-     * }
-     *
-     * @param action The block of use case function to execute.
-     *               This should be where your core logic goes, like fetching or processing data.
-     * @param onSuccess A callback invoked if the action completes successfully.
-     *                  Use this to handle the result (e.g., print output).
-     *
-     * @see getErrorMessageByException Used internally to convert known exceptions into readable error messages.
-     *      Make sure to add your specific custom exceptions inside `getErrorMessageByException` to handle them properly.
-     */
-
-    val getSeafoodMealsByProteinUseCase = GetSeafoodMealsByProteinUseCase(csvMealRepo)
-    val seafoodMealsSuccessUIController = SeafoodMealsSuccessUIController(getSeafoodMealsByProteinUseCase)
-    val startGameUC = StartIngredientGameUseCase(csvMealRepo)
-    val submitAnswerUC = SubmitAnswerUseCase()
-    val ingredientGameUiController = IngredientGameUIController(startGameUC,submitAnswerUC)
     val handlers = mapOf(
-        14 to seafoodMealsSuccessUIController,
-        11 to ingredientGameUiController
+        5 to guessGameUIController,
+        14 to seafoodMealsSuccessUIController
     )
 
     MainMenuHandler(handlers).start()
