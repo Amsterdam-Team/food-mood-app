@@ -10,7 +10,9 @@ fun String.withYellowColor(): String = "\u001B[33m$this\u001B[0m"
 
 fun getErrorMessageByException(exception: Exception): String {
     val message = when (exception) {
-        is FoodMoodException.Validation.EmptyDataException -> "No meals found that match your criteria."
+        is FoodMoodException.EmptyDataException -> "No meals found that match your criteria."
+        is FoodMoodException.Validation.NoMoreSuggestion -> "No more meals contain over than 700 calorie"
+
         is FoodMoodException.Validation.InvalidCalories -> "Calories value is invalid. Please enter a number within the acceptable range."
         is FoodMoodException.Validation.InvalidProtein -> "Protein value is invalid. Please check the input."
         is FoodMoodException.Validation.EmptyMealName -> "Meal name cannot be empty. Please provide a valid name."
