@@ -13,8 +13,9 @@ class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCas
 
     override fun execute() {
         tryToExecute(
-            action = { ::onStartGuessing },
-            onSuccess = { ::runGuessGame }
+            action = ::onStartGuessing,
+            onSuccess = { onRunGuessGameSuccess() }
+
         )
     }
 
@@ -23,12 +24,16 @@ class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCas
         println("🎯 Guess the preparation time for: $mealName")
     }
 
-    private tailrec fun runGuessGame(remainingAttempts: Int = 3) {
+    private fun readGuessInput(remainingAttempts: Int): Int {
+        return readValidInt("Your guess (Attempts left: $remainingAttempts):")
+    }
+
+    private tailrec fun onRunGuessGameSuccess(remainingAttempts: Int = 3) {
         if (remainingAttempts == 0) {
             throw FoodMoodException.GameException.AttemptsExceeded
         }
 
-        val guess = readValidInt("Your guess (Attempts left: $remainingAttempts):")
+        val guess = readGuessInput(remainingAttempts)
         val result = guessUseCase.checkGuess(guess)
 
         when (result) {
@@ -50,6 +55,6 @@ class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCas
             }
         }
 
-        runGuessGame(remainingAttempts - 1)
+        onRunGuessGameSuccess(remainingAttempts - 1)
     }
 }
