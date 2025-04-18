@@ -1,4 +1,4 @@
-package org.example.presentation.utils
+package presentation.utils
 
 // returns one random element or null if the list is empty
 fun <T> List<T>.getRandomElementOrNull(): T? {

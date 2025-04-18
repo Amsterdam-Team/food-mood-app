@@ -3,7 +3,7 @@ package logic.search
 
 class SearchUsingKMP : SearchStrategy {
 
-    override fun validateTheInputInExistData(input: String, searchList:List<String>?): String? {
+    override fun validateTheInputInExistData(input: String, searchList: List<String>?): String? {
         return searchList?.firstOrNull { listItem ->
             kmpSearch(listItem, input.lowercase())
         }
@@ -21,7 +21,7 @@ class SearchUsingKMP : SearchStrategy {
             }
 
             if (pattenIndex == pattern.length) {
-                return true
+               return true
             } else if (textIndex < text.length && text[textIndex] != pattern[pattenIndex]) {
                 if (pattenIndex != 0) {
                     pattenIndex = lps[pattenIndex - 1]

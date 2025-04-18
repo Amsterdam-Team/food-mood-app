@@ -8,7 +8,9 @@ sealed class FoodMoodException() : Exception() {
         data object NoMealsWereFoundForTheGivenDate : Validation()
         data object NotFoundMealName: Validation()
         data object NotFoundCountryName: Validation()
-
+        data object EmptyDataException : Validation()
+        data object MissingPreparationTime : Validation()
+        data object MealNotFounded : Validation()
 
 
     }
