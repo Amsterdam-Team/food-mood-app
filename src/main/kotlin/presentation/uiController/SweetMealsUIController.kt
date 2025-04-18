@@ -1,7 +1,7 @@
 package presentation.uiController
 
 import logic.models.Meal
-import logic.sweetsWithNoEggs.GetRandomOneSweetMealWithoutEggsUseCase
+import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
 import presentation.utils.tryToExecute
 
 class SweetMealsUIController(

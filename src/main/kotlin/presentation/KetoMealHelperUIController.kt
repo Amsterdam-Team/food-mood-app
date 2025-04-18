@@ -1,5 +1,4 @@
 package presentation
-
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import logic.usecase.GetKetoMealsUseCase
