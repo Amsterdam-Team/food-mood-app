@@ -1,8 +1,9 @@
-package presentation
+package presentation.uiController
 
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import logic.usecase.GetKetoMealsUseCase
+import presentation.utils.getRandomElementOrNull
 import org.example.presentation.utils.getRandomElementOrNull
 import presentation.uiController.BaseUIController
 import presentation.utils.tryToExecute
