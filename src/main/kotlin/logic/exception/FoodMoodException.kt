@@ -10,9 +10,7 @@ sealed class FoodMoodException() : Exception() {
         data object EmptyDataException: Validation()
         data object NoMoreSuggestion : Validation()
         data object MissingPreparationTime : Validation()
-
-
-
+        data object MealNotFounded : Validation()
     }
 
     sealed class ParsingException() : FoodMoodException() {
