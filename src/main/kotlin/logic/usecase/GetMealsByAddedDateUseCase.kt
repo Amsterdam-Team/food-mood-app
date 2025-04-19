@@ -19,7 +19,7 @@ class GetMealsByAddedDateUseCase(private val mealsRepository: MealsRepository) {
     fun getDetailedMealFromMealsData(mealId: String, meals: List<Meal>): Meal {
         val requestedMeal = meals.find { meal ->
             meal.id == mealId
-        } ?: throw FoodMoodException.Validation.NoMealsWereFoundForTheGivenDate
+        } ?: throw FoodMoodException.Validation.EmptyDataException
         return requestedMeal
     }
 }
