@@ -18,7 +18,8 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.Validation.EmptyMealName -> "Meal name cannot be empty. Please provide a valid name."
         is FoodMoodException.Validation.MissingPreparationTime -> "This meal has no preparation time. Unable to start the game."
         is FoodMoodException.Validation.MealNotFounded -> "No meals found that match your criteria."
-
+        is FoodMoodException.Validation.NoMealsWereFoundForTheGivenDate -> "No Meals Were found for the given date"
+        is FoodMoodException.ParsingException.InvalidDateFormatException -> "please enter a valid date format like yyy/mm/dd"
         is FoodMoodException.ParsingException.MissingNutritionField -> "Nutrition information is incomplete or missing. Please check the data source."
 
         is FoodMoodException.GameException.AttemptsExceeded -> "You’ve used all your attempts. Better luck next time!"
