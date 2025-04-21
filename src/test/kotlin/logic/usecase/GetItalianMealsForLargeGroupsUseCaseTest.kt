@@ -5,7 +5,9 @@ import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
 import logic.exception.FoodMoodException
+import logic.helpers.chocolateCherryPecanBiscotti
 import logic.helpers.createMeal
+import logic.helpers.threeInOneItalianDip
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -39,16 +41,8 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
                 description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
                 tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
             ),
-            createMeal(
-                name = "chocolate  cherry pecan biscotti",
-                description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
-            ),
-            createMeal(
-                name = "3 in 1 italian dip",
-                description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
-                tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
-            ),
+            chocolateCherryPecanBiscotti(),
+            threeInOneItalianDip(),
             createMeal(
                 name = "3 ingredient carnitas",
                 description = "3 ingredients and a little patience are all you need to create flavorful carnitas.",
@@ -61,16 +55,8 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
 
         // Then
         assertThat(result).containsExactly(
-            createMeal(
-                name = "chocolate  cherry pecan biscotti",
-                description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
-            ),
-            createMeal(
-                name = "3 in 1 italian dip",
-                description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
-                tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
-            )
+            chocolateCherryPecanBiscotti(),
+            threeInOneItalianDip()
         )
     }
 
@@ -88,11 +74,7 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
                 description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
                 tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
             ),
-            createMeal(
-                name = "3 in 1 italian dip",
-                description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
-                tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
-            ),
+            threeInOneItalianDip(),
             createMeal(
                 name = "3 ingredient carnitas",
                 description = "3 ingredients and a little patience are all you need to create flavorful carnitas.",
@@ -105,11 +87,7 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
 
         // Then
         assertThat(result).containsExactly(
-            createMeal(
-                name = "3 in 1 italian dip",
-                description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
-                tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
-            )
+            threeInOneItalianDip()
         )
     }
 
@@ -122,11 +100,7 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
                 description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
                 tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
             ),
-            createMeal(
-                name = "chocolate  cherry pecan biscotti",
-                description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
-            ),
+            chocolateCherryPecanBiscotti(),
             createMeal(
                 name = "3 in 1 italian dip",
                 description = null,
@@ -144,11 +118,7 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
 
         // Then
         assertThat(result).containsExactly(
-            createMeal(
-                name = "chocolate  cherry pecan biscotti",
-                description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
-            )
+            chocolateCherryPecanBiscotti()
         )
     }
 
@@ -161,11 +131,7 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
                 description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
                 tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
             ),
-            createMeal(
-                name = "chocolate  cherry pecan biscotti",
-                description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
-            ),
+            chocolateCherryPecanBiscotti(),
             createMeal(
                 name = "3 in 1 italian dip",
                 description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
@@ -183,11 +149,7 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
 
         // Then
         assertThat(result).containsExactly(
-            createMeal(
-                name = "chocolate  cherry pecan biscotti",
-                description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
-            )
+            chocolateCherryPecanBiscotti()
         )
     }
 }
