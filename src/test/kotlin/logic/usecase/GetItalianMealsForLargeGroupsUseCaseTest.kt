@@ -20,7 +20,7 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
     }
 
     @Test
-    fun `should throw exception when given empty list`() {
+    fun `should throw empty data exception when given empty list`() {
         // Given
         every { mealsRepository.getAllMeals() } returns emptyList()
 
