@@ -5,8 +5,15 @@ import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
 import logic.exception.FoodMoodException
+import logic.helpers.FastHealthyMealTestFactory.PREPARATION_TIME_ABOVE_TARGET
+import logic.helpers.FastHealthyMealTestFactory.PREPARATION_TIME_IN_TARGET
+import logic.helpers.FastHealthyMealTestFactory.defaultNutrition
+import logic.helpers.FastHealthyMealTestFactory.mealWithAboveTimeTarget
+import logic.helpers.FastHealthyMealTestFactory.mealWithNegativePreparationTime
+import logic.helpers.FastHealthyMealTestFactory.mealWithNotHealthyNutrition
+import logic.helpers.FastHealthyMealTestFactory.mealWithZeroPreparationTime
+import logic.helpers.FastHealthyMealTestFactory.preparationTimeRange
 import logic.helpers.createMeal
-import logic.models.Nutrition
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -161,39 +168,5 @@ class GetFastHealthyMealsUseCaseTest {
 
         // When & Then
         assertThat(getFastHealthyMealsUseCase.getFastHealthMeals()).containsExactly(mealWithMinPreparationTime)
-    }
-
-    private companion object {
-        const val PREPARATION_TIME_IN_TARGET = 15
-        const val PREPARATION_TIME_ABOVE_TARGET = 30
-        const val NEGATIVE_PREPARATION_TIME = -10
-        const val ZERO_PREPARATION_TIME = 0
-        val preparationTimeRange = 1..15
-
-        val defaultNutrition = Nutrition(
-            totalFat = 30.0,
-            saturatedFat = 5.0,
-            carbohydrates = 10.0,
-            calories = null,
-            sugar = null,
-            sodium = null,
-            protein = null,
-        )
-
-
-        val mealWithAboveTimeTarget =
-            createMeal().copy(nutrition = defaultNutrition, preparationTime = PREPARATION_TIME_ABOVE_TARGET)
-
-        val mealWithNegativePreparationTime =
-            createMeal().copy(nutrition = defaultNutrition, preparationTime = NEGATIVE_PREPARATION_TIME)
-
-        val mealWithZeroPreparationTime =
-            createMeal().copy(nutrition = defaultNutrition, preparationTime = ZERO_PREPARATION_TIME)
-
-        val mealWithNotHealthyNutrition =
-            createMeal().copy(
-                preparationTime = PREPARATION_TIME_IN_TARGET,
-                nutrition = defaultNutrition.copy(totalFat = 80.0, saturatedFat = 15.0, carbohydrates = 50.0)
-            )
     }
 }
