@@ -1,6 +1,7 @@
 package logic.usecase
 
 import com.google.common.truth.Truth.assertThat
+import data.KetoMealsDataStore
 import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
@@ -14,14 +15,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class GetKetoMealsUseCaseTest {
-    private lateinit var getRandomKetoMealUseCase: GetKetoMealsUseCase
+class GetRandomKetoMealUseCaseTest {
+    private lateinit var getRandomKetoMealUseCase: GetRandomKetoMealUseCase
     private lateinit var mealsRepository: MealsRepository
+    private lateinit var ketoMealsDataStore: KetoMealsDataStore
 
     @BeforeEach
     fun setUp() {
         mealsRepository = mockk(relaxed = true)
-        getRandomKetoMealUseCase = GetKetoMealsUseCase(mealsRepository)
+        ketoMealsDataStore = mockk(relaxed = true)
+        getRandomKetoMealUseCase = GetRandomKetoMealUseCase(mealsRepository, ketoMealsDataStore)
     }
 
     @Test
