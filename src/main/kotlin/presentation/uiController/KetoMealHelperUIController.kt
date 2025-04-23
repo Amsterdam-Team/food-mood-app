@@ -1,14 +1,12 @@
 package presentation.uiController
 
-import logic.exception.FoodMoodException
 import logic.models.Meal
 import logic.usecase.GetKetoMealsUseCase
-import presentation.utils.getRandomElementOrNull
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 import presentation.utils.withRedColor
 
-class KetoMealHelperUIController(getKetoFriendlyMealsUseCase: GetKetoMealsUseCase) :
+class KetoMealHelperUIController(private val getKetoFriendlyMealsUseCase: GetKetoMealsUseCase) :
     BaseUIController {
 
     private lateinit var suggestedMeal: Meal
@@ -18,7 +16,7 @@ class KetoMealHelperUIController(getKetoFriendlyMealsUseCase: GetKetoMealsUseCas
 
     override fun execute() {
         tryToExecute(
-            action = { ketoMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException },
+            action = { getKetoFriendlyMealsUseCase.getRandomKetoMeal() },
             onSuccess = { onGetRandomMealSuccess(it) }
         )
     }

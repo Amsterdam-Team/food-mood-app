@@ -1,5 +1,7 @@
 package logic.helpers
 
+import logic.models.Nutrition
+
 fun bahrainiSweetRice() =
     createMeal(
         name = "bahraini sweet rice  muhammar",
@@ -23,4 +25,46 @@ fun threeInOneItalianDip() = createMeal(
     name = "3 in 1 italian dip",
     description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
     tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
+)
+
+fun eggAvocadoBowl() = createMeal(
+    name = "Egg Avocado Bowl",
+    description = "A delicious keto bowl with eggs, avocado, and bacon.",
+    nutrition = Nutrition(
+        calories = 450.0,
+        totalFat = 35.0,
+        sugar = 1.0,
+        sodium = 500.0,
+        protein = 25.0,
+        saturatedFat = 10.0,
+        carbohydrates = 4.0
+    )
+)
+
+fun grilledChickenSalad() = createMeal(
+    name = "Grilled Chicken Salad",
+    description = "Grilled Chicken",
+    nutrition = Nutrition(
+        calories = 400.0,
+        totalFat = 30.0,
+        sugar = 2.0,
+        sodium = 600.0,
+        protein = 30.0,
+        saturatedFat = 8.0,
+        carbohydrates = 6.0
+    )
+)
+
+fun zucchiniNoodlesWithPesto() = createMeal(
+    name = "Zucchini Noodles with Pesto",
+    description = "Zucchini noodles with a creamy pesto sauce.",
+    nutrition = Nutrition(
+        calories = 350.0,
+        totalFat = 28.0,
+        sugar = 3.0,
+        sodium = 700.0,
+        protein = 15.0,
+        saturatedFat = 6.0,
+        carbohydrates = 8.0
+    )
 )
