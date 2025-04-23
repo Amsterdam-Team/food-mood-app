@@ -25,7 +25,7 @@ class GetKetoMealsUseCaseTest {
     }
 
     @Test
-    fun `get random keto meal should throw empty data exception when keto meals list is empty`() {
+    fun `should throw empty data exception when fetching random keto meal and keto meals list is empty`() {
         //Given
         every { mealsRepository.getAllMeals() } returns emptyList()
         // When && Then
@@ -36,7 +36,7 @@ class GetKetoMealsUseCaseTest {
     }
 
     @Test
-    fun `get random keto meal should return random keto meal when get random keto meal is called`() {
+    fun `should return random keto meal when get random keto meal is called`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
             eggAvocadoBowl(),
@@ -50,7 +50,7 @@ class GetKetoMealsUseCaseTest {
     }
 
     @Test
-    fun `get keto meals should return correct keto meals when met all constraints`() {
+    fun `should return correct keto meals when meals met all constraints`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
             eggAvocadoBowl(),
@@ -65,7 +65,7 @@ class GetKetoMealsUseCaseTest {
 
 
     @Test
-    fun `get keto meals should return correct keto meals list without null descriptions when get keto meals is called`() {
+    fun `should return correct keto meals list without null descriptions when get keto meals is called`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
             grilledChickenSalad(),
@@ -93,7 +93,7 @@ class GetKetoMealsUseCaseTest {
     }
 
     @Test
-    fun `get keto meals should return correct keto meals list without null carbohydrates when get keto meals is called`() {
+    fun `should return correct keto meals list without null carbohydrates when get keto meals is called`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
             eggAvocadoBowl(),
@@ -122,7 +122,7 @@ class GetKetoMealsUseCaseTest {
     }
 
     @Test
-    fun `get keto meals should return correct keto meals list without null protein when get keto meals is called`() {
+    fun `should return correct keto meals list without null protein when get keto meals is called`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
             eggAvocadoBowl(),
@@ -151,7 +151,7 @@ class GetKetoMealsUseCaseTest {
     }
 
     @Test
-    fun `get keto meals should return correct keto meals list without null total fats when get keto meals is called`() {
+    fun `should return correct keto meals list without null total fats when get keto meals is called`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
             eggAvocadoBowl(),
