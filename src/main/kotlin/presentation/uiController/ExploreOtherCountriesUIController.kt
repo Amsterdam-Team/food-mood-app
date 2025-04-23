@@ -1,11 +1,11 @@
 package presentation.uiController
 
-import logic.usecase.ExploreOtherCountriesUseCase
+import logic.usecase.ExploreOtherCountriesByNameUseCase
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 
 class ExploreOtherCountriesUIController(
-    private val exploreOtherCountriesUseCase: ExploreOtherCountriesUseCase
+    private val exploreOtherCountriesUseCase: ExploreOtherCountriesByNameUseCase
 ) : BaseUIController {
 
     fun exploreOtherCountriesUI() {
