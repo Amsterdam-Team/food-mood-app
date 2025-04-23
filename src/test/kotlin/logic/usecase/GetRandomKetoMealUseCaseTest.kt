@@ -39,6 +39,19 @@ class GetRandomKetoMealUseCaseTest {
     }
 
     @Test
+    fun `should throw no more suggestion exception when no more keto meals`() {
+        //Given
+        every { mealsRepository.getAllMeals() } returns listOf(eggAvocadoBowl())
+        every { ketoMealsDataStore.checkTotalSeenKetoMeals() } returns 1
+
+        // When && Then
+        assertThrows<FoodMoodException.Validation.NoMoreSuggestion> {
+            getRandomKetoMealUseCase.getRandomKetoMeal()
+        }
+
+    }
+
+    @Test
     fun `should return random keto meal when get random keto meal is called`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
