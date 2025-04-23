@@ -5,7 +5,7 @@ import logic.models.Nutrition
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
-object SeafoodMealsSuccessUIControllerTestFactory {
+object SeafoodMealsUIControllerTestFactory {
 
     private const val FISH_TAG = "seafood"
     const val EMPTY_DATA_EXCEPTION_ERROR_MESSAGE = "No meals found that match your criteria."

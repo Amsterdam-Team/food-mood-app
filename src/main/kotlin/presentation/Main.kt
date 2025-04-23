@@ -19,7 +19,7 @@ fun main() {
 
     val guessGameUIController: GuessGameUIController = getKoin().get()
     val fastHealthyMealsUiController: FastHealthyMealsUIController = getKoin().get()
-    val seafoodMealsSuccessUIController: SeafoodMealsSuccessUIController = getKoin().get()
+    val seafoodMealsSuccessUIController: SeafoodMealsUIController = getKoin().get()
     val iraqiMealUIController: IraqiMealUIController = getKoin().get()
     val italianMealUIController: ItalianMealUIController = getKoin().get()
     val suggestTop10EasyMealsUIController: SuggestTop10EasyMealsUIController =

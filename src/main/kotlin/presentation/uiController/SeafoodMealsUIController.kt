@@ -5,7 +5,7 @@ import logic.usecase.GetSeafoodMealsByProteinUseCase
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 
-class SeafoodMealsSuccessUIController(private val getSeafoodMealsByProteinUseCase: GetSeafoodMealsByProteinUseCase) :
+class SeafoodMealsUIController(private val getSeafoodMealsByProteinUseCase: GetSeafoodMealsByProteinUseCase) :
     BaseUIController {
     override fun execute() {
         tryToExecute(
