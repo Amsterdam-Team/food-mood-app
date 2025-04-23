@@ -3,9 +3,9 @@ package data
 import CSVFoodParser
 
 import com.google.common.truth.Truth.assertThat;
+import data.helpers.ParseTestFactory
 import data.helpers.createRowData
 import kotlinx.datetime.LocalDate
-import logic.models.Nutrition
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
@@ -29,7 +29,7 @@ class CSVFoodParserTest{
   val result = csvFoodParser.parseRow(row)
 
   // then
-  assertEquals(null, result)
+  assertThat (result).isEqualTo(null)
 
  }
 
@@ -210,15 +210,7 @@ class CSVFoodParserTest{
   val result = csvFoodParser.parseRow(row)?.nutrition
 
   // then
-  assertThat(result).isEqualTo(Nutrition(
-   calories = 0.3,
-   totalFat = 0.1,
-   sugar = 0.0,
-   sodium = 1.2,
-   protein = 2.2,
-   saturatedFat = 0.01,
-   carbohydrates = 0.0,
-  ))
+  assertThat(result).isEqualTo(ParseTestFactory.nutrition_sample)
 
  }
 
