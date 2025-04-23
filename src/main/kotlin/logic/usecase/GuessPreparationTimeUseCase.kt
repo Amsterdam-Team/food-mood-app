@@ -11,7 +11,7 @@ class GuessPreparationTimeUseCase(private val repository: MealsRepository) {
 
     private val mealToGuess: Meal by lazy {
         repository.getAllMeals()
-            .filter { it.name != null && it.preparationTime != null }
+            .filter { it.name != null }
             .getRandomElementOrNull() ?: throw EmptyDataException
     }
 
