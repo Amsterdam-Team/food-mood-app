@@ -141,14 +141,9 @@ class SuggestTop10EasyMealsUseCaseTest {
         assertThat(result.size).isAtMost(10)
 
         result.forEach { meal ->
-            assertThat(meal.preparationTime).isNotNull()
-            assertThat(meal.preparationTime!!).isAtMost(30)
-
-            assertThat(meal.numberOfIngredients).isNotNull()
-            assertThat(meal.numberOfIngredients!!).isAtMost(5)
-
-            assertThat(meal.numberOfSteps).isNotNull()
-            assertThat(meal.numberOfSteps!!).isAtMost(6)
+            assertThat(meal.preparationTime).isAtMost(30)
+            assertThat(meal.numberOfIngredients).isAtMost(5)
+            assertThat(meal.numberOfSteps).isAtMost(6)
         }
     }
 }
