@@ -5,9 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
 import logic.exception.FoodMoodException
-import logic.helpers.chocolateCherryPecanBiscotti
-import logic.helpers.createMeal
-import logic.helpers.threeInOneItalianDip
+import logic.helpers.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -36,18 +34,10 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
     fun `should return correct italian meals for large groups when given valid input`(){
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
-                name = "beef enchilada lasagna",
-                description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
-            ),
+            beefEnchilada(),
             chocolateCherryPecanBiscotti(),
             threeInOneItalianDip(),
-            createMeal(
-                name = "3 ingredient carnitas",
-                description = "3 ingredients and a little patience are all you need to create flavorful carnitas.",
-                tags = listOf("very-low-carbs", "summer", "dietary", "low-sodium", "seasonal")
-            ),
+            threeIngredientCarnitas(),
         )
 
         // When
@@ -64,22 +54,10 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
     fun `should return correct italian meals for large groups without null names when given valid input`(){
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
-                name = "beef enchilada lasagna",
-                description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
-            ),
-            createMeal(
-                name = null,
-                description = "everybody i've ever made these for have loved them. i've made them with marshmellows before too... but that didn't really work out too well hehehe. in the picture the lighter biscottis don't have the cocoa powder in them and the darker ones do. (i like them without cocoa better but that's just me.)",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "preparation", "for-large-groups", "italian")
-            ),
+            beefEnchilada(),
+            chocolateCherryPecanBiscotti().copy(name = null),
             threeInOneItalianDip(),
-            createMeal(
-                name = "3 ingredient carnitas",
-                description = "3 ingredients and a little patience are all you need to create flavorful carnitas.",
-                tags = listOf("very-low-carbs", "summer", "dietary", "low-sodium", "seasonal")
-            ),
+            threeIngredientCarnitas(),
         )
 
         // When
@@ -95,22 +73,10 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
     fun `should return correct italian meals for large groups without null descriptions when given valid input`(){
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
-                name = "beef enchilada lasagna",
-                description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
-            ),
+            beefEnchilada(),
             chocolateCherryPecanBiscotti(),
-            createMeal(
-                name = "3 in 1 italian dip",
-                description = null,
-                tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
-            ),
-            createMeal(
-                name = "3 ingredient carnitas",
-                description = "3 ingredients and a little patience are all you need to create flavorful carnitas.",
-                tags = listOf("very-low-carbs", "summer", "dietary", "low-sodium", "seasonal")
-            ),
+            threeInOneItalianDip().copy(description = null),
+            threeIngredientCarnitas(),
         )
 
         // When
@@ -126,22 +92,10 @@ class GetItalianMealsForLargeGroupsUseCaseTest{
     fun `should return correct italian meals for large groups without null tags when given valid input`(){
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
-                name = "beef enchilada lasagna",
-                description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
-                tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
-            ),
+            beefEnchilada(),
             chocolateCherryPecanBiscotti(),
-            createMeal(
-                name = "3 in 1 italian dip",
-                description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
-                tags = null
-            ),
-            createMeal(
-                name = "3 ingredient carnitas",
-                description = "3 ingredients and a little patience are all you need to create flavorful carnitas.",
-                tags = listOf("very-low-carbs", "summer", "dietary", "low-sodium", "seasonal")
-            ),
+            threeInOneItalianDip().copy(tags = null),
+            threeIngredientCarnitas(),
         )
 
         // When
