@@ -31,3 +31,16 @@ fun createMeal(
     ingredients = ingredients,
     preparationTime = preparationTime
 )
+
+fun createMealByProteinAndCalories(name: String, calories: Double?, protein: Double?) = createMeal(
+    name = name,
+    nutrition = Nutrition(
+        calories = calories,
+        protein = protein,
+        totalFat = null,
+        sugar = null,
+        sodium = null,
+        saturatedFat = null,
+        carbohydrates = null
+    )
+)
