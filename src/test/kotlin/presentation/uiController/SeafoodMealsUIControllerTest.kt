@@ -29,7 +29,7 @@ class SeafoodMealsUIControllerTest {
     }
 
     @Test
-    fun `execute should prints correct formatted meals when use case succeeds`() {
+    fun `should execute prints correctly formatted meals when the use case succeeds`() {
         // Given
         every { useCase.getSeafoodMealsSortedByProtein() } returns listOf(shrimpMeal)
 
@@ -44,7 +44,7 @@ class SeafoodMealsUIControllerTest {
     }
 
     @Test
-    fun `execute should call getSeafoodMealsSortedByProtein exactly once`() {
+    fun `should execute call getSeafoodMealsSortedByProtein exactly once`() {
         // Given
         every { useCase.getSeafoodMealsSortedByProtein() } returns emptyList()
 
@@ -56,7 +56,7 @@ class SeafoodMealsUIControllerTest {
     }
 
     @Test
-    fun `execute should print multiple meals in order of protein descending`() {
+    fun `should execute print multiple meals in order of protein descending`() {
         every { useCase.getSeafoodMealsSortedByProtein() } returns listOf(shrimpMeal, tunaMeal)
 
         val outContent = readConsoleOutputContent()
@@ -70,7 +70,7 @@ class SeafoodMealsUIControllerTest {
     }
 
     @Test
-    fun `execute should print correct error message when there is an exception thrown`() {
+    fun `should execute print correct error message when there is an exception thrown`() {
         // Given
         val exception = FoodMoodException.Validation.EmptyDataException
         every { useCase.getSeafoodMealsSortedByProtein() } throws exception
@@ -86,7 +86,7 @@ class SeafoodMealsUIControllerTest {
     }
 
     @Test
-    fun `execute should print unknown error message when unexpected exception is thrown`() {
+    fun `should execute print unknown error message when unexpected exception is thrown`() {
         // Given
         val unknownException = RuntimeException()
         every { useCase.getSeafoodMealsSortedByProtein() } throws unknownException
