@@ -36,7 +36,6 @@ class SweetMealsUIControllerTest {
 
     @AfterEach
     fun tearDown() {
-        // Restore original streams after each test
         System.setIn(originalIn)
         System.setOut(originalOut)
     }
@@ -84,7 +83,6 @@ class SweetMealsUIControllerTest {
             tags = listOf("sweet")
         )
 
-        // Mock to return first meal then second meal
         every { useCase.getRandomOneSweetMealWithoutEggs() } returns firstMeal andThen secondMeal
 
         simulateUserInput("n\ny")
