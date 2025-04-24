@@ -1,28 +1,24 @@
-import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import kotlinx.datetime.LocalDate
 import logic.models.Meal
 import logic.models.Nutrition
-import data.CSVFoodFileReader
 
 
-import java.time.format.DateTimeParseException
+class CSVFoodParser() {
 
-class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
-//
-    fun parseCsvFile(): List<Meal> {
-        val rows = csvReader().readAllWithHeader(csvFoodFileReader.csvFile)
-        return rows
-            .map { row ->
+    fun parseRow(row:Map<String,String>): Meal? {
 
+        if(row.isEmpty()){
+            return null
+        }
                 val submittedDate = row["submitted"]?.takeIf { it.isNotBlank() }
 
                 val submittedDateModel: LocalDate? = if(submittedDate != null) try {
                     LocalDate.parse(submittedDate)
-                }catch (e:DateTimeParseException ){
+                }catch (e:Exception ){
                     null
                 } else null
 
-            Meal(
+           return Meal(
                 name = row["name"]?.takeIf { it.isNotBlank() },
                 description = row["description"]?.takeIf { it.isNotBlank() },
                 id = row["id"]?.takeIf { it.isNotBlank() },
@@ -30,14 +26,14 @@ class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
                 submittedDate =submittedDateModel,
                 preparationTime = row["minutes"]?.takeIf { it.isNotBlank() }.toString().toIntOrNull(),
                 tags = parseQuotedStringIntoList(row["tags"]?.takeIf { it.isNotBlank() }) ,
-                nutrition = parseNutrition(row["nutrition"]?.takeIf { it.isNotBlank() }),
+                nutrition = parseNutrition(row["nutrition"]),
                 steps = parseQuotedStringIntoList(row["steps"]?.takeIf { it.isNotBlank() }),
                 numberOfSteps = row["n_steps"].toString().toIntOrNull(),
                 ingredients = parseQuotedStringIntoList(row["ingredients"]?.takeIf { it.isNotBlank() }),
                 numberOfIngredients = row["n_ingredients"].toString().toIntOrNull(),
             )
         }
-    }
+
 
     private fun parseQuotedStringIntoList(text: String?):List<String>?{
         if(text.isNullOrBlank()) return null
@@ -48,8 +44,10 @@ class CSVFoodParser(private val csvFoodFileReader: CSVFoodFileReader) {
     }
 
     private fun parseNutrition(text: String?): Nutrition?{
-        val cleanedText = text?.trim()?.trim('[',']','"') ?: return null
-        val values:List<Double?> = cleanedText.split(",").map { it.trim().toDoubleOrNull() }
+        if(text.isNullOrBlank()) return null
+        val cleanedText = text.trim().trim('[',']','"')
+        val values:List<Double?> = cleanedText.split(",").map { it.trim().toDoubleOrNull() }.takeIf { it.size ==7 } ?: return null
+
         return Nutrition(
                 values.getOrNull(CALORIES),
                 values.getOrNull(TOTAL_FAT),
