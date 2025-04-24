@@ -48,15 +48,3 @@ fun allInTheKitchen() = createMeal(
         "north-american"
     )
 )
-
-fun allInChili() = createMeal(
-    name = "all in the kitchen  chili",
-    tags = listOf(
-        "30-minutes-or-less",
-        "time-to-make",
-        "course",
-        "main-ingredient",
-        "cuisine",
-        "cairo"
-    )
-)

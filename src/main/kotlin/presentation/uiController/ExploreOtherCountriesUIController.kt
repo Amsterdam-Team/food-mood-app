@@ -1,5 +1,6 @@
 package presentation.uiController
 
+import logic.models.Meal
 import logic.usecase.ExploreOtherCountriesByNameUseCase
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
@@ -13,11 +14,15 @@ class ExploreOtherCountriesUIController(
         print("Type a country name to discover meals related to it:\n> ")
         val countryName = readLine()?.trim() ?: ""
 
-        println("\nSearching for meals related to \"$countryName\"...\n")
+        println("\nSearching for meals \n")
 
         val meals = exploreOtherCountriesUseCase.getRandomMealsRelatedToCountryName(countryName)
 
-        println("🍽️ Found ${meals.size} meals related to \"$countryName\":")
+        printMeals(meals)
+    }
+
+    private fun printMeals(meals:List<Meal>){
+        println("🍽️ Found ${meals.size} meals :")
         meals.forEach { meal ->
             println("- Meal Details are :")
             meal.id?.let { println("  ID: $it") }
@@ -33,6 +38,7 @@ class ExploreOtherCountriesUIController(
             meal.ingredients?.let { println("  Ingredients: $it") }
             meal.numberOfIngredients?.let { println(" Number Of Ingredients: $it") }
         }
+
     }
 
 

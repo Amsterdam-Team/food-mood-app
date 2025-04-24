@@ -5,7 +5,6 @@ import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
 import logic.exception.FoodMoodException.Validation.NotFoundMealForThisCountry
-import logic.helpers.allInChili
 import logic.helpers.allInTheKitchen
 import logic.helpers.arribaBakedWinter
 import logic.search.SearchUsingKMP
@@ -52,7 +51,6 @@ class ExploreOtherCountriesByNameUseCaseTest {
         val allMeals = listOf(
             arribaBakedWinter(),
             allInTheKitchen(),
-            allInChili()
         )
         every { repository.getAllMeals() } returns allMeals
         every {
