@@ -7,22 +7,27 @@ import logic.models.Meal
 import presentation.utils.getRandomElementOrNull
 
 class SuggestAMealByCaloriesUseCase(
-    private val mealsRepository: MealsRepository,
-    private val mealSuggestionDataStore: MealSuggestionDataStore
+    private val mealsRepository: MealsRepository, private val mealSuggestionDataStore: MealSuggestionDataStore
 ) {
 
-    private val filteredMealByCalories: List<Meal> by lazy {
-        mealsRepository.getAllMeals().filter {
+
+    fun filteredMealByCalories(): List<Meal> {
+        return mealsRepository.getAllMeals().filter {
             (it.nutrition?.calories ?: DEFAULT_CALORIES_VALUE) > INPUT_CALORIES
         }
     }
 
     fun getMealRandomly(): Meal {
-        val validMeals = filteredMealByCalories.ifEmpty { throw FoodMoodException.Validation.EmptyDataException }
-        val randomMeal = validMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+        val validMeals = filteredMealByCalories()
+
+        if (validMeals.isEmpty()) throw FoodMoodException.Validation.EmptyDataException
+
         if (validMeals.size == mealSuggestionDataStore.checkTotalSeenSuggestedMeals()) {
             throw FoodMoodException.Validation.NoMoreSuggestion
         }
+
+        val randomMeal = validMeals.getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+
         if (mealSuggestionDataStore.checkSeenSuggestedMeal(randomMeal)) {
             getMealRandomly()
         } else {
