@@ -9,8 +9,9 @@ class GetMealsByAddedDateUseCase(private val mealsRepository: MealsRepository) {
 
     fun getMealsByDate(inputDate: String): List<Meal> {
         val allMeals = mealsRepository.getAllMeals()
+        val parsedDate = parseDate(inputDate)
         val filteredMealByDate = allMeals.filter { currentMeal ->
-            currentMeal.submittedDate == parseDate(inputDate)
+            currentMeal.submittedDate == parsedDate
         }
 
         return filteredMealByDate.ifEmpty { throw FoodMoodException.Validation.NoMealsWereFoundForTheGivenDate }
