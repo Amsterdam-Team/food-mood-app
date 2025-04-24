@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import logic.exception.FoodMoodException
+import logic.exception.FoodMoodException.Validation.EmptyDataException
 import logic.helpers.*
 import logic.usecase.GetIraqiMealsUseCase
 import org.junit.jupiter.api.BeforeEach
@@ -36,8 +36,7 @@ class IraqiMealUIControllerTest{
     @Test
     fun `should execute print correct error message when there is an exception thrown`() {
         // Given
-        val exception = FoodMoodException.Validation.EmptyDataException
-        every { useCase.getOnlyIraqiMeals() } throws exception
+        every { useCase.getOnlyIraqiMeals() } throws EmptyDataException
 
         val outContent = readConsoleOutputContent()
 
