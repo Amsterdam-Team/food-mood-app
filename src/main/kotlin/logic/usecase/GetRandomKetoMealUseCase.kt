@@ -15,7 +15,7 @@ class GetRandomKetoMealUseCase(
         val randomMeal =
             getKetoMeals().getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
         if (getKetoMeals().size == ketoMealsDataStore.checkTotalSeenKetoMeals()) {
-            throw FoodMoodException.Validation.NoMoreSuggestion
+            throw FoodMoodException.Validation.NoMoreKetoMeals
         }
         if (ketoMealsDataStore.checkSeenKetoMeal(randomMeal)) {
             getRandomKetoMeal()
