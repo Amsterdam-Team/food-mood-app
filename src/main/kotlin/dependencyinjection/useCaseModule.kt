@@ -1,6 +1,5 @@
 package dependencyinjection
 
-import logic.GetFastHealthyMealsUseCase
 import logic.usecase.*
 import org.koin.dsl.module
 
@@ -9,7 +8,7 @@ val useCaseModule = module {
     single { GetFastHealthyMealsUseCase(get()) }
     single { GetIraqiMealsUseCase(get()) }
     single { GetItalianMealsForLargeGroupsUseCase(get()) }
-    single { GetKetoMealsUseCase(get()) }
+    single { GetRandomKetoMealUseCase(get(), get()) }
     single { GetMealByNameUseCase(get(), get()) }
     single { GetMealsByAddedDateUseCase(get()) }
     single { GetRandomOneSweetMealWithoutEggsUseCase(get()) }

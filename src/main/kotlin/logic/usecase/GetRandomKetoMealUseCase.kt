@@ -1,16 +1,29 @@
 package logic.usecase
 
+import data.KetoMealsDataStore
 import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
 import presentation.utils.getRandomElementOrNull
 
-class GetKetoMealsUseCase(
-    private val mealsRepository: MealsRepository
+class GetRandomKetoMealUseCase(
+    private val mealsRepository: MealsRepository,
+    private val ketoMealsDataStore: KetoMealsDataStore
 ) {
 
     fun getRandomKetoMeal(): Meal {
-        return getKetoMeals().getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+        val randomMeal =
+            getKetoMeals().getRandomElementOrNull() ?: throw FoodMoodException.Validation.EmptyDataException
+        if (getKetoMeals().size == ketoMealsDataStore.checkTotalSeenKetoMeals()) {
+            throw FoodMoodException.Validation.NoMoreKetoMeals
+        }
+        if (ketoMealsDataStore.checkSeenKetoMeal(randomMeal)) {
+            getRandomKetoMeal()
+        } else {
+            ketoMealsDataStore.addSeenKetoMeal(randomMeal)
+        }
+        return randomMeal
+
     }
 
     fun getKetoMeals(): List<Meal> {

@@ -14,8 +14,12 @@ class SuggestTop10EasyMealsUseCase(
         return validMeals.filter(::onSuggestEasyMeals).shuffled().take(10)
     }
     private fun onSuggestEasyMeals(meal: Meal): Boolean {
-        return (meal.preparationTime ?: Int.MAX_VALUE) <= 30 &&
-                (meal.numberOfIngredients ?: Int.MAX_VALUE) <= 5 &&
-                (meal.numberOfSteps ?: Int.MAX_VALUE) <= 6
+
+        return  meal.preparationTime != null &&
+                meal.numberOfIngredients != null &&
+                meal.numberOfSteps != null &&
+                meal.preparationTime <= 30 &&
+                meal.numberOfIngredients <= 5 &&
+                meal.numberOfSteps <= 6
     }
 }

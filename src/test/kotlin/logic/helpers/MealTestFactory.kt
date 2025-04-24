@@ -31,6 +31,30 @@ fun threeInOneItalianDip() = createMeal(
     tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables"),
     ingredients = listOf("cream cheese", "mozzarella cheese", "mayonnaise", "garlic clove", "sun-dried tomato packed in oil", "marinated artichoke hearts", "roasted red pepper")
 )
+fun arribaBakedWinter() = createMeal(
+    name = "arriba   baked winter squash mexican style",
+    tags = listOf(
+        "60-minutes-or-less",
+        "time-to-make",
+        "course",
+        "main-ingredient",
+        "cuisine",
+        "north-american"
+    )
+)
+
+fun allInTheKitchen() = createMeal(
+    name = "all in the kitchen  chili",
+    tags = listOf(
+        "30-minutes-or-less",
+        "time-to-make",
+        "course",
+        "main-ingredient",
+        "cuisine",
+        "north-american"
+    )
+)
+
 
 fun eggAvocadoBowl() = createMeal(
     name = "Egg Avocado Bowl",
