@@ -1,6 +1,10 @@
 package logic.helpers
 
 import logic.models.Nutrition
+import presentation.utils.withGreenColor
+import presentation.utils.withYellowColor
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 
 fun bahrainiSweetRice() =
     createMeal(
@@ -24,8 +28,33 @@ fun chocolateCherryPecanBiscotti() = createMeal(
 fun threeInOneItalianDip() = createMeal(
     name = "3 in 1 italian dip",
     description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
-    tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
+    tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables"),
+    ingredients = listOf("cream cheese", "mozzarella cheese", "mayonnaise", "garlic clove", "sun-dried tomato packed in oil", "marinated artichoke hearts", "roasted red pepper")
 )
+fun arribaBakedWinter() = createMeal(
+    name = "arriba   baked winter squash mexican style",
+    tags = listOf(
+        "60-minutes-or-less",
+        "time-to-make",
+        "course",
+        "main-ingredient",
+        "cuisine",
+        "north-american"
+    )
+)
+
+fun allInTheKitchen() = createMeal(
+    name = "all in the kitchen  chili",
+    tags = listOf(
+        "30-minutes-or-less",
+        "time-to-make",
+        "course",
+        "main-ingredient",
+        "cuisine",
+        "north-american"
+    )
+)
+
 
 fun eggAvocadoBowl() = createMeal(
     name = "Egg Avocado Bowl",
@@ -68,3 +97,51 @@ fun zucchiniNoodlesWithPesto() = createMeal(
         carbohydrates = 8.0
     )
 )
+
+fun beefEnchilada() = createMeal(
+    name = "beef enchilada lasagna",
+    description = "this tasty italian/mexican medley is delicious and easy to put together. a barely-modified, terrific sandi richards recipe that allows for you to prepare ingredients ahead of time to throw together once you get home. enjoy!",
+    tags = listOf("time-to-make", "course", "main-ingredient", "cuisine", "main-dish", "beef", "pasta", "mexican", "easy", "european", "kid-friendly", "italian", "lasagna")
+)
+
+fun threeIngredientCarnitas() = createMeal(
+    name = "3 ingredient carnitas",
+    description = "3 ingredients and a little patience are all you need to create flavorful carnitas.",
+    tags = listOf("very-low-carbs", "summer", "dietary", "low-sodium", "seasonal")
+)
+
+fun barmia() = createMeal(
+    name = "barmia",
+    description = "a one dish hearty meal using lamb, garlic and a tomato sauce served with rice and pitta.  i love this as it's so easy to prepare and cook and is really tasty.  it's from iraq i think--well my iraqi husband showed me how to cook it once and i have used it again and again as a supper or served at a long lunch with friends. i use two cutlets per person, but sometimes i use what bits and pieces i have in fridge/freezer such as the odd chop and shank. it's good to have bone in this dish as you cook it on the stove for a minimum 45 minutes and it gives it a rustic look, not to mention taste.",
+    tags = listOf("main-ingredient", "cuisine")
+)
+
+fun beefCutlets() = createMeal(
+    name = "beef cutlets",
+    description = "this is my cutlet recipe. i add with a little grated coconut added for a twist sometimes. i like to serve these with a tomato sauce or a dipping sauce, as an accompaniment to pulao and raita or even dal and rice. not very sure of the yield as it varies depending on the size of my cutlets. i do not like monotony so the the sizes vary ;)",
+    tags = listOf("60-minutes-or-less", "time-to-make", "course", "main-ingredient", "cuisine", "preparation", "side-dishes", "asian", "indian", "easy", "meat"),
+    ingredients = listOf("beef mince", "garam masala powder", "onions", "mint leaves", "cilantro", "green chilies", "coconut", "black pepper", "egg", "semolina", "oil")
+)
+
+fun readConsoleOutputContent(): ByteArrayOutputStream {
+    val outContent = ByteArrayOutputStream()
+    System.setOut(PrintStream(outContent))
+    return outContent
+}
+
+const val EMPTY_DATA_EXCEPTION_ERROR_MESSAGE = "No meals found that match your criteria."
+
+fun formattedIraqiMeal(): String {
+    val meal = beefCutlets()
+    val formattedIraqiMeal = StringBuilder()
+    formattedIraqiMeal.append("Meal Name: ${meal.name},   Description: ${meal.description}")
+    return formattedIraqiMeal.toString()
+}
+
+fun formattedItalianMeal(): String {
+    val meal = threeInOneItalianDip()
+    val formattedIraqiMeal = StringBuilder()
+
+    formattedIraqiMeal.append("Meal Name: ${meal.name},   Description: ${meal.description}")
+    return formattedIraqiMeal.toString()
+}

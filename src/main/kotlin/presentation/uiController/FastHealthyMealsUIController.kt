@@ -1,7 +1,7 @@
 package presentation.uiController
 
-import logic.GetFastHealthyMealsUseCase
 import logic.models.Meal
+import logic.usecase.GetFastHealthyMealsUseCase
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 

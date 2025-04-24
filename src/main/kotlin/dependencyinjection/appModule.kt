@@ -30,7 +30,7 @@ val appModule = module {
     single { IraqiMealUIController(get()) }
     single { ItalianMealUIController(get()) }
     single { MealsByDateUIController(get()) }
-    single { SeafoodMealsSuccessUIController(get()) }
+    single { SeafoodMealsUIController(get()) }
     single { SuggestMealByCaloriesUIController(get()) }
     single { SuggestTop10EasyMealsUIController(get()) }
     single { SweetMealsUIController(get()) }

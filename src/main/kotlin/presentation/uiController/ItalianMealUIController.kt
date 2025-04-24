@@ -19,7 +19,7 @@ class ItalianMealUIController(
         println("Your Italian Meals for large groups\n".withGreenColor())
         meals.forEach { meal ->
             println("Meal Name: ${meal.name},   Description: ${meal.description}".withGreenColor())
-            println("Ingredients: ")
+            println("Ingredients:")
             meal.ingredients?.forEach {
                 println(it.withGreenColor())
             }
