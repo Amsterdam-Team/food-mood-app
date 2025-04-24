@@ -14,8 +14,10 @@ class FastHealthyMealsUIController(private val fastHealthyMealsUseCase: GetFastH
     }
 
     private fun onGetFastHealthyMealsSuccess(meals: List<Meal>) {
-        meals.forEach { result ->
-            println(result.toString().trimIndent().withGreenColor())
+        meals.forEach { meal ->
+            println(formatMeal(meal).withGreenColor())
         }
     }
+
+    private fun formatMeal(meal: Meal) = meal.toString().trimIndent()
 }

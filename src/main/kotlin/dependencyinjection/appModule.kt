@@ -15,8 +15,8 @@ import java.io.File
 val appModule = module {
     single { File("food.csv") }
     single { CSVFoodFileReader(get()) }
-    single { CSVFoodParser(get()) }
-    single<MealsRepository> { MealsRepositoryImpl(get()) }
+    single { CSVFoodParser() }
+    single<MealsRepository> { MealsRepositoryImpl(get(),get()) }
     single { MealSuggestionDataStore() }
     single { KetoMealsDataStore() }
     single { SearchUsingKMP() }
