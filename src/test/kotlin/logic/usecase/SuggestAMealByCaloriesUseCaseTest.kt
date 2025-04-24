@@ -6,7 +6,8 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import logic.MealsRepository
-import logic.exception.FoodMoodException
+import logic.exception.FoodMoodException.Validation.EmptyDataException
+import logic.exception.FoodMoodException.Validation.NoMoreSuggestion
 import logic.helpers.createMeal
 import logic.helpers.createNutrition
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -64,7 +65,7 @@ class SuggestAMealByCaloriesUseCaseTest {
         every { repository.getAllMeals() } returns emptyList()
 
         //when then
-        assertThrows<FoodMoodException.Validation.EmptyDataException> {
+        assertThrows<EmptyDataException> {
             useCase.getMealRandomly()
         }
     }
@@ -96,7 +97,7 @@ class SuggestAMealByCaloriesUseCaseTest {
 
         //then
         assertEquals(highCalorieMeals.size, dataStore.checkTotalSeenSuggestedMeals())
-        assertThrows<FoodMoodException.Validation.NoMoreSuggestion> {
+        assertThrows<NoMoreSuggestion> {
             useCase.getMealRandomly()
         }
     }
