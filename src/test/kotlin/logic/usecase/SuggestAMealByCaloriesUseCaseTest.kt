@@ -4,13 +4,11 @@ import com.google.common.truth.Truth.assertThat
 import data.MealSuggestionDataStore
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.TestCase.assertEquals
 import logic.MealsRepository
 import logic.exception.FoodMoodException.Validation.EmptyDataException
 import logic.exception.FoodMoodException.Validation.NoMoreSuggestion
 import logic.helpers.createMeal
 import logic.helpers.createNutrition
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
