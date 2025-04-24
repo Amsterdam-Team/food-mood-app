@@ -1,5 +1,7 @@
 package logic.helpers
 
+import logic.models.Nutrition
+
 fun bahrainiSweetRice() =
     createMeal(
         name = "bahraini sweet rice  muhammar",
