@@ -9,7 +9,7 @@ class SeafoodMealsSuccessUIController(private val getSeafoodMealsByProteinUseCas
     BaseUIController {
     override fun execute() {
         tryToExecute(
-            action = { getSeafoodMealsByProteinUseCase.getSeafoodMealsByProteinUseCase() },
+            action = { getSeafoodMealsByProteinUseCase.getSeafoodMealsSortedByProtein() },
             onSuccess = ::onGetSeafoodMealsSuccess
         )
     }
