@@ -1,16 +1,18 @@
 package presentation.uiController
 
+import logic.helpers.SearchByIngredientsTestFactory.POTATOES
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import logic.exception.FoodMoodException
-import logic.helpers.createMeal
 import logic.usecase.SearchByIngredientsUseCase
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import logic.helpers.SearchByIngredientsTestFactory.makePotatoMeals
+import logic.helpers.SearchByIngredientsTestFactory.makeSinglePotatoMeal
 
 class ILovePotatoUIControllerTest {
 
@@ -29,7 +31,7 @@ class ILovePotatoUIControllerTest {
     @Test
     fun `execute should print welcome message for potato lovers`() {
         // Given
-        every { useCase.getMealByIngredient("potatoes") } returns emptyList()
+        every { useCase.getMealByIngredient(POTATOES) } returns emptyList()
 
         // When
         controller.execute()
@@ -41,25 +43,19 @@ class ILovePotatoUIControllerTest {
     @Test
     fun `execute should call use case with correct ingredient`() {
         // Given
-        every { useCase.getMealByIngredient("potatoes") } returns emptyList()
+        every { useCase.getMealByIngredient(POTATOES) } returns emptyList()
 
         // When
         controller.execute()
 
         // Then
-        verify(exactly = 1) { useCase.getMealByIngredient("potatoes") }
+        verify(exactly = 1) { useCase.getMealByIngredient(POTATOES) }
     }
 
     @Test
     fun `execute should display up to 10 random potato meals`() {
         // Given
-        val potatoMeals = List(15) { index ->
-            createMeal(
-                name = "Potato Meal ${index + 1}",
-                ingredients = listOf("potatoes", "other ingredient ${index + 1}")
-            )
-        }
-        every { useCase.getMealByIngredient("potatoes") } returns potatoMeals
+        every { useCase.getMealByIngredient(POTATOES) } returns makePotatoMeals(15)
 
         // When
         controller.execute()
@@ -73,11 +69,8 @@ class ILovePotatoUIControllerTest {
     @Test
     fun `execute should display meal details correctly`() {
         // Given
-        val testMeal = createMeal(
-            name = "Mashed Potatoes",
-            ingredients = listOf("potatoes", "butter", "milk")
-        )
-        every { useCase.getMealByIngredient("potatoes") } returns listOf(testMeal)
+        val testMeal = makeSinglePotatoMeal()
+        every { useCase.getMealByIngredient(POTATOES) } returns listOf(testMeal)
 
         // When
         controller.execute()
@@ -88,12 +81,10 @@ class ILovePotatoUIControllerTest {
         assertThat(output).contains("   Ingredients: [potatoes, butter, milk]")
     }
 
-
-
     @Test
     fun `execute should handle empty results gracefully`() {
         // Given
-        every { useCase.getMealByIngredient("potatoes") } throws
+        every { useCase.getMealByIngredient(POTATOES) } throws
                 FoodMoodException.Validation.EmptyDataException
 
         // When
@@ -103,13 +94,11 @@ class ILovePotatoUIControllerTest {
         assertThat(outContent.toString()).contains("No meals found that match your criteria.")
     }
 
-
-
     @Test
     fun `execute should print enjoy message when meals found`() {
         // Given
-        val testMeal = createMeal(name = "Test Meal", ingredients = listOf("potatoes"))
-        every { useCase.getMealByIngredient("potatoes") } returns listOf(testMeal)
+        val testMeal = makeSinglePotatoMeal()
+        every { useCase.getMealByIngredient(POTATOES) } returns listOf(testMeal)
 
         // When
         controller.execute()
@@ -124,7 +113,7 @@ class ILovePotatoUIControllerTest {
     @Test
     fun `execute should handle unexpected errors`() {
         // Given
-        every { useCase.getMealByIngredient("potatoes") } throws
+        every { useCase.getMealByIngredient(POTATOES) } throws
                 RuntimeException("Database error")
 
         // When
@@ -140,7 +129,7 @@ class ILovePotatoUIControllerTest {
     @Test
     fun `execute should handle empty results`() {
         // Given
-        every { useCase.getMealByIngredient("potatoes") } throws
+        every { useCase.getMealByIngredient(POTATOES) } throws
                 FoodMoodException.Validation.EmptyDataException
 
         // When

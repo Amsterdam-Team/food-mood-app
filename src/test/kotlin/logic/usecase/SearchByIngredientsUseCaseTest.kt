@@ -6,39 +6,33 @@ import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
 import logic.exception.FoodMoodException.Validation.EmptyDataException
-import logic.helpers.createMeal
+import logic.helpers.SearchByIngredientsTestFactory
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class SearchByIngredientsUseCaseTest {
 
-    private lateinit var mealsRepository: MealsRepository
-    private lateinit var searchByIngredientsUseCase: SearchByIngredientsUseCase
+    private lateinit var repository: MealsRepository
+    private lateinit var useCase: SearchByIngredientsUseCase
 
     @BeforeEach
     fun setup() {
-        mealsRepository = mockk(relaxed = true)
-        searchByIngredientsUseCase = SearchByIngredientsUseCase(mealsRepository)
+        repository = mockk(relaxed = true)
+        useCase = SearchByIngredientsUseCase(repository)
     }
 
     @Test
     fun `should return meals containing the ingredient`() {
         // Given
-        val ingredient = "lemon"
-        val mealWithIngredient = createMeal(
-            name = "Salmon with Lemon",
-            ingredients = listOf("salmon", "lemon", "salt")
-        )
-        val mealWithoutIngredient = createMeal(
-            name = "Tuna Dish",
-            ingredients = listOf("tuna", "pepper")
-        )
+        val ingredient = SearchByIngredientsTestFactory.LEMON
+        val (mealWithIngredient, mealWithoutIngredient) =
+            SearchByIngredientsTestFactory.makeMealsWithAndWithout(ingredient)
 
-        every { mealsRepository.getAllMeals() } returns listOf(mealWithIngredient, mealWithoutIngredient)
+        every { repository.getAllMeals() } returns listOf(mealWithIngredient, mealWithoutIngredient)
 
         // When
-        val result = searchByIngredientsUseCase.getMealByIngredient(ingredient)
+        val result = useCase.getMealByIngredient(ingredient)
 
         // Then
         assertThat(result).containsExactly(mealWithIngredient)
@@ -47,33 +41,29 @@ class SearchByIngredientsUseCaseTest {
     @Test
     fun `should throw EmptyDataException when no meals contain the ingredient`() {
         // Given
-        val ingredient = "garlic"
-        val meals = listOf(
-            createMeal(name = "Shrimp", ingredients = listOf("shrimp", "salt")),
-            createMeal(name = "Tuna", ingredients = listOf("tuna", "pepper"))
-        )
+        val ingredient = SearchByIngredientsTestFactory.GARLIC
+        val meals = SearchByIngredientsTestFactory.makeSomeMeals()
 
-        every { mealsRepository.getAllMeals() } returns meals
+        every { repository.getAllMeals() } returns meals
 
         // When & Then
         assertThrows<EmptyDataException> {
-            searchByIngredientsUseCase.getMealByIngredient(ingredient)
+            useCase.getMealByIngredient(ingredient)
         }
     }
 
     @Test
     fun `should skip meals with null ingredients`() {
         // Given
-        val ingredient = "lemon"
-        val mealWithNullIngredients = createMeal(name = "Unknown")
-        val mealWithIngredient = createMeal(name = "Lemon Dish", ingredients = listOf("lemon"))
+        val ingredient = SearchByIngredientsTestFactory.LEMON
+        val meals = SearchByIngredientsTestFactory.makeMealsWithNullAndValidIngredient(ingredient)
 
-        every { mealsRepository.getAllMeals() } returns listOf(mealWithNullIngredients, mealWithIngredient)
+        every { repository.getAllMeals() } returns meals
 
         // When
-        val result = searchByIngredientsUseCase.getMealByIngredient(ingredient)
+        val result = useCase.getMealByIngredient(ingredient)
 
         // Then
-        assertThat(result).containsExactly(mealWithIngredient)
+        assertThat(result).containsExactly(meals.last()) // Only the valid one
     }
 }
