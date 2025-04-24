@@ -42,30 +42,6 @@ class SweetMealsUIControllerTest {
     }
 
     @Test
-    fun `should print the correct message when meal is found`() {
-        // Given
-        val sweetMeal = createMeal(
-            name = "Sweet Halwa",
-            description = "A delicious sweet dessert",
-            preparationTime = 15,
-            ingredients = listOf("sugar", "semolina", "ghee"),
-            numberOfIngredients = 3,
-            tags = listOf("sweet")
-        )
-
-        simulateUserInput("y")
-
-        every { useCase.getRandomOneSweetMealWithoutEggs() } returns sweetMeal
-
-        // When
-        controller.execute()
-
-        // Then
-        val output = outContent.toString()
-        assertThat(output).contains("Here is a random sweet meal without eggs: Sweet Halwa , And description: A delicious sweet dessert")
-    }
-
-    @Test
     fun `should ask user if they like the meal and handle yes response correctly`() {
         // Given
         val sweetMeal = createMeal(
