@@ -1,6 +1,7 @@
 package presentation.uiController
 
 import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -9,6 +10,7 @@ import logic.helpers.*
 import logic.usecase.GetItalianMealsForLargeGroupsUseCase
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class ItalianMealUIControllerTest{
     private lateinit var useCase: GetItalianMealsForLargeGroupsUseCase
@@ -44,7 +46,7 @@ class ItalianMealUIControllerTest{
 
         // Then
         val actualErrorMessage = outContent.toString()
-        Truth.assertThat(actualErrorMessage).contains(EMPTY_DATA_EXCEPTION_ERROR_MESSAGE)
+        assertThat(actualErrorMessage).contains(EMPTY_DATA_EXCEPTION_ERROR_MESSAGE)
     }
 
     @Test
@@ -59,6 +61,6 @@ class ItalianMealUIControllerTest{
 
         // Then
         val actualFormatMeal = outContent.toString()
-        Truth.assertThat(actualFormatMeal).contains(formattedItalianMeal())
+        assertThat(actualFormatMeal).contains(formattedItalianMeal())
     }
 }
