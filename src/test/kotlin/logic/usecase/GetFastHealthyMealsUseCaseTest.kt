@@ -132,7 +132,7 @@ class GetFastHealthyMealsUseCaseTest {
     }
 
     @Test
-    fun `should return the correct meals when all meals are healthy, but it has a preparation time out of range (1 to 15)`() {
+    fun `should return healthy meals excluding those with preparation time outside the allowed range`() {
         //Given
         val healthyMealResult = createMeal(
             nutrition = defaultNutrition.copy(totalFat = 40.0, saturatedFat = 8.0, carbohydrates = 15.0),
@@ -154,7 +154,7 @@ class GetFastHealthyMealsUseCaseTest {
     }
 
     @Test
-    fun `should return the correct meals when there is a meal with a preparation time exactly at the edge of the preparation time range`() {
+    fun `should return meals including those with preparation time at the range boundary`() {
         // Given
         val mealWithMinPreparationTime = createMeal(
             nutrition = defaultNutrition.copy(totalFat = 10.0, saturatedFat = 2.0, carbohydrates = 5.0),
