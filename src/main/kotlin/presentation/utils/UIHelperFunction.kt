@@ -1,7 +1,6 @@
 package presentation.utils
 
 import logic.exception.FoodMoodException
-import sun.security.provider.PolicyParser
 
 
 fun String.withRedColor(): String = "\u001b[31m $this\u001B[0m"
@@ -34,7 +33,7 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.ParsingException.MalFormedCsvFileException -> "this csv file is malformed."
 
         is FoodMoodException -> "Something went wrong with your request. Please try again."
-       else -> "An unexpected error occurred. Please try again later."
+        else -> "An unexpected error occurred. Please try again later."
     }
 
     return message.withRedColor()

@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class GetRandomKetoMealUseCaseTest {
+
     private lateinit var useCase: GetRandomKetoMealUseCase
     private lateinit var mealsRepository: MealsRepository
     private lateinit var ketoMealsDataStore: KetoMealsDataStore
@@ -24,6 +25,7 @@ class GetRandomKetoMealUseCaseTest {
     fun setUp() {
         mealsRepository = mockk(relaxed = true)
         ketoMealsDataStore = mockk(relaxed = true)
+
         useCase = GetRandomKetoMealUseCase(mealsRepository, ketoMealsDataStore)
     }
 
@@ -33,6 +35,7 @@ class GetRandomKetoMealUseCaseTest {
         every { mealsRepository.getAllMeals() } returns emptyList()
         // When && Then
         assertThrows<FoodMoodException.Validation.EmptyDataException> {
+
             useCase.getRandomKetoMeal()
         }
 
@@ -60,6 +63,7 @@ class GetRandomKetoMealUseCaseTest {
             grilledChickenSalad()
         )
         // When
+
         val result = useCase.getRandomKetoMeal()
         // Then
         assertThat(result).isIn(listOf(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto()))
@@ -74,6 +78,7 @@ class GetRandomKetoMealUseCaseTest {
             grilledChickenSalad()
         )
         // When
+
         val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
@@ -102,6 +107,7 @@ class GetRandomKetoMealUseCaseTest {
             )
         )
         // When
+
         val result = useCase.getKetoMeals()
 
         // Then
@@ -131,6 +137,7 @@ class GetRandomKetoMealUseCaseTest {
 
         )
         // When
+
         val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
@@ -159,6 +166,7 @@ class GetRandomKetoMealUseCaseTest {
 
         )
         // When
+
         val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
@@ -187,10 +195,12 @@ class GetRandomKetoMealUseCaseTest {
 
         )
         // When
+
         val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
     }
+
 
     @Test
     fun `should return another meal when call get random meal again and there are more keto meals`() {
