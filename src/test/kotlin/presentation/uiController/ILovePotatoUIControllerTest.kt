@@ -29,7 +29,7 @@ class ILovePotatoUIControllerTest {
     }
 
     @Test
-    fun `execute should print welcome message for potato lovers`() {
+    fun `execute should print welcome message`() {
         // Given
         every { useCase.getMealByIngredient(POTATOES) } returns emptyList()
 
@@ -41,7 +41,7 @@ class ILovePotatoUIControllerTest {
     }
 
     @Test
-    fun `execute should call use case with correct ingredient`() {
+    fun `execute should call use case`() {
         // Given
         every { useCase.getMealByIngredient(POTATOES) } returns emptyList()
 
@@ -53,7 +53,7 @@ class ILovePotatoUIControllerTest {
     }
 
     @Test
-    fun `execute should display up to 10 random potato meals`() {
+    fun `execute should display meal section header`() {
         // Given
         every { useCase.getMealByIngredient(POTATOES) } returns makePotatoMeals(15)
 
@@ -61,13 +61,24 @@ class ILovePotatoUIControllerTest {
         controller.execute()
 
         // Then
-        val output = outContent.toString()
-        assertThat(output).contains("Here are some meals that contain potatoes:")
-        assertThat(output.lines().count { it.startsWith("Meal:") }).isAtMost(10)
+        assertThat(outContent.toString()).contains("Here are some meals that contain potatoes:")
     }
 
     @Test
-    fun `execute should display meal details correctly`() {
+    fun `execute should limit displayed meals to 10`() {
+        // Given
+        every { useCase.getMealByIngredient(POTATOES) } returns makePotatoMeals(15)
+
+        // When
+        controller.execute()
+
+        // Then
+        val lines = outContent.toString().lines().count { it.startsWith("Meal:") }
+        assertThat(lines).isAtMost(10)
+    }
+
+    @Test
+    fun `execute should show meal name`() {
         // Given
         val testMeal = makeSinglePotatoMeal()
         every { useCase.getMealByIngredient(POTATOES) } returns listOf(testMeal)
@@ -76,13 +87,50 @@ class ILovePotatoUIControllerTest {
         controller.execute()
 
         // Then
-        val output = outContent.toString()
-        assertThat(output).contains("1. Meal: Mashed Potatoes")
-        assertThat(output).contains("   Ingredients: [potatoes, butter, milk]")
+        assertThat(outContent.toString()).contains("1. Meal: Mashed Potatoes")
     }
 
     @Test
-    fun `execute should handle empty results gracefully`() {
+    fun `execute should show meal ingredients`() {
+        // Given
+        val testMeal = makeSinglePotatoMeal()
+        every { useCase.getMealByIngredient(POTATOES) } returns listOf(testMeal)
+
+        // When
+        controller.execute()
+
+        // Then
+        assertThat(outContent.toString()).contains("   Ingredients: [potatoes, butter, milk]")
+    }
+
+    @Test
+    fun `execute should print enjoy message`() {
+        // Given
+        val testMeal = makeSinglePotatoMeal()
+        every { useCase.getMealByIngredient(POTATOES) } returns listOf(testMeal)
+
+        // When
+        controller.execute()
+
+        // Then
+        assertThat(outContent.toString()).contains("enjoy your meal!")
+    }
+
+    @Test
+    fun `execute should print loading message`() {
+        // Given
+        val testMeal = makeSinglePotatoMeal()
+        every { useCase.getMealByIngredient(POTATOES) } returns listOf(testMeal)
+
+        // When
+        controller.execute()
+
+        // Then
+        assertThat(outContent.toString()).contains("Loading meals...")
+    }
+
+    @Test
+    fun `execute should handle empty results with user-friendly message`() {
         // Given
         every { useCase.getMealByIngredient(POTATOES) } throws
                 FoodMoodException.Validation.EmptyDataException
@@ -95,39 +143,46 @@ class ILovePotatoUIControllerTest {
     }
 
     @Test
-    fun `execute should print enjoy message when meals found`() {
-        // Given
-        val testMeal = makeSinglePotatoMeal()
-        every { useCase.getMealByIngredient(POTATOES) } returns listOf(testMeal)
-
-        // When
-        controller.execute()
-
-        // Then
-        val output = outContent.toString()
-        assertThat(output).contains("Loading meals...")
-        assertThat(output).contains("Hi, potato lover!")
-        assertThat(output).contains("enjoy your meal!")
-    }
-
-    @Test
-    fun `execute should handle unexpected errors`() {
+    fun `execute should print error on unexpected exceptions`() {
         // Given
         every { useCase.getMealByIngredient(POTATOES) } throws
-                RuntimeException("Database error")
+                RuntimeException("DB error")
 
         // When
         controller.execute()
 
         // Then
-        val output = outContent.toString()
-        assertThat(output).contains("Loading meals...")
-        assertThat(output).contains("An unexpected error occurred. Please try again later.")
-        assertThat(output).doesNotContain("enjoy your meal!")
+        assertThat(outContent.toString()).contains("An unexpected error occurred. Please try again later.")
     }
 
     @Test
-    fun `execute should handle empty results`() {
+    fun `execute should not print enjoy message on error`() {
+        // Given
+        every { useCase.getMealByIngredient(POTATOES) } throws
+                RuntimeException("DB error")
+
+        // When
+        controller.execute()
+
+        // Then
+        assertThat(outContent.toString()).doesNotContain("enjoy your meal!")
+    }
+
+    @Test
+    fun `execute should print loading message on exception`() {
+        // Given
+        every { useCase.getMealByIngredient(POTATOES) } throws
+                RuntimeException("DB error")
+
+        // When
+        controller.execute()
+
+        // Then
+        assertThat(outContent.toString()).contains("Loading meals...")
+    }
+
+    @Test
+    fun `execute should not print enjoy message on empty data exception`() {
         // Given
         every { useCase.getMealByIngredient(POTATOES) } throws
                 FoodMoodException.Validation.EmptyDataException
@@ -136,9 +191,19 @@ class ILovePotatoUIControllerTest {
         controller.execute()
 
         // Then
-        val output = outContent.toString()
-        assertThat(output).contains("Loading meals...")
-        assertThat(output).contains("No meals found that match your criteria.")
-        assertThat(output).doesNotContain("enjoy your meal!")
+        assertThat(outContent.toString()).doesNotContain("enjoy your meal!")
+    }
+
+    @Test
+    fun `execute should print loading message on empty data exception`() {
+        // Given
+        every { useCase.getMealByIngredient(POTATOES) } throws
+                FoodMoodException.Validation.EmptyDataException
+
+        // When
+        controller.execute()
+
+        // Then
+        assertThat(outContent.toString()).contains("Loading meals...")
     }
 }
