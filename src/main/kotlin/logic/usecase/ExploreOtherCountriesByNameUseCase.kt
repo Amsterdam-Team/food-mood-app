@@ -19,7 +19,7 @@ class ExploreOtherCountriesByNameUseCase(
         }
 
         if (mealsRelatedToCountry.isEmpty())
-            throw FoodMoodException.Validation.NotFoundCountryName
+            throw FoodMoodException.Validation.NotFoundMealForThisCountry
 
         return mealsRelatedToCountry.getRandomElements(20)
     }

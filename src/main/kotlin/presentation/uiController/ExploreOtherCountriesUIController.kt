@@ -19,7 +19,19 @@ class ExploreOtherCountriesUIController(
 
         println("🍽️ Found ${meals.size} meals related to \"$countryName\":")
         meals.forEach { meal ->
-            println("- $meal")
+            println("- Meal Details are :")
+            meal.id?.let { println("  ID: $it") }
+            meal.name?.let { println("  Name: $it") }
+            meal.description?.let { println("  Description: $it") }
+            meal.preparationTime?.let { println("  Preparation Time: $it") }
+            meal.contributorId?.let { println(" Contributor Id: $it") }
+            meal.submittedDate?.let { println("  Submitted Date: $it") }
+            meal.tags?.let { println("  Tags: $it") }
+            meal.nutrition?.let { println("  Nutrition: $it") }
+            meal.steps?.let { println("  Steps: $it") }
+            meal.numberOfSteps?.let { println("  Number Of Step: $it") }
+            meal.ingredients?.let { println("  Ingredients: $it") }
+            meal.numberOfIngredients?.let { println(" Number Of Ingredients: $it") }
         }
     }
 
