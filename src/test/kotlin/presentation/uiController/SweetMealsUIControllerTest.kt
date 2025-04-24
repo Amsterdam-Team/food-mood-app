@@ -1,4 +1,4 @@
-package logic.usecase
+package presentation.uiController
 
 import io.mockk.every
 import io.mockk.mockk
@@ -13,8 +13,8 @@ import java.io.PrintStream
 import presentation.utils.withGreenColor
 import com.google.common.truth.Truth.assertThat
 import logic.exception.FoodMoodException
-import presentation.uiController.SweetMealsUIController
 import logic.helpers.simulateUserInput
+import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
 
 class SweetMealsUIControllerTest {
 
