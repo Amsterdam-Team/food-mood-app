@@ -6,7 +6,6 @@ import io.mockk.mockk
 import logic.MealsRepository
 import logic.exception.FoodMoodException.Validation.EmptyDataException
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -34,91 +33,94 @@ class SearchByCaloriesAndProteinUseCaseTest {
         useCase = SearchByCaloriesAndProteinUseCase(repository)
     }
 
-    @Nested
-    inner class HappyPathTests {
-        @Test
-        fun `should return exact match when calories and protein match exactly`() {
-            // Given
-            every { repository.getAllMeals() } returns listOf(
-                pizza,
-                steak,
-                cucumber
-            )
-            // When
-            val result = useCase.getMealByCaloriesAndProtein(250, 25)
 
-            // Then
-            assertThat(result).containsExactly(steak)
-        }
-
-        @ParameterizedTest
-        @CsvSource(
-            "251, 25",  // calories slightly higher
-            "249, 25",  // calories slightly lower
-            "250, 26",   // protein slightly higher
-            "250, 24",  // protein slightly lower
-            "251, 26",   // both slightly higher
-            "249, 24"    // both slightly lower
+    @Test
+    fun `should return exact match when calories and protein match exactly`() {
+        // Given
+        every { repository.getAllMeals() } returns listOf(
+            pizza,
+            steak,
+            cucumber
         )
-        fun `should return matches within acceptable range`(calories: Double, protein: Double) {
-            // Given
-            every { repository.getAllMeals() } returns listOf(
-                pizza,
-                steak,
-                cucumber
-            )
-            // When
-            val result = useCase.getMealByCaloriesAndProtein(calories.toInt(), protein.toInt())
+        // When
+        val result = useCase.getMealByCaloriesAndProtein(250, 25)
 
-            // Then
-            assertThat(result).containsExactly(steak)
-        }
+        // Then
+        assertThat(result).containsExactly(steak)
+    }
 
-        @Test
-        fun `should return multiple matches when they fit the criteria`() {
-            // Given
-            every { repository.getAllMeals() } returns listOf(
-                pizza,
-                steak,
-                chicken,
-                cucumber
-            )
+    @ParameterizedTest
+    @CsvSource(
+        "251, 25",  // calories slightly higher
+        "249, 25",  // calories slightly lower
+        "250, 26",   // protein slightly higher
+        "250, 24",  // protein slightly lower
+        "251, 26",   // both slightly higher
+        "249, 24"    // both slightly lower
+    )
+    fun `should return matches within acceptable range`(calories: Double, protein: Double) {
+        // Given
+        every { repository.getAllMeals() } returns listOf(
+            pizza,
+            steak,
+            cucumber
+        )
+        // When
+        val result = useCase.getMealByCaloriesAndProtein(calories.toInt(), protein.toInt())
 
-            // When
-            val result = useCase.getMealByCaloriesAndProtein(250, 25)
+        // Then
+        assertThat(result).containsExactly(steak)
+    }
 
-            // Then
-            assertThat(result).containsExactly(steak, chicken)
+    @Test
+    fun `should return multiple matches when they fit the criteria`() {
+        // Given
+        every { repository.getAllMeals() } returns listOf(
+            pizza,
+            steak,
+            chicken,
+            cucumber
+        )
+
+        // When
+        val result = useCase.getMealByCaloriesAndProtein(250, 25)
+
+        // Then
+        assertThat(result).containsExactly(steak, chicken)
+    }
+
+
+
+    @Test
+    fun `should return only water when zero values and mixed meals exist`() {
+        // Given
+        every { repository.getAllMeals() } returns listOf(water, steak, pizza)
+
+        // When
+        val result = useCase.getMealByCaloriesAndProtein(0, 0)
+
+        // Then
+        assertThat(result).containsExactly(water)
+    }
+
+
+
+
+
+
+    @Test
+    fun `should throw EmptyDataException when no meals exist`() {
+        // Given
+        every { repository.getAllMeals() } returns emptyList()
+
+        // When + Then
+        assertThrows<EmptyDataException> {
+            useCase.getMealByCaloriesAndProtein(100, 10)
         }
     }
 
-    @Nested
-    inner class EdgeCasesTests {
-        @Test
-        fun `should handle zero values correctly`() {
-            // Given
-            every { repository.getAllMeals() } returns listOf(water)
-            // When
-            val result = useCase.getMealByCaloriesAndProtein(0, 0)
 
-            // Then
-            assertThat(result).containsExactly(water)
-        }
-
-
-    }
-
-
-        @Test
-        fun `should throw EmptyDataException when no meals exist`() {
-            // Given
-            // When + Then
-            assertThrows<EmptyDataException> {
-                useCase.getMealByCaloriesAndProtein(100, 10)
-            }
-        }
-
-        @Test
+    @Test
         fun `should throw EmptyDataException when no matching meals found`() {
             // Given
             every { repository.getAllMeals() } returns listOf(water)
