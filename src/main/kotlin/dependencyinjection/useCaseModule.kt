@@ -1,6 +1,5 @@
 package dependencyinjection
 
-import logic.GetFastHealthyMealsUseCase
 import logic.usecase.*
 import org.koin.dsl.module
 
