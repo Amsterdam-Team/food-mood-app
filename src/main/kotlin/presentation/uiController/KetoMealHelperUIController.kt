@@ -11,7 +11,7 @@ class KetoMealHelperUIController(private val getRandomKetoMealUseCase: GetRandom
 
 
     private var input: String = ""
-    lateinit var currentMeal: Meal
+    private lateinit var currentMeal: Meal
 
     override fun execute() {
         tryToExecute(
