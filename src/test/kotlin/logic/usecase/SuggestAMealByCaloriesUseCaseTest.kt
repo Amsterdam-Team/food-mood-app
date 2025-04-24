@@ -42,8 +42,7 @@ class SuggestAMealByCaloriesUseCaseTest {
         val filteredMeals = useCase.filteredMealByCalories()
 
         //then
-        assertEquals(3, filteredMeals.size)
-
+        assertThat(filteredMeals).hasSize(3)
     }
 
     @Test
@@ -79,8 +78,9 @@ class SuggestAMealByCaloriesUseCaseTest {
         val result = useCase.getMealRandomly()
 
         //then
-        assertTrue(dataStore.checkSeenSuggestedMeal(result))
-        assertEquals(1, dataStore.checkTotalSeenSuggestedMeals())
+        assertThat(dataStore.checkSeenSuggestedMeal(result)).isTrue()
+        assertThat(dataStore.checkTotalSeenSuggestedMeals()).isEqualTo(1)
+
     }
 
     @Test
@@ -90,13 +90,12 @@ class SuggestAMealByCaloriesUseCaseTest {
 
         //when
         val highCalorieMeals = meals.filter { (it.nutrition?.calories ?: 0.0) > 700.0 }
-
         highCalorieMeals.forEach {
             dataStore.addSeenSuggestedMeal(it)
         }
 
         //then
-        assertEquals(highCalorieMeals.size, dataStore.checkTotalSeenSuggestedMeals())
+        assertThat(dataStore.checkTotalSeenSuggestedMeals()).isEqualTo(highCalorieMeals.size)
         assertThrows<NoMoreSuggestion> {
             useCase.getMealRandomly()
         }
