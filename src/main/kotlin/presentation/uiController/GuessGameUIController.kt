@@ -2,14 +2,16 @@ package presentation.uiController
 
 import logic.exception.FoodMoodException
 import logic.usecase.GuessPreparationTimeUseCase
-import presentation.utils.readValidInt
+import presentation.console.ConsoleIO
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 import presentation.utils.withRedColor
 import presentation.utils.withYellowColor
 
-class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCase) :
-    BaseUIController {
+class GuessGameUIController(
+    private val guessUseCase: GuessPreparationTimeUseCase,
+    private val console: ConsoleIO
+) : BaseUIController {
 
     override fun execute() {
         tryToExecute(
@@ -21,11 +23,11 @@ class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCas
 
     private fun onStartGuessing() {
         val mealName = guessUseCase.getCurrentMeal()
-        println("🎯 Guess the preparation time for: $mealName")
+        console.println("🎯 Guess the preparation time for: $mealName")
     }
 
     private fun readGuessInput(remainingAttempts: Int): Int {
-        return readValidInt("Your guess (Attempts left: $remainingAttempts):")
+        return console.readInt("Your guess (Attempts left: $remainingAttempts):")
     }
 
     private tailrec fun onRunGuessGameSuccess(remainingAttempts: Int = 3) {
@@ -38,20 +40,20 @@ class GuessGameUIController(private val guessUseCase: GuessPreparationTimeUseCas
 
         when (result) {
             is GuessPreparationTimeUseCase.ComparisonResult.Correct -> {
-                println("Correct! You guessed it.".withGreenColor())
+                console.println("Correct! You guessed it.".withGreenColor())
                 return
             }
 
             is GuessPreparationTimeUseCase.ComparisonResult.Close -> {
-                println("Wrong but you're very close!".withYellowColor())
+                console.println("Wrong but you're very close!".withYellowColor())
             }
 
             is GuessPreparationTimeUseCase.ComparisonResult.TooHigh -> {
-                println("Too high!".withRedColor())
+                console.println("Too high!".withRedColor())
             }
 
             is GuessPreparationTimeUseCase.ComparisonResult.TooLow -> {
-                println("Too low!".withRedColor())
+                console.println("Too low!".withRedColor())
             }
         }
 
