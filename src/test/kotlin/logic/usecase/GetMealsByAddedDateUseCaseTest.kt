@@ -17,7 +17,7 @@ import kotlin.test.Test
 
 class GetMealsByAddedDateUseCaseTest {
     lateinit var useCase: GetMealsByAddedDateUseCase
-    lateinit var mealsRepository: MealsRepository
+    lateinit var repository: MealsRepository
     val meals = listOf<Meal>(
         createMeal(submittedDate = LocalDate(2025, 9, 16), id = "50"),
         createMeal(submittedDate = LocalDate(2005, 9, 16), id = "120"),
@@ -26,14 +26,14 @@ class GetMealsByAddedDateUseCaseTest {
 
     @BeforeEach
     fun setup() {
-        mealsRepository = mockk(relaxed = true)
-        useCase = GetMealsByAddedDateUseCase(mealsRepository)
+        repository = mockk(relaxed = true)
+        useCase = GetMealsByAddedDateUseCase(repository)
     }
 
     @Test
-    fun `getMealsByDate should throw InvalidDateFormatException when it given invalid date format`() {
+    fun `should getMealsByDate throw InvalidDateFormatException when it given invalid date format`() {
         //given
-        every { mealsRepository.getAllMeals() } returns meals
+        every { repository.getAllMeals() } returns meals
 
         //when
         val date = "2005/9/16"
@@ -45,9 +45,9 @@ class GetMealsByAddedDateUseCaseTest {
     }
 
     @Test
-    fun `getMealsByDate should throw NoMealsWereFoundForTheGivenDate exception when it given a valid date and no data associated to it`() {
+    fun `should getMealsByDate throw NoMealsWereFoundForTheGivenDate exception when it given a valid date and no data associated to it`() {
         //given
-        every { mealsRepository.getAllMeals() } returns meals
+        every { repository.getAllMeals() } returns meals
 
         //when
         val date = "2005-09-20"
@@ -60,9 +60,9 @@ class GetMealsByAddedDateUseCaseTest {
 
 
     @Test
-    fun `getMealsByDate should return all meals when it given a valid date`() {
+    fun `should getMealsByDate return all meals when it given a valid date`() {
         //given
-        every { mealsRepository.getAllMeals() } returns meals
+        every { repository.getAllMeals() } returns meals
 
         //when
         val date = "2005-09-16"
@@ -74,9 +74,9 @@ class GetMealsByAddedDateUseCaseTest {
     }
 
     @Test
-    fun `getDetailedMealFromMealsData should throw EmptyDataException when it given an id that doesn't belong to any data`() {
+    fun `should getDetailedMealFromMealsData throw EmptyDataException when it given an id that doesn't belong to any data`() {
         //given
-        every { mealsRepository.getAllMeals() } returns meals
+        every { repository.getAllMeals() } returns meals
 
         //when
         val id = "7"
@@ -89,10 +89,10 @@ class GetMealsByAddedDateUseCaseTest {
 
 
     @Test
-    fun `getDetailedMealFromMealsData should return the meal that associated to the given id`() {
+    fun `should getDetailedMealFromMealsData return the meal that associated to the given id`() {
 
         //given
-        every { mealsRepository.getAllMeals() } returns meals
+        every { repository.getAllMeals() } returns meals
 
         //when
         val id = "50"
