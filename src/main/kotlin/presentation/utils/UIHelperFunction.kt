@@ -1,7 +1,6 @@
 package presentation.utils
 
 import logic.exception.FoodMoodException
-import sun.security.provider.PolicyParser
 
 
 fun String.withRedColor(): String = "\u001b[31m $this\u001B[0m"
@@ -13,6 +12,7 @@ fun getErrorMessageByException(exception: Exception): String {
     val message = when (exception) {
         is FoodMoodException.Validation.EmptyDataException -> "No meals found that match your criteria."
         is FoodMoodException.Validation.NoMoreSuggestion -> "No more meals contain over than 700 calorie"
+        is FoodMoodException.Validation.NoMoreKetoMeals -> "No more keto meals"
 
         is FoodMoodException.Validation.InvalidCalories -> "Calories value is invalid. Please enter a number within the acceptable range."
         is FoodMoodException.Validation.InvalidProtein -> "Protein value is invalid. Please check the input."
@@ -33,7 +33,7 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.ParsingException.MalFormedCsvFileException -> "this csv file is malformed."
 
         is FoodMoodException -> "Something went wrong with your request. Please try again."
-       else -> "An unexpected error occurred. Please try again later."
+        else -> "An unexpected error occurred. Please try again later."
     }
 
     return message.withRedColor()

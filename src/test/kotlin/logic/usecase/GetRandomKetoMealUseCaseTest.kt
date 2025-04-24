@@ -1,6 +1,7 @@
 package logic.usecase
 
 import com.google.common.truth.Truth.assertThat
+import data.KetoMealsDataStore
 import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
@@ -14,14 +15,18 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class GetKetoMealsUseCaseTest {
-    private lateinit var getRandomKetoMealUseCase: GetKetoMealsUseCase
+class GetRandomKetoMealUseCaseTest {
+
+    private lateinit var useCase: GetRandomKetoMealUseCase
     private lateinit var mealsRepository: MealsRepository
+    private lateinit var ketoMealsDataStore: KetoMealsDataStore
 
     @BeforeEach
     fun setUp() {
         mealsRepository = mockk(relaxed = true)
-        getRandomKetoMealUseCase = GetKetoMealsUseCase(mealsRepository)
+        ketoMealsDataStore = mockk(relaxed = true)
+
+        useCase = GetRandomKetoMealUseCase(mealsRepository, ketoMealsDataStore)
     }
 
     @Test
@@ -30,7 +35,21 @@ class GetKetoMealsUseCaseTest {
         every { mealsRepository.getAllMeals() } returns emptyList()
         // When && Then
         assertThrows<FoodMoodException.Validation.EmptyDataException> {
-            getRandomKetoMealUseCase.getRandomKetoMeal()
+
+            useCase.getRandomKetoMeal()
+        }
+
+    }
+
+    @Test
+    fun `should throw no more keto meals exception when no more keto meals`() {
+        //Given
+        every { mealsRepository.getAllMeals() } returns listOf(eggAvocadoBowl())
+        every { ketoMealsDataStore.checkTotalSeenKetoMeals() } returns 1
+
+        // When && Then
+        assertThrows<FoodMoodException.Validation.NoMoreKetoMeals> {
+            useCase.getRandomKetoMeal()
         }
 
     }
@@ -44,7 +63,8 @@ class GetKetoMealsUseCaseTest {
             grilledChickenSalad()
         )
         // When
-        val result = getRandomKetoMealUseCase.getRandomKetoMeal()
+
+        val result = useCase.getRandomKetoMeal()
         // Then
         assertThat(result).isIn(listOf(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto()))
     }
@@ -58,7 +78,8 @@ class GetKetoMealsUseCaseTest {
             grilledChickenSalad()
         )
         // When
-        val result = getRandomKetoMealUseCase.getKetoMeals()
+
+        val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
     }
@@ -86,7 +107,8 @@ class GetKetoMealsUseCaseTest {
             )
         )
         // When
-        val result = getRandomKetoMealUseCase.getKetoMeals()
+
+        val result = useCase.getKetoMeals()
 
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
@@ -115,8 +137,8 @@ class GetKetoMealsUseCaseTest {
 
         )
         // When
-        val result = getRandomKetoMealUseCase.getKetoMeals()
-        println(result)
+
+        val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
     }
@@ -144,8 +166,8 @@ class GetKetoMealsUseCaseTest {
 
         )
         // When
-        val result = getRandomKetoMealUseCase.getKetoMeals()
-        println(result)
+
+        val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
     }
@@ -173,10 +195,41 @@ class GetKetoMealsUseCaseTest {
 
         )
         // When
-        val result = getRandomKetoMealUseCase.getKetoMeals()
-        println(result)
+
+        val result = useCase.getKetoMeals()
         // Then
         assertThat(result).containsExactly(eggAvocadoBowl(), grilledChickenSalad(), zucchiniNoodlesWithPesto())
+    }
+
+
+    @Test
+    fun `should return another meal when call get random meal again and there are more keto meals`() {
+        //Given
+        every { mealsRepository.getAllMeals() } returns listOf(eggAvocadoBowl())
+        every { ketoMealsDataStore.checkTotalSeenKetoMeals() } returns 0
+
+        // When
+        val result = useCase.getRandomKetoMeal()
+
+        // Then
+        assertThat(result).isIn(listOf(eggAvocadoBowl()))
+
+
+    }
+
+    @Test
+    fun `should return another meal when current meal in the seen keto meals`() {
+        //Given
+        every { mealsRepository.getAllMeals() } returns listOf(eggAvocadoBowl(), zucchiniNoodlesWithPesto())
+        every { ketoMealsDataStore.checkSeenKetoMeal(eggAvocadoBowl()) } returns true
+
+        // When
+        val result = useCase.getRandomKetoMeal()
+
+        // Then
+        assertThat(result).isIn(listOf(zucchiniNoodlesWithPesto()))
+
+
     }
 
 

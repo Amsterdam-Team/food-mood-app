@@ -7,6 +7,7 @@ fun <T> tryToExecute(action: () -> T, onSuccess: (result: T) -> Unit) {
         action().also { onSuccess(it) }
     } catch (exception: Exception) {
         println(getErrorMessageByException(exception))
+        throw exception
     }
 }
 

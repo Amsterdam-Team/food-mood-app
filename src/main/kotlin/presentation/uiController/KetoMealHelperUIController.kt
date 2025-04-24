@@ -1,42 +1,31 @@
 package presentation.uiController
 
 import logic.models.Meal
-import logic.usecase.GetKetoMealsUseCase
+import logic.usecase.GetRandomKetoMealUseCase
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 import presentation.utils.withRedColor
 
-class KetoMealHelperUIController(private val getKetoFriendlyMealsUseCase: GetKetoMealsUseCase) :
+class KetoMealHelperUIController(private val getRandomKetoMealUseCase: GetRandomKetoMealUseCase) :
     BaseUIController {
 
-    private lateinit var suggestedMeal: Meal
-    private var seenMeals: MutableList<Meal> = mutableListOf()
-    private val ketoMeals = getKetoFriendlyMealsUseCase.getKetoMeals()
+
     private var input: String = ""
+
+    private lateinit var currentMeal: Meal
+
 
     override fun execute() {
         tryToExecute(
-            action = { getKetoFriendlyMealsUseCase.getRandomKetoMeal() },
+            action = { getRandomKetoMealUseCase.getRandomKetoMeal() },
             onSuccess = { onGetRandomMealSuccess(it) }
         )
     }
 
     private fun onGetRandomMealSuccess(meal: Meal) {
-        suggestedMeal = meal
-        if (seenMeals.size == ketoMeals.size) {
-            println("No More Keto Meals".withRedColor())
-            return
-        }
-        if (suggestedMeal in seenMeals) {
-            execute()
-
-        } else {
-            println("Suggested Meal: ${meal.name}")
-            seenMeals.add(suggestedMeal)
-            handleUserInput()
-
-        }
-
+        currentMeal = meal
+        println(meal.name)
+        handleUserInput()
     }
 
 
@@ -44,7 +33,7 @@ class KetoMealHelperUIController(private val getKetoFriendlyMealsUseCase: GetKet
         println("press Y if you like it , or N if you do not like it")
         input = readlnOrNull()?.trim()?.lowercase() ?: ""
         when (input) {
-            "y" -> println(suggestedMeal.toString().withGreenColor())
+            "y" -> println(currentMeal.toString().withGreenColor())
             "n" -> {
                 execute()
             }

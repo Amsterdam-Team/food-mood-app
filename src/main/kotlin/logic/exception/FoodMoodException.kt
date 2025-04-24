@@ -1,19 +1,18 @@
 package logic.exception
 
-import com.github.doyaaaaaken.kotlincsv.util.MalformedCSVException
-
 sealed class FoodMoodException() : Exception() {
     sealed class Validation() : FoodMoodException() {
         data object InvalidCalories : Validation()
         data object InvalidProtein : Validation()
         data object EmptyMealName : Validation()
         data object NotFoundMealName : Validation()
-        data object NotFoundMealForThisCountry : Validation()
+        data object NotFoundCountryName : Validation()
         data object EmptyDataException : Validation()
         data object NoMoreSuggestion : Validation()
         data object MissingPreparationTime : Validation()
         data object MealNotFounded : Validation()
         data object NoMealsWereFoundForTheGivenDate : Validation()
+        data object NoMoreKetoMeals : Validation()
 
 
     }
