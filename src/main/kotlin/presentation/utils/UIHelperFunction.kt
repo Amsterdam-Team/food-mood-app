@@ -27,7 +27,7 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.GameException.WrongGuessFormat -> "Invalid input format. Please enter a valid number for preparation time."
 
         is FoodMoodException.Validation.NotFoundMealName -> "This meal name not found , Please Try again and make sure of entering correct name "
-        is FoodMoodException.Validation.NotFoundCountryName -> "This country name not found , Please Try again and make sure of entering correct name "
+        is FoodMoodException.Validation.NotFoundMealForThisCountry -> "Not found meal for this country name, Please Try again "
 
         is FoodMoodException.ParsingException.EmptyFileException -> "this csv file is empty"
         is FoodMoodException.ParsingException.MalFormedCsvFileException -> "this csv file is malformed."
