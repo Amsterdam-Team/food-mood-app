@@ -49,6 +49,8 @@ fun allInTheKitchen() = createMeal(
         "north-american"
     )
 )
+
+
 fun eggAvocadoBowl() = createMeal(
     name = "Egg Avocado Bowl",
     description = "A delicious keto bowl with eggs, avocado, and bacon.",
@@ -76,6 +78,7 @@ fun grilledChickenSalad() = createMeal(
         carbohydrates = 6.0
     )
 )
+
 fun zucchiniNoodlesWithPesto() = createMeal(
     name = "Zucchini Noodles with Pesto",
     description = "Zucchini noodles with a creamy pesto sauce.",
@@ -87,4 +90,5 @@ fun zucchiniNoodlesWithPesto() = createMeal(
         protein = 15.0,
         saturatedFat = 6.0,
         carbohydrates = 8.0
-    ))
+    )
+)
