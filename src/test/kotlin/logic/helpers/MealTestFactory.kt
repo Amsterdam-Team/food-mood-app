@@ -24,27 +24,3 @@ fun threeInOneItalianDip() = createMeal(
     description = "great idea here!  i found this in the kraft food and family holiday edition.  very simple and if some don't like the taste of an ingredient, they don't have to eat it because the 'dip' is sectioned off into 3 sections.",
     tags = listOf("north-american", "for-large-groups", "appetizers", "eggs-dairy", "vegetables")
 )
-
-fun arribaBakedWinter() = createMeal(
-    name = "arriba   baked winter squash mexican style",
-    tags = listOf(
-        "60-minutes-or-less",
-        "time-to-make",
-        "course",
-        "main-ingredient",
-        "cuisine",
-        "north-american"
-    )
-)
-
-fun allInTheKitchen() = createMeal(
-    name = "all in the kitchen  chili",
-    tags = listOf(
-        "30-minutes-or-less",
-        "time-to-make",
-        "course",
-        "main-ingredient",
-        "cuisine",
-        "north-american"
-    )
-)

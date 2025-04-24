@@ -1,5 +1,7 @@
 package logic.exception
 
+import com.github.doyaaaaaken.kotlincsv.util.MalformedCSVException
+
 sealed class FoodMoodException() : Exception() {
     sealed class Validation() : FoodMoodException() {
         data object InvalidCalories : Validation()
@@ -19,6 +21,8 @@ sealed class FoodMoodException() : Exception() {
     sealed class ParsingException() : FoodMoodException() {
         data object MissingNutritionField : ParsingException()
         data object InvalidDateFormatException : ParsingException()
+        data object EmptyFileException : ParsingException()
+        data object MalFormedCsvFileException : ParsingException()
 
     }
 

@@ -4,12 +4,11 @@ import logic.MealsRepository
 import logic.exception.FoodMoodException
 import logic.models.Meal
 
-
 class GetSeafoodMealsByProteinUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun getSeafoodMealsByProteinUseCase(): List<Meal> {
+    fun getSeafoodMealsSortedByProtein(): List<Meal> {
         val allMeals = mealsRepository.getAllMeals()
         val validMeals = getValidMeals(allMeals).ifEmpty { throw FoodMoodException.Validation.EmptyDataException }
         val seafoodMeals =
