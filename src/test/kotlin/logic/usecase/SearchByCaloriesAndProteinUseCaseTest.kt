@@ -5,24 +5,33 @@ import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
 import logic.exception.FoodMoodException.Validation.EmptyDataException
-import logic.helpers.createMeal
-import logic.helpers.createMealByProteinAndCalories
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.pizza
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.steak
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.cucumber
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.chicken
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.water
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.nullNutritionMeal
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.nullProteinMeal
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.nullCaloriesMeal
+import logic.helpers.SearchByCaloriesAndProteinUseCaseTestFactory.validMeal
+
+
 
 class SearchByCaloriesAndProteinUseCaseTest {
 
-    private lateinit var mealsRepository: MealsRepository
+    private lateinit var repository: MealsRepository
     private lateinit var useCase: SearchByCaloriesAndProteinUseCase
 
     @BeforeEach
     fun setup() {
-        mealsRepository = mockk(relaxed = true)
-        useCase = SearchByCaloriesAndProteinUseCase(mealsRepository)
+        repository = mockk(relaxed = true)
+        useCase = SearchByCaloriesAndProteinUseCase(repository)
     }
 
     @Nested
@@ -30,12 +39,10 @@ class SearchByCaloriesAndProteinUseCaseTest {
         @Test
         fun `should return exact match when calories and protein match exactly`() {
             // Given
-            val steak = createMealByProteinAndCalories("steak", 250.0, 25.0)
-
-            every { mealsRepository.getAllMeals() } returns listOf(
-                createMealByProteinAndCalories("pizza", 400.0, 50.0),
+            every { repository.getAllMeals() } returns listOf(
+                pizza,
                 steak,
-                createMealByProteinAndCalories("cucumber", 23.0, 1.0)
+                cucumber
             )
             // When
             val result = useCase.getMealByCaloriesAndProtein(250, 25)
@@ -55,14 +62,13 @@ class SearchByCaloriesAndProteinUseCaseTest {
         )
         fun `should return matches within acceptable range`(calories: Double, protein: Double) {
             // Given
-            val steak = createMealByProteinAndCalories("steak", calories, protein)
-            every { mealsRepository.getAllMeals() } returns listOf(
-                createMealByProteinAndCalories("pizza", 400.0, 50.0),
+            every { repository.getAllMeals() } returns listOf(
+                pizza,
                 steak,
-                createMealByProteinAndCalories("cucumber", 23.0, 1.0)
+                cucumber
             )
             // When
-            val result = useCase.getMealByCaloriesAndProtein(250, 25)
+            val result = useCase.getMealByCaloriesAndProtein(calories.toInt(), protein.toInt())
 
             // Then
             assertThat(result).containsExactly(steak)
@@ -71,14 +77,11 @@ class SearchByCaloriesAndProteinUseCaseTest {
         @Test
         fun `should return multiple matches when they fit the criteria`() {
             // Given
-            val steak = createMealByProteinAndCalories("steak", 251.0, 26.0)
-            val chicken = createMealByProteinAndCalories("chicken", 249.0, 24.0)
-
-            every { mealsRepository.getAllMeals() } returns listOf(
-                createMealByProteinAndCalories("pizza", 400.0, 50.0),
+            every { repository.getAllMeals() } returns listOf(
+                pizza,
                 steak,
                 chicken,
-                createMealByProteinAndCalories("cucumber", 23.0, 1.0)
+                cucumber
             )
 
             // When
@@ -94,8 +97,7 @@ class SearchByCaloriesAndProteinUseCaseTest {
         @Test
         fun `should handle zero values correctly`() {
             // Given
-            val water = createMealByProteinAndCalories("water", 0.0, 0.0)
-            every { mealsRepository.getAllMeals() } returns listOf(water)
+            every { repository.getAllMeals() } returns listOf(water)
             // When
             val result = useCase.getMealByCaloriesAndProtein(0, 0)
 
@@ -119,7 +121,7 @@ class SearchByCaloriesAndProteinUseCaseTest {
         @Test
         fun `should throw EmptyDataException when no matching meals found`() {
             // Given
-            every { mealsRepository.getAllMeals() } returns listOf(createMealByProteinAndCalories("pizza", 500.0, 50.0))
+            every { repository.getAllMeals() } returns listOf(water)
 
             // When + Then
             assertThrows<EmptyDataException> {
@@ -130,12 +132,10 @@ class SearchByCaloriesAndProteinUseCaseTest {
         @Test
         fun `should exclude meals with null nutrition`() {
             // Given
-            val nullNutritionMeal = createMeal(name = "pizza")
-            val validMeal = createMealByProteinAndCalories("steak", 180.0, 18.0)
-            every { mealsRepository.getAllMeals() } returns listOf(nullNutritionMeal, validMeal)
+            every { repository.getAllMeals() } returns listOf(nullNutritionMeal, validMeal)
 
             // When
-            val result = useCase.getMealByCaloriesAndProtein(180, 18)
+            val result = useCase.getMealByCaloriesAndProtein(200, 20)
 
             // Then
             assertThat(result).containsExactly(validMeal)
@@ -144,13 +144,7 @@ class SearchByCaloriesAndProteinUseCaseTest {
         @Test
         fun `should exclude meals with null calories`() {
             // Given
-            val nullCaloriesMeal = createMealByProteinAndCalories(
-                name = "pizza",
-                protein = 20.0,
-                calories = null,
-            )
-            val validMeal = createMealByProteinAndCalories("steak", 200.0, 20.0)
-            every { mealsRepository.getAllMeals() } returns listOf(nullCaloriesMeal, validMeal)
+            every { repository.getAllMeals() } returns listOf(nullCaloriesMeal, validMeal)
 
             // When
             val result = useCase.getMealByCaloriesAndProtein(200, 20)
@@ -162,13 +156,7 @@ class SearchByCaloriesAndProteinUseCaseTest {
         @Test
         fun `should exclude meals with null protein`() {
             // Given
-            val nullProteinMeal = createMealByProteinAndCalories(
-                name = "MissingProtein",
-                calories = 200.0,
-                protein = null,
-            )
-            val validMeal = createMealByProteinAndCalories("ValidMeal", 200.0, 20.0)
-            every { mealsRepository.getAllMeals() } returns listOf(nullProteinMeal,validMeal)
+            every { repository.getAllMeals() } returns listOf(nullProteinMeal,validMeal)
 
             // When
             val result = useCase.getMealByCaloriesAndProtein(200, 20)
