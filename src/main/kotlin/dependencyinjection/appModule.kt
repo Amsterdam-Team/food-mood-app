@@ -14,8 +14,8 @@ import java.io.File
 val appModule = module {
     single { File("food.csv") }
     single { CSVFoodFileReader(get()) }
-    single { CSVFoodParser(get()) }
-    single<MealsRepository> { MealsRepositoryImpl(get()) }
+    single { CSVFoodParser() }
+    single<MealsRepository> { MealsRepositoryImpl(get(),get()) }
     single { MealSuggestionDataStore() }
 
     single { SearchUsingKMP() }
@@ -29,7 +29,7 @@ val appModule = module {
     single { IraqiMealUIController(get()) }
     single { ItalianMealUIController(get()) }
     single { MealsByDateUIController(get()) }
-    single { SeafoodMealsSuccessUIController(get()) }
+    single { SeafoodMealsUIController(get()) }
     single { SuggestMealByCaloriesUIController(get()) }
     single { SuggestTop10EasyMealsUIController(get()) }
     single { SweetMealsUIController(get()) }

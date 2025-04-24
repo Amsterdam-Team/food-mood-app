@@ -1,7 +1,7 @@
 package presentation.uiController
 
-import logic.GetFastHealthyMealsUseCase
 import logic.models.Meal
+import logic.usecase.GetFastHealthyMealsUseCase
 import presentation.utils.tryToExecute
 import presentation.utils.withGreenColor
 
@@ -14,8 +14,10 @@ class FastHealthyMealsUIController(private val fastHealthyMealsUseCase: GetFastH
     }
 
     private fun onGetFastHealthyMealsSuccess(meals: List<Meal>) {
-        meals.forEach { result ->
-            println(result.toString().trimIndent().withGreenColor())
+        meals.forEach { meal ->
+            println(formatMeal(meal).withGreenColor())
         }
     }
+
+    private fun formatMeal(meal: Meal) = meal.toString().trimIndent()
 }
