@@ -4,7 +4,9 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.datetime.LocalDate
 import logic.MealsRepository
-import logic.exception.FoodMoodException
+import logic.exception.FoodMoodException.ParsingException.InvalidDateFormatException
+import logic.exception.FoodMoodException.Validation.NoMealsWereFoundForTheGivenDate
+import logic.exception.FoodMoodException.Validation.EmptyDataException
 import logic.helpers.createMeal
 import logic.models.Meal
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,7 +16,7 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 
 class GetMealsByAddedDateUseCaseTest {
-    lateinit var getMealsByAddedDateUseCase: GetMealsByAddedDateUseCase
+    lateinit var useCase: GetMealsByAddedDateUseCase
     lateinit var mealsRepository: MealsRepository
     val meals = listOf<Meal>(
         createMeal(submittedDate = LocalDate(2025, 9, 16), id = "50"),
@@ -25,7 +27,7 @@ class GetMealsByAddedDateUseCaseTest {
     @BeforeEach
     fun setup() {
         mealsRepository = mockk(relaxed = true)
-        getMealsByAddedDateUseCase = GetMealsByAddedDateUseCase(mealsRepository)
+        useCase = GetMealsByAddedDateUseCase(mealsRepository)
     }
 
     @Test
@@ -37,8 +39,8 @@ class GetMealsByAddedDateUseCaseTest {
         val date = "2005/9/16"
 
         //then
-        assertThrows<FoodMoodException.ParsingException.InvalidDateFormatException> {
-            getMealsByAddedDateUseCase.getMealsByDate(date)
+        assertThrows<InvalidDateFormatException> {
+            useCase.getMealsByDate(date)
         }
     }
 
@@ -51,8 +53,8 @@ class GetMealsByAddedDateUseCaseTest {
         val date = "2005-09-20"
 
         //then
-        assertThrows<FoodMoodException.Validation.NoMealsWereFoundForTheGivenDate> {
-            getMealsByAddedDateUseCase.getMealsByDate(date)
+        assertThrows<NoMealsWereFoundForTheGivenDate> {
+            useCase.getMealsByDate(date)
         }
     }
 
@@ -64,7 +66,7 @@ class GetMealsByAddedDateUseCaseTest {
 
         //when
         val date = "2005-09-16"
-        val result = getMealsByAddedDateUseCase.getMealsByDate(date)
+        val result = useCase.getMealsByDate(date)
 
         //then
         assertFalse { result.isEmpty() }
@@ -80,8 +82,8 @@ class GetMealsByAddedDateUseCaseTest {
         val id = "7"
 
         //then
-        assertThrows<FoodMoodException.Validation.EmptyDataException> {
-            getMealsByAddedDateUseCase.getDetailedMealFromMealsData(id, meals)
+        assertThrows<EmptyDataException> {
+            useCase.getDetailedMealFromMealsData(id, meals)
         }
     }
 
@@ -94,7 +96,7 @@ class GetMealsByAddedDateUseCaseTest {
 
         //when
         val id = "50"
-        val requestedMeal = getMealsByAddedDateUseCase.getDetailedMealFromMealsData(id, meals)
+        val requestedMeal = useCase.getDetailedMealFromMealsData(id, meals)
 
         //then
         assertEquals(id, requestedMeal.id)
