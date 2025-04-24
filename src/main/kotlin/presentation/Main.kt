@@ -2,11 +2,25 @@ package presentation
 
 import dependencyinjection.appModule
 import dependencyinjection.useCaseModule
-import logic.usecase.GetKetoMealsUseCase
+import logic.usecase.GetRandomKetoMealUseCase
 import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
-import presentation.uiController.*
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
+import presentation.uiController.ExploreOtherCountriesUIController
+import presentation.uiController.FastHealthyMealsUIController
+import presentation.uiController.GetMealByNameUIController
+import presentation.uiController.GuessGameUIController
+import presentation.uiController.GymHelperUIController
+import presentation.uiController.ILovePotatoUIController
+import presentation.uiController.IraqiMealUIController
+import presentation.uiController.ItalianMealUIController
+import presentation.uiController.KetoMealHelperUIController
+import presentation.uiController.MainMenuHandler
+import presentation.uiController.MealsByDateUIController
+import presentation.uiController.SeafoodMealsUIController
+import presentation.uiController.SuggestMealByCaloriesUIController
+import presentation.uiController.SuggestTop10EasyMealsUIController
+import presentation.uiController.SweetMealsUIController
 
 fun main() {
     startKoin {
@@ -14,8 +28,9 @@ fun main() {
             appModule, useCaseModule
         )
     }
-    val getKetoMealsUseCase: GetKetoMealsUseCase = getKoin().get()
-    val getRandomOneSweetMealWithoutEggsUseCase: GetRandomOneSweetMealWithoutEggsUseCase = getKoin().get()
+    val getKetoMealsUseCase: GetRandomKetoMealUseCase = getKoin().get()
+    val getRandomOneSweetMealWithoutEggsUseCase: GetRandomOneSweetMealWithoutEggsUseCase =
+        getKoin().get()
 
     val guessGameUIController: GuessGameUIController = getKoin().get()
     val fastHealthyMealsUiController: FastHealthyMealsUIController = getKoin().get()
@@ -30,8 +45,8 @@ fun main() {
     val exploreOtherCountriesUIController: ExploreOtherCountriesUIController = getKoin().get()
     val suggestMealByCalorieUI: SuggestMealByCaloriesUIController = getKoin().get()
 
-    val iLovePotatoUIController :ILovePotatoUIController= getKoin().get()
-    val gymHelperUIController :GymHelperUIController= getKoin().get()
+    val iLovePotatoUIController: ILovePotatoUIController = getKoin().get()
+    val gymHelperUIController: GymHelperUIController = getKoin().get()
 
     val handlers = mapOf(
         1 to fastHealthyMealsUiController,
@@ -48,7 +63,7 @@ fun main() {
         13 to suggestMealByCalorieUI,
         14 to seafoodMealsSuccessUIController,
         15 to italianMealUIController,
-        )
+    )
 
 
 

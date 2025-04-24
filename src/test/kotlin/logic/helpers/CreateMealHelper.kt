@@ -48,6 +48,8 @@ fun createNutrition(
     protein = protein,
     saturatedFat = saturatedFat,
     carbohydrates = carbohydrates
+)
+
 fun createMealByProteinAndCalories(name: String, calories: Double?, protein: Double?) = createMeal(
     name = name,
     nutrition = Nutrition(
