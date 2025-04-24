@@ -2,6 +2,7 @@ package dependencyinjection
 
 import CSVFoodParser
 import data.CSVFoodFileReader
+import data.KetoMealsDataStore
 import data.MealSuggestionDataStore
 import data.MealsRepositoryImpl
 import logic.MealsRepository
@@ -17,7 +18,7 @@ val appModule = module {
     single { CSVFoodParser() }
     single<MealsRepository> { MealsRepositoryImpl(get(),get()) }
     single { MealSuggestionDataStore() }
-
+    single { KetoMealsDataStore() }
     single { SearchUsingKMP() }
 
     single { ExploreOtherCountriesUIController(get()) }
