@@ -1,6 +1,5 @@
 package presentation.uiController
 
-import logic.exception.FoodMoodException
 import logic.usecase.GuessPreparationTimeUseCase
 import presentation.console.ConsoleIO
 import presentation.utils.tryToExecute
@@ -32,7 +31,8 @@ class GuessGameUIController(
 
     private tailrec fun onRunGuessGameSuccess(remainingAttempts: Int = 3) {
         if (remainingAttempts == 0) {
-            throw FoodMoodException.GameException.AttemptsExceeded
+            console.println("Game over! You've run out of attempts.".withRedColor())
+            return
         }
 
         val guess = readGuessInput(remainingAttempts)

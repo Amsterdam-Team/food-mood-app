@@ -2,7 +2,6 @@ package presentation.uiController
 
 import io.mockk.mockk
 import io.mockk.verify
-import logic.exception.FoodMoodException.GameException.AttemptsExceeded
 import logic.usecase.GuessPreparationTimeUseCase
 import logic.usecase.GuessPreparationTimeUseCase.ComparisonResult.Close
 import logic.usecase.GuessPreparationTimeUseCase.ComparisonResult.Correct
@@ -10,7 +9,6 @@ import logic.usecase.GuessPreparationTimeUseCase.ComparisonResult.TooHigh
 import logic.usecase.GuessPreparationTimeUseCase.ComparisonResult.TooLow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import presentation.console.ConsoleIO
 import presentation.uiController.helpers.GuessGameTestHelper.givenMultipleGuesses
 import presentation.uiController.helpers.GuessGameTestHelper.givenValidGuessFlow
@@ -128,18 +126,20 @@ class GuessGameUIControllerTest {
     }
 
     @Test
-    fun `should throw attempts exceeded exception after 3 wrong guesses`() {
+    fun `should show attempts exceeded error message after 3 wrong guesses`() {
         // Given
         givenMultipleGuesses(
             guessUseCase,
             console,
-            guesses = listOf(0, 0, 0),
+            guesses = listOf(1, 1, 1),
             results = listOf(TooLow, TooHigh, Close)
         )
 
-        // When & Then
-        assertThrows<AttemptsExceeded> {
-            controller.execute()
-        }
+        // When
+        controller.execute()
+
+        // Then
+        verify(exactly = 3) { console.readInt(any()) }
+        verify { console.println("Game over! You've run out of attempts.".withRedColor()) }
     }
 }
