@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import logic.MealsRepository
-import logic.exception.FoodMoodException.*
+import logic.exception.FoodMoodException.Validation.EmptyDataException
 import logic.helpers.FastHealthyMealTestFactory.PREPARATION_TIME_ABOVE_TARGET
 import logic.helpers.FastHealthyMealTestFactory.PREPARATION_TIME_IN_TARGET
 import logic.helpers.FastHealthyMealTestFactory.defaultNutrition
