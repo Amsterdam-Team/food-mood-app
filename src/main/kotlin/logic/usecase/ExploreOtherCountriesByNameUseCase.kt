@@ -6,7 +6,7 @@ import logic.models.Meal
 import logic.search.SearchUsingKMP
 import presentation.utils.getRandomElements
 
-class ExploreOtherCountriesUseCase(
+class ExploreOtherCountriesByNameUseCase(
     private val searchUsingKMP: SearchUsingKMP,
     private val mealsRepository: MealsRepository
 ) {
@@ -19,7 +19,7 @@ class ExploreOtherCountriesUseCase(
         }
 
         if (mealsRelatedToCountry.isEmpty())
-            throw FoodMoodException.Validation.NotFoundCountryName
+            throw FoodMoodException.Validation.NotFoundMealForThisCountry
 
         return mealsRelatedToCountry.getRandomElements(20)
     }

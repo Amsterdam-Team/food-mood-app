@@ -4,7 +4,7 @@ import logic.usecase.*
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single { ExploreOtherCountriesUseCase(get(), get()) }
+    single { ExploreOtherCountriesByNameUseCase(get(), get()) }
     single { GetFastHealthyMealsUseCase(get()) }
     single { GetIraqiMealsUseCase(get()) }
     single { GetItalianMealsForLargeGroupsUseCase(get()) }
