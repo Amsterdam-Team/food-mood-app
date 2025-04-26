@@ -31,6 +31,7 @@ val appModule = module {
     single { SeafoodMealsUIController(get()) }
     single { SuggestMealByCaloriesUIController(get()) }
     single { SuggestTop10EasyMealsUIController(get()) }
+    single { IngredientGameUIController(get(),get()) }
     single { SweetMealsUIController(get()) }
     single { KetoMealHelperUIController(get()) }
 

@@ -32,6 +32,11 @@ fun getErrorMessageByException(exception: Exception): String {
         is FoodMoodException.ParsingException.EmptyFileException -> "this csv file is empty"
         is FoodMoodException.ParsingException.MalFormedCsvFileException -> "this csv file is malformed."
 
+        is FoodMoodException.GameException.InvalidIngredientData -> "No ingredients found for the meal or invalid ingredient format."
+        is FoodMoodException.GameException.NoIngredientData -> "No ingredients found for the meal or invalid ingredient format."
+        is FoodMoodException.GameException.IngredientOptionsNotEnough -> "Not enough ingredients available to generate distractor options for the game."
+        is FoodMoodException.GameException.NoValidMealsAvailable -> "No meals with valid ingredients available"
+
         is FoodMoodException -> "Something went wrong with your request. Please try again."
         else -> "An unexpected error occurred. Please try again later."
     }

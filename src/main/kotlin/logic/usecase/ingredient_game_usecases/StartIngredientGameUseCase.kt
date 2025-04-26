@@ -19,6 +19,9 @@ class StartIngredientGameUseCase(private val mealsRepository: MealsRepository) {
         }
 
         val availableMeal = getAvailableMeal(gameState)
+
+        gameState.usedMealIds.add(availableMeal.id!!)
+
         val correctIngredient = getCorrectIngredient(availableMeal)
         val distractors = getDistractors(availableMeal, gameState, correctIngredient)
 
@@ -27,6 +30,7 @@ class StartIngredientGameUseCase(private val mealsRepository: MealsRepository) {
         val options = (distractors + correctIngredient).shuffled()
 
         return IngredientGameResult.GameInProgress(
+            mealId = availableMeal.id,
             mealName = availableMeal.name!!,
             ingredientOptions = options,
             correctIngredient = correctIngredient,
@@ -38,15 +42,21 @@ class StartIngredientGameUseCase(private val mealsRepository: MealsRepository) {
     private fun getAvailableMeal(gameState: IngredientGameState): Meal {
         val meals = mealsRepository.getAllMeals()
         return meals
-            .filter { it.id != null && it.id !in gameState.usedMealIds && !it.ingredients.isNullOrEmpty() }
+            .filter { it.id != null && it.id !in gameState.usedMealIds }
             .getRandomElementOrNull()
-            ?: throw FoodMoodException.GameException.NoMealsAvailable
+            ?: throw FoodMoodException.GameException.NoValidMealsAvailable
     }
 
     private fun getCorrectIngredient(availableMeal: Meal): String {
-        return availableMeal.ingredients!!.getRandomElementOrNull()
-            ?: throw FoodMoodException.GameException.MealDataCorrupted
+        val ingredients = availableMeal.ingredients
+            ?.takeIf { it.isNotEmpty() && it.all { ing -> ing.matches(Regex("[A-Za-z0-9 ]+")) } }
+            ?: throw FoodMoodException.GameException.InvalidIngredientData
+
+        return ingredients.getRandomElementOrNull()
+            ?.takeIf { it.isNotBlank() }
+            ?: throw FoodMoodException.GameException.NoIngredientData
     }
+
 
     private fun getDistractors(availableMeal: Meal, gameState: IngredientGameState, correctIngredient: String): List<String> {
         val meals = mealsRepository.getAllMeals()

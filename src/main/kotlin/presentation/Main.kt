@@ -6,21 +6,7 @@ import logic.usecase.GetRandomKetoMealUseCase
 import logic.usecase.GetRandomOneSweetMealWithoutEggsUseCase
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
-import presentation.uiController.ExploreOtherCountriesUIController
-import presentation.uiController.FastHealthyMealsUIController
-import presentation.uiController.GetMealByNameUIController
-import presentation.uiController.GuessGameUIController
-import presentation.uiController.GymHelperUIController
-import presentation.uiController.ILovePotatoUIController
-import presentation.uiController.IraqiMealUIController
-import presentation.uiController.ItalianMealUIController
-import presentation.uiController.KetoMealHelperUIController
-import presentation.uiController.MainMenuHandler
-import presentation.uiController.MealsByDateUIController
-import presentation.uiController.SeafoodMealsUIController
-import presentation.uiController.SuggestMealByCaloriesUIController
-import presentation.uiController.SuggestTop10EasyMealsUIController
-import presentation.uiController.SweetMealsUIController
+import presentation.uiController.*
 
 fun main() {
     startKoin {
@@ -44,7 +30,7 @@ fun main() {
     val mealsByDateUIController: MealsByDateUIController = getKoin().get()
     val exploreOtherCountriesUIController: ExploreOtherCountriesUIController = getKoin().get()
     val suggestMealByCalorieUI: SuggestMealByCaloriesUIController = getKoin().get()
-
+    val ingredientGameUIController: IngredientGameUIController = getKoin().get()
     val iLovePotatoUIController: ILovePotatoUIController = getKoin().get()
     val gymHelperUIController: GymHelperUIController = getKoin().get()
 
@@ -60,6 +46,7 @@ fun main() {
         9 to gymHelperUIController,
         10 to exploreOtherCountriesUIController,
         12 to iLovePotatoUIController,
+        11 to ingredientGameUIController,
         13 to suggestMealByCalorieUI,
         14 to seafoodMealsSuccessUIController,
         15 to italianMealUIController,
