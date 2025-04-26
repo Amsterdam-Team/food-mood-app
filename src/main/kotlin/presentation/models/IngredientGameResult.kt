@@ -2,6 +2,7 @@ package presentation.models
 
 sealed class IngredientGameResult {
     data class GameInProgress(
+        var mealId:String,
         val mealName: String,
         val ingredientOptions: List<String>,
         val correctIngredient: String,

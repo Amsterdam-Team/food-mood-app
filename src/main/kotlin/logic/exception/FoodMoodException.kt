@@ -29,12 +29,11 @@ sealed class FoodMoodException() : Exception() {
         data object AttemptsExceeded : GameException()
         data object WrongGuessFormat : GameException()
 
-        // // Ingredient Game Exceptions
-        data object InvalidUserInput : GameException()
-        data object MealDataCorrupted : GameException()
+        // Ingredient Game Exceptions
+        data object InvalidIngredientData : GameException()
         data object IngredientOptionsNotEnough : GameException()
-        data object NoMealsAvailable : GameException()
-        data object GameLoad : GameException()
+        data object NoValidMealsAvailable : GameException()
+        data object NoIngredientData : GameException()
 
     }
 
